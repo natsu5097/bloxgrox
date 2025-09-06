@@ -232,16 +232,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const darkToggle = document.getElementById("darkModeToggle");
 if (darkToggle) {
+  const icon = darkToggle.querySelector(".icon");
+
   darkToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark");
-
-    // Animate icon
-    darkToggle.classList.add("switching");
-    setTimeout(() => darkToggle.classList.remove("switching"), 400);
-
-    // Change label
-    darkToggle.innerHTML = document.body.classList.contains("dark")
-      ? "<span>☀️ Light Mode</span>"
-      : "<span>🌙 Dark Mode</span>";
+    icon.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
   });
 }
