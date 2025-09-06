@@ -1,12 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blox Fruits Fan Wiki</title>
     <link rel="stylesheet" href="bloxgrox.css">
 </head>
+
 <body>
     <header>
         <h1>Blox Fruits Fan Wiki</h1>
@@ -26,27 +27,34 @@
     </header>
 
     <main>
-      <div id="search-container">
-    <input type="text" id="search-bar" placeholder="Search items... (Fruits, Swords, Guns, etc.)">
-    <button id="clear-search">×</button>
-</div>
-
+        <div id="search-container">
+            <input type="text" id="search-bar" placeholder="Search items... (Fruits, Swords, Guns, etc.)">
+            <button id="clear-search">×</button>
+        </div>
 
         <section id="home">
             <h2>Welcome to Blox Fruits Fan Wiki</h2>
-            <p>This is a fan-made wiki inspired by the official Blox Fruits Wiki on Fandom. It provides information about the Roblox game Blox Fruits, where players can eat mysterious fruits to gain supernatural powers. Reference: <a href="https://blox-fruits.fandom.com/wiki/Blox_Fruits_Wiki">Official Wiki</a>.</p>
-            <p>Explore the sections below for details on fruits, weapons, races, and more. This site uses a brighter and warmer color palette for a more inviting feel.</p>
+            <p>Blox Fruits are mysterious fruits that can grant their user supernatural abilities when eaten. They are
+                the main, core mechanism of the game, as well as being represented as the game title, hence Blox Fruits.
+                Each Blox Fruit has its own unique power. However, in exchange for power, the user will continuously
+                take damage if they stay in water for too long. Some Blox Fruits have special abilities that can grant
+                the user certain immunities, buffed movement, defensive perks, etc.</p>
+            <p>Explore the sections below for details on fruits, weapons, races, and more. This site uses a brighter and
+                warmer color palette for a more inviting feel.</p>
         </section>
 
         <section id="fruits">
             <h2>Blox Fruits</h2>
-            <p>Blox Fruits are the core mechanic of the game, granting users special abilities. They are divided by rarity.</p>
+            <p>Blox Fruits are the core mechanic of the game, granting users special abilities. They are divided by
+                rarity.</p>
             <div id="fruits-sections"></div>
         </section>
 
         <section id="fighting-styles">
             <h2>Fighting Styles</h2>
-            <p>Fighting styles are melee combat methods. Examples: Combat, Dark Step, Electric, Water Kung Fu, Dragon Breath, Superhuman, Death Step, Sharkman Karate, Electric Claw, Dragon Talon, Godhuman, Sanguine Art.</p>
+            <p>Fighting styles are melee combat methods. Examples: Combat, Dark Step, Electric, Water Kung Fu, Dragon
+                Breath, Superhuman, Death Step, Sharkman Karate, Electric Claw, Dragon Talon, Godhuman, Sanguine Art.
+            </p>
             <table id="fighting-styles-table">
                 <thead>
                     <tr>
@@ -66,262 +74,260 @@
             <div id="swords-sections"></div>
         </section>
 
-       <section id="guns">
-    <h2>Guns</h2>
-    <p>Guns are ranged weapons with different abilities, from basic Slingshots to legendary Serpent Bows.</p>
-    <div id="guns-sections"></div>
-</section>
+        <section id="guns">
+            <h2>Guns</h2>
+            <p>Guns are ranged weapons with different abilities, from basic Slingshots to legendary Serpent Bows.</p>
+            <div id="guns-sections"></div>
+        </section>
 
-<section id="accessories">
-    <h2>Accessories</h2>
-    <p>Accessories grant buffs such as increased damage, health, or unique effects.</p>
-    <div id="accessories-sections"></div>
-</section>
+        <section id="accessories">
+            <h2>Accessories</h2>
+            <p>Accessories grant buffs such as increased damage, health, or unique effects.</p>
+            <div id="accessories-sections"></div>
+        </section>
 
-<section id="races">
-    <h2>Races</h2>
-    <p>Races provide unique perks and evolutions. Each has different advantages for PvE and PvP.</p>
-    <div id="races-sections"></div>
-</section>
+        <section id="races">
+            <h2>Races</h2>
+            <p>Races provide unique perks and evolutions. Each has different advantages for PvE and PvP.</p>
+            <div id="races-sections"></div>
+        </section>
 
-<section id="locations">
-    <h2>Locations</h2>
-    <p>Explore the three seas, each with unique islands, bosses, and quests.</p>
-    <div id="locations-sections"></div>
-</section>
+        <section id="locations">
+            <h2>Locations</h2>
+            <p>Explore the three seas, each with unique islands, bosses, and quests.</p>
+            <div id="locations-sections"></div>
+        </section>
 
-<section id="updates">
-    <h2>Updates</h2>
-    <p>Recent updates with new fruits, weapons, and balance changes.</p>
-    <table id="updates-table">
-        <thead>
-            <tr>
-                <th>Version</th>
-                <th>Date</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</section>
+        <section id="updates">
+            <h2>Updates</h2>
+            <p>Recent updates with new fruits, weapons, and balance changes.</p>
+            <table id="updates-table">
+                <thead>
+                    <tr>
+                        <th>Version</th>
+                        <th>Date</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Blox Fruits Fan Wiki. Inspired by <a href="https://blox-fruits.fandom.com/wiki/Blox_Fruits_Wiki">Blox Fruits Wiki</a>. All rights reserved to original creators.</p>
+        <p>&copy; 2025 Blox Fruits Fan Wiki. Inspired by <a
+                href="https://blox-fruits.fandom.com/wiki/Blox_Fruits_Wiki">Blox Fruits Wiki</a>. All rights reserved to
+            original creators.</p>
     </footer>
 
- <script>
-fetch('data.json')
-    .then(response => response.json())
-    .then(data => {
-        function groupByRarity(items) {
-            const groups = {};
-            items.forEach(item => {
-                const rarity = item.rarity || 'Unknown';
-                if (!groups[rarity]) groups[rarity] = [];
-                groups[rarity].push(item);
-            });
-            return groups;
-        }
+    <button id="scrollTopBtn" style="display:none;" aria-label="Scroll to top">↑</button>
 
-        function renderGroupedTables(groups, containerId, columns) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
+    <script>
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                function groupByRarity(items) {
+                    const groups = {};
+                    items.forEach(item => {
+                        const rarity = item.rarity || 'Unknown';
+                        if (!groups[rarity]) groups[rarity] = [];
+                        groups[rarity].push(item);
+                    });
+                    return groups;
+                }
 
-            Object.keys(groups).forEach(rarity => {
-                const section = document.createElement('section');
-                section.classList.add('collapsible-section');
+                function renderGroupedTables(groups, containerId, columns) {
+                    const container = document.getElementById(containerId);
+                    container.innerHTML = '';
 
-                // Collapsible header
-                const header = document.createElement('h3');
-                header.textContent = rarity;
-                header.classList.add('collapsible-header');
+                    Object.keys(groups).forEach(rarity => {
+                        const section = document.createElement('section');
+                        section.classList.add('collapsible-section');
 
-                // Table container
-                const tableWrapper = document.createElement('div');
-                tableWrapper.classList.add('collapsible-content');
+                        // Collapsible header
+                        const header = document.createElement('h3');
+                        header.textContent = rarity;
+                        header.classList.add('collapsible-header');
 
-                const table = document.createElement('table');
-                const thead = document.createElement('thead');
-                thead.innerHTML = `<tr>${columns.map(c => `<th>${c.header}</th>`).join('')}</tr>`;
-                table.appendChild(thead);
+                        // Table container
+                        const tableWrapper = document.createElement('div');
+                        tableWrapper.classList.add('collapsible-content');
 
-                const tbody = document.createElement('tbody');
-                groups[rarity].forEach(item => {
+                        const table = document.createElement('table');
+                        const thead = document.createElement('thead');
+                        thead.innerHTML = `<tr>${columns.map(c => `<th>${c.header}</th>`).join('')}</tr>`;
+                        table.appendChild(thead);
+
+                        const tbody = document.createElement('tbody');
+                        groups[rarity].forEach(item => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = columns.map(c =>
+                                c.key === 'image_url'
+                                    ? `<td><img src="${item[c.key] || 'images/placeholder.png'}" alt="${item.name || ''}" style="width:40px;height:40px;"></td>`
+                                    : `<td>${item[c.key] !== undefined ? item[c.key] : ''}</td>`
+                            ).join('');
+                            tbody.appendChild(row);
+                        });
+                        table.appendChild(tbody);
+                        tableWrapper.appendChild(table);
+
+                        section.appendChild(header);
+                        section.appendChild(tableWrapper);
+                        container.appendChild(section);
+
+                        // Toggle behavior
+                        header.addEventListener('click', () => {
+                            tableWrapper.classList.toggle('active');
+                        });
+                    });
+                }
+
+                // Fruits
+                const fruitColumns = [
+                    { header: 'Image', key: 'image_url' },
+                    { header: 'Name', key: 'name' },
+                    { header: 'Type', key: 'type' },
+                    { header: 'Price (Money)', key: 'price_money' },
+                    { header: 'Price (Robux)', key: 'price_robux' },
+                    { header: 'Description', key: 'description' }
+                ];
+                renderGroupedTables(groupByRarity(data.fruits), 'fruits-sections', fruitColumns);
+
+                // Swords
+                const swordColumns = [
+                    { header: 'Image', key: 'image_url' },
+                    { header: 'Name', key: 'name' },
+                    { header: 'Rarity', key: 'rarity' },
+                    { header: 'Price (Money)', key: 'price_money' },
+                    { header: 'Price (Robux)', key: 'price_robux' },
+                    { header: 'Description', key: 'description' }
+                ];
+                renderGroupedTables(groupByRarity(data.swords), 'swords-sections', swordColumns);
+
+                // Fighting Styles
+                const fightingStylesTableBody = document.querySelector('#fighting-styles-table tbody');
+                data.fightingStyles.forEach(style => {
                     const row = document.createElement('tr');
-                    row.innerHTML = columns.map(c =>
-                        c.key === 'image_url'
-                            ? `<td><img src="${item[c.key] || 'images/placeholder.png'}" alt="${item.name || ''}" style="width:40px;height:40px;"></td>`
-                            : `<td>${item[c.key] !== undefined ? item[c.key] : ''}</td>`
-                    ).join('');
-                    tbody.appendChild(row);
-                });
-                table.appendChild(tbody);
-                tableWrapper.appendChild(table);
-
-                section.appendChild(header);
-                section.appendChild(tableWrapper);
-                container.appendChild(section);
-
-                // Toggle behavior
-                header.addEventListener('click', () => {
-                    tableWrapper.classList.toggle('active');
-                });
-            });
-        }
-
-        // Fruits
-        const fruitColumns = [
-            { header: 'Image', key: 'image_url' },
-            { header: 'Name', key: 'name' },
-            { header: 'Type', key: 'type' },
-            { header: 'Price (Money)', key: 'price_money' },
-            { header: 'Price (Robux)', key: 'price_robux' },
-            { header: 'Description', key: 'description' }
-        ];
-        renderGroupedTables(groupByRarity(data.fruits), 'fruits-sections', fruitColumns);
-
-        // Swords
-        const swordColumns = [
-            { header: 'Image', key: 'image_url' },
-            { header: 'Name', key: 'name' },
-            { header: 'Rarity', key: 'rarity' },
-            { header: 'Price (Money)', key: 'price_money' },
-            { header: 'Price (Robux)', key: 'price_robux' },
-            { header: 'Description', key: 'description' }
-        ];
-        renderGroupedTables(groupByRarity(data.swords), 'swords-sections', swordColumns);
-
-        // Fighting Styles
-        const fightingStylesTableBody = document.querySelector('#fighting-styles-table tbody');
-        data.fightingStyles.forEach(style => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
+                    row.innerHTML = `
                 <td><img src="${style.image_url || 'images/placeholder.png'}" alt="${style.name || ''}" style="width:40px;height:40px;"></td>
                 <td>${style.name || ''}</td>
                 <td>${style.price_money ? style.price_money.toLocaleString() : ''}</td>
                 <td>${style.description || ''}</td>
             `;
-            fightingStylesTableBody.appendChild(row);
-        });
+                    fightingStylesTableBody.appendChild(row);
+                });
 
-        // Guns
-        const gunColumns = [
-            { header: 'Image', key: 'image_url' },
-            { header: 'Name', key: 'name' },
-            { header: 'Rarity', key: 'rarity' },
-            { header: 'Price (Money)', key: 'price_money' },
-            { header: 'Description', key: 'description' }
-        ];
-        renderGroupedTables(groupByRarity(data.guns), 'guns-sections', gunColumns);
+                // Guns
+                const gunColumns = [
+                    { header: 'Image', key: 'image_url' },
+                    { header: 'Name', key: 'name' },
+                    { header: 'Rarity', key: 'rarity' },
+                    { header: 'Price (Money)', key: 'price_money' },
+                    { header: 'Description', key: 'description' }
+                ];
+                renderGroupedTables(groupByRarity(data.guns), 'guns-sections', gunColumns);
 
-        // Accessories
-        const accessoryColumns = [
-            { header: 'Image', key: 'image_url' },
-            { header: 'Name', key: 'name' },
-            { header: 'Rarity', key: 'rarity' },
-            { header: 'Price (Money)', key: 'price_money' },
-            { header: 'Description', key: 'description' }
-        ];
-        renderGroupedTables(groupByRarity(data.accessories), 'accessories-sections', accessoryColumns);
+                // Accessories
+                const accessoryColumns = [
+                    { header: 'Image', key: 'image_url' },
+                    { header: 'Name', key: 'name' },
+                    { header: 'Rarity', key: 'rarity' },
+                    { header: 'Price (Money)', key: 'price_money' },
+                    { header: 'Description', key: 'description' }
+                ];
+                renderGroupedTables(groupByRarity(data.accessories), 'accessories-sections', accessoryColumns);
 
-        // Races
-        const raceColumns = [
-            { header: 'Image', key: 'image_url' },
-            { header: 'Name', key: 'name' },
-            { header: 'Description', key: 'description' }
-        ];
-        renderGroupedTables({ "All Races": data.races }, 'races-sections', raceColumns);
+                // Races
+                const raceColumns = [
+                    { header: 'Image', key: 'image_url' },
+                    { header: 'Name', key: 'name' },
+                    { header: 'Description', key: 'description' }
+                ];
+                renderGroupedTables({ "All Races": data.races }, 'races-sections', raceColumns);
 
-        // Locations
-        const locationColumns = [
-            { header: 'Image', key: 'image_url' },
-            { header: 'Name', key: 'name' },
-            { header: 'Description', key: 'description' }
-        ];
-        renderGroupedTables({ "Game Worlds": data.locations }, 'locations-sections', locationColumns);
+                // Locations
+                const locationColumns = [
+                    { header: 'Image', key: 'image_url' },
+                    { header: 'Name', key: 'name' },
+                    { header: 'Description', key: 'description' }
+                ];
+                renderGroupedTables({ "Game Worlds": data.locations }, 'locations-sections', locationColumns);
 
-        // Updates
-        const updatesTableBody = document.querySelector('#updates-table tbody');
-        data.updates.forEach(update => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
+                // Updates
+                const updatesTableBody = document.querySelector('#updates-table tbody');
+                data.updates.forEach(update => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
                 <td>${update.version}</td>
                 <td>${update.date}</td>
                 <td>${update.details}</td>
             `;
-            updatesTableBody.appendChild(row);
-        });
-
-        // 🔍 Search functionality
-         const searchBar = document.getElementById('search-bar');
-        searchBar.addEventListener('input', () => {
-            const query = searchBar.value.toLowerCase();
-
-            function filterTable(containerId) {
-                const container = document.getElementById(containerId);
-                if (!container) return;
-                const rows = container.querySelectorAll('tbody tr');
-                rows.forEach(row => {
-                    const text = row.innerText.toLowerCase();
-                    row.style.display = text.includes(query) ? '' : 'none';
+                    updatesTableBody.appendChild(row);
                 });
+
+                // 🔍 Search functionality
+                const searchBar = document.getElementById('search-bar');
+                searchBar.addEventListener('input', () => {
+                    const query = searchBar.value.toLowerCase();
+
+                    function filterTable(containerId) {
+                        const container = document.getElementById(containerId);
+                        if (!container) return;
+                        const rows = container.querySelectorAll('tbody tr');
+                        rows.forEach(row => {
+                            const text = row.innerText.toLowerCase();
+                            row.style.display = text.includes(query) ? '' : 'none';
+                        });
+                    }
+
+                    // Search across these categories
+                    filterTable('fruits-sections');
+                    filterTable('swords-sections');
+                    filterTable('guns-sections');
+                    filterTable('accessories-sections');
+                    filterTable('races-sections');
+                    filterTable('locations-sections');
+
+                    // Fighting Styles (already a <table>)
+                    const fsRows = document.querySelectorAll('#fighting-styles-table tbody tr');
+                    fsRows.forEach(row => {
+                        const text = row.innerText.toLowerCase();
+                        row.style.display = text.includes(query) ? '' : 'none';
+                    });
+
+                    // Updates (already a <table>)
+                    const updateRows = document.querySelectorAll('#updates-table tbody tr');
+                    updateRows.forEach(row => {
+                        const text = row.innerText.toLowerCase();
+                        row.style.display = text.includes(query) ? '' : 'none';
+                    });
+                });
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+        window.addEventListener('scroll', () => {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                scrollTopBtn.style.display = "block";
+            } else {
+                scrollTopBtn.style.display = "none";
             }
-
-            // Search across these categories
-            filterTable('fruits-sections');
-            filterTable('swords-sections');
-            filterTable('guns-sections');
-            filterTable('accessories-sections');
-            filterTable('races-sections');
-            filterTable('locations-sections');
-
-            // Fighting Styles (already a <table>)
-            const fsRows = document.querySelectorAll('#fighting-styles-table tbody tr');
-            fsRows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(query) ? '' : 'none';
-            });
-
-            // Updates (already a <table>)
-            const updateRows = document.querySelectorAll('#updates-table tbody tr');
-            updateRows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(query) ? '' : 'none';
-            });
         });
-    })
-    .catch(error => console.error('Error loading JSON:', error));
 
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
-    window.addEventListener('scroll', () => {
-        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-            scrollTopBtn.style.display = "block";
-        } else {
-            scrollTopBtn.style.display = "none";
-        }
-    });
+        // Clear search button functionality
+        const clearBtn = document.getElementById('clear-search');
 
-    scrollTopBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+        searchBar.addEventListener('input', () => {
+            clearBtn.style.display = searchBar.value ? 'inline-block' : 'none';
+        });
 
-    // Clear search button functionality
-    const clearBtn = document.getElementById('clear-search');
-
-    searchBar.addEventListener('input', () => {
-        clearBtn.style.display = searchBar.value ? 'inline-block' : 'none';
-    });
-
-    clearBtn.addEventListener('click', () => {
-        searchBar.value = '';
-        clearBtn.style.display = 'none';
-        searchBar.dispatchEvent(new Event('input')); // reset all tables
-    });
-</script>
-
-</body>
-<button id="scrollTopBtn">↑</button>
-
-</html>
+        clearBtn.addEventListener('click', () => {
+            searchBar.value = '';
+            clearBtn.style.display = 'none';
+            searchBar.dispatchEvent(new Event('input')); // reset all tables
+        });
