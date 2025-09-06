@@ -776,12 +776,12 @@
         {
             "name": "First Sea",
             "description": "Starter sea with basic islands like Jungle, Pirate Village, and Desert.",
-            "image_url": "images/locations/first_sea.png"
+            "image_url": "images/locations/first_sea.jpg"
         },
         {
             "name": "Second Sea",
             "description": "Unlocked at level 700. Includes Dressrosa, Green Zone, and Ice Castle.",
-            "image_url": "images/locations/second_sea.png"
+            "image_url": "images/locations/second_sea.jpg"
         },
         {
             "name": "Third Sea",
