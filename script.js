@@ -98,20 +98,66 @@ document.addEventListener("DOMContentLoaded", () => {
       renderGroupedTables(groupByRarity(data.swords || []), "swords-sections", swordColumns);
 
       // Fighting styles
-      const fsBody = document.querySelector("#fighting-styles-table tbody");
-      if (fsBody && Array.isArray(data.fightingStyles)) {
-        fsBody.innerHTML = "";
-        data.fightingStyles.forEach(style => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><img src="${safeText(style.image_url) || 'images/placeholder.png'}" alt="${safeText(style.name)}" style="width:40px;height:40px;object-fit:contain"></td>
-            <td>${safeText(style.name)}</td>
-            <td>${style.price_money ? Number(style.price_money).toLocaleString() : ""}</td>
-            <td>${safeText(style.description)}</td>
-          `;
-          fsBody.appendChild(tr);
-        });
-      }
+     if (Array.isArray(data.fightingStyles)) {
+  // group by sea
+  const grouped = data.fightingStyles.reduce((acc, style) => {
+    const key = style.sea || "Unknown Sea";
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(style);
+    return acc;
+  }, {});
+
+  const fsContainer = document.getElementById("fighting-styles-sections");
+  if (fsContainer) {
+    fsContainer.innerHTML = "";
+
+    // Loop through each Sea
+    Object.keys(grouped).forEach(sea => {
+      // Sort styles within this Sea (by price_money ascending)
+      grouped[sea].sort((a, b) => (a.price_money || 0) - (b.price_money || 0));
+
+      const section = document.createElement("section");
+      section.classList.add("collapsible-section");
+
+      const header = document.createElement("h3");
+      header.textContent = sea;
+      header.classList.add("collapsible-header");
+
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("collapsible-content");
+
+      const table = document.createElement("table");
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price (Money)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${grouped[sea].map(style => `
+            <tr>
+              <td><img src="${style.image_url || 'images/placeholder.png'}" alt="${style.name}" style="width:40px;height:40px;"></td>
+              <td>${style.name}</td>
+              <td>${style.price_money ? Number(style.price_money).toLocaleString() : ""}</td>
+              <td>${style.description}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      `;
+      wrapper.appendChild(table);
+
+      section.appendChild(header);
+      section.appendChild(wrapper);
+      fsContainer.appendChild(section);
+
+      // collapsible toggle
+      header.addEventListener("click", () => wrapper.classList.toggle("active"));
+    });
+  }
+}
 
       // Guns
       const gunColumns = [
