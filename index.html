@@ -7,15 +7,15 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header>
     <h1>Blox Fruits Fan Wiki</h1>
     <button id="darkModeToggle" class="toggle-btn">
-  <span class="icon">🌙</span>
-</button>
-
+      <span class="icon">🌙</span>
+    </button>
   </header>
 
-  <!-- Navbar -->
+  <!-- Navigation -->
   <nav id="navbar">
     <ul>
       <li><a href="#fruits">Fruits</a></li>
@@ -29,28 +29,31 @@
     </ul>
   </nav>
 
-  <!-- Filters + controls -->
-  <div id="filters">
-    <button class="filter-btn" data-filter="fruits">Fruits</button>
-    <button class="filter-btn" data-filter="fighting-styles">Fighting Styles</button>
-    <button class="filter-btn" data-filter="swords">Swords</button>
-    <button class="filter-btn" data-filter="guns">Guns</button>
-    <button class="filter-btn" data-filter="accessories">Accessories</button>
-    <button class="filter-btn" data-filter="races">Races</button>
-    <button class="filter-btn" data-filter="locations">Locations</button>
-    <button class="filter-btn" data-filter="updates">Updates</button>
-  </div>
+  <!-- Filters & Controls -->
+  <section id="controls">
+    <div id="filters">
+      <button class="filter-btn" data-filter="fruits">Fruits</button>
+      <button class="filter-btn" data-filter="fighting-styles">Fighting Styles</button>
+      <button class="filter-btn" data-filter="swords">Swords</button>
+      <button class="filter-btn" data-filter="guns">Guns</button>
+      <button class="filter-btn" data-filter="accessories">Accessories</button>
+      <button class="filter-btn" data-filter="races">Races</button>
+      <button class="filter-btn" data-filter="locations">Locations</button>
+      <button class="filter-btn" data-filter="updates">Updates</button>
+    </div>
 
-  <div id="expand-collapse">
-    <button id="expandAll">Expand All</button>
-    <button id="collapseAll">Collapse All</button>
-  </div>
+    <div id="expand-collapse">
+      <button id="expandAll">Expand All</button>
+      <button id="collapseAll">Collapse All</button>
+    </div>
 
-  <div id="search-container">
-    <input type="text" id="search-bar" placeholder="Search items... (Fruits, Swords, Guns, etc.)">
-    <button id="clear-search">✖</button>
-  </div>
+    <div id="search-container">
+      <input type="text" id="search-bar" placeholder="Search items... (Fruits, Swords, Guns, etc.)" />
+      <button id="clear-search">✖</button>
+    </div>
+  </section>
 
+  <!-- Main Content -->
   <main>
     <section id="fruits">
       <h2>Fruits</h2>
@@ -102,13 +105,16 @@
     </section>
   </main>
 
+  <!-- Footer -->
   <footer>
     <p>© 2025 Blox Fruits Fan Wiki. Built for fans!</p>
   </footer>
 
+  <!-- Floating UI -->
   <button id="scrollTopBtn">⬆</button>
   <div id="loadingSpinner">Loading...</div>
 
+  <!-- Scripts -->
   <script src="script.js"></script>
 </body>
 </html>

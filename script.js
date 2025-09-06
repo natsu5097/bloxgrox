@@ -67,9 +67,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ---------- fetch + render ----------
   fetch("data.json")
-    .then(resp => {
-      if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`);
-      return resp.json();
+    .then(async resp => {
+      if (!resp.ok) {
+        throw new Error(`Failed to fetch data.json (HTTP ${resp.status})`);
+      }
+      const text = await resp.text();
+
+      if (!text.trim()) {
+        throw new Error("data.json is empty!");
+      }
+
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        console.error("❌ JSON parse error:", e, "Raw text was:", text);
+        throw e;
+      }
     })
     .then(data => {
       if (spinner) spinner.style.display = "none";
@@ -97,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ];
       renderGroupedTables(groupByRarity(data.swords || []), "swords-sections", swordColumns);
 
-      // Fighting styles: group by sea
+      // Fighting styles (group by sea)
       if (Array.isArray(data.fightingStyles)) {
         const grouped = data.fightingStyles.reduce((acc, style) => {
           const key = style.sea || "Unknown Sea";
@@ -166,7 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("❌ Error loading JSON:", err);
       const main = document.querySelector("main") || document.body;
       if (main) {
-        main.insertAdjacentHTML("afterbegin",
+        main.insertAdjacentHTML(
+          "afterbegin",
           `<div style="background:#ffdddd;color:#900;padding:1em;margin:1em 0;border:1px solid red;">
             Failed to load <b>data.json</b>: ${err.message}
           </div>`
@@ -231,11 +245,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (col) col.addEventListener("click", () => document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active")));
 
   const darkToggle = document.getElementById("darkModeToggle");
-if (darkToggle) {
-  const icon = darkToggle.querySelector(".icon");
+  if (darkToggle) {
+    const icon = darkToggle.querySelector(".icon");
 
-  darkToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    icon.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
-  });
-}
+    darkToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      icon.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+    });
+  }
+});
