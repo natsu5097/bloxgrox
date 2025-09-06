@@ -382,86 +382,86 @@
     "fightingStyles": [
   {
     "name": "Combat",
-    "sea": "First Sea",
     "price_money": 0,
     "description": "Basic melee fighting style.",
+    "sea": "First Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/combat.png"
   },
   {
     "name": "Dark Step",
-    "sea": "First Sea",
     "price_money": 150000,
     "description": "Fast kicks with dark energy.",
+    "sea": "First Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/dark_step.png"
   },
   {
     "name": "Electric",
-    "sea": "Second Sea",
     "price_money": 500000,
     "description": "Electric-enhanced punches.",
+    "sea": "First Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/electric.png"
   },
   {
     "name": "Water Kung Fu",
-    "sea": "First Sea",
     "price_money": 750000,
     "description": "Water-based fluid movements.",
+    "sea": "Second Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/water_kung_fu.png"
   },
   {
     "name": "Dragon Breath",
-    "sea": "Second Sea",
     "price_money": 1500000,
     "description": "Fire breath and dragon-inspired moves.",
+    "sea": "Second Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/dragon_breath.png"
   },
   {
     "name": "Superhuman",
-    "sea": "Second Sea",
     "price_money": 3000000,
     "description": "Combination of basic styles for super speed.",
+    "sea": "Second Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/superhuman.png"
   },
   {
     "name": "Death Step",
-    "sea": "Second Sea",
     "price_money": 2500000,
     "description": "Advanced Dark Step with death themes.",
+    "sea": "Third Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/death_step.png"
   },
   {
     "name": "Sharkman Karate",
-    "sea": "Second Sea",
     "price_money": 2500000,
     "description": "Advanced Water Kung Fu with shark power.",
+    "sea": "Third Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/sharkman_karate.png"
   },
   {
     "name": "Electric Claw",
-    "sea": "Third Sea",
     "price_money": 3000000,
     "description": "Advanced Electric with claw attacks.",
+    "sea": "Third Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/electric_claw.png"
   },
   {
     "name": "Dragon Talon",
-    "sea": "Third Sea",
     "price_money": 3000000,
     "description": "Advanced Dragon Breath with talon strikes.",
+    "sea": "Third Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/dragon_talon.png"
   },
   {
     "name": "Godhuman",
-    "sea": "Third Sea",
     "price_money": 5000000,
     "description": "Ultimate fighting style combining all.",
+    "sea": "Third Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/godhuman.png"
   },
   {
     "name": "Sanguine Art",
-    "sea": "Third Sea",
     "price_money": 5000000,
     "description": "Blood-based attacks with lifesteal.",
+    "sea": "Third Sea",
     "image_url": "https://raw.githubusercontent.com/natsu5097/bloxgrox/main/images/fighting_styles/sanguine_art.png"
   }
 ],
