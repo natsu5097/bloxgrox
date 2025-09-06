@@ -1,3 +1,4 @@
+// script.js
 document.addEventListener("DOMContentLoaded", () => {
   const spinner = document.getElementById("loadingSpinner");
   if (spinner) spinner.style.display = "block";
@@ -65,13 +66,18 @@ document.addEventListener("DOMContentLoaded", () => {
       section.appendChild(tableWrapper);
       container.appendChild(section);
 
-      header.addEventListener("click", () => tableWrapper.classList.toggle("active"));
-
-      // ⭐ Initialize DataTables
-      new DataTable(table, {
-        paging: false,
-        searching: false, // disable built-in search
-        info: false
+      // Collapsible + DataTable init
+      let initialized = false;
+      header.addEventListener("click", () => {
+        tableWrapper.classList.toggle("active");
+        if (!initialized && tableWrapper.classList.contains("active")) {
+          new DataTable(table, {
+            paging: false,
+            searching: false, // disable built-in search, use Fuse.js instead
+            info: false
+          });
+          initialized = true;
+        }
       });
     });
   }
@@ -101,26 +107,24 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // Fruits
-      const fruitColumns = [
+      renderGroupedTables(groupByRarity(data.fruits || []), "fruits-sections", [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Type", key: "type" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Price (Robux)", key: "price_robux", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ];
-      renderGroupedTables(groupByRarity(data.fruits || []), "fruits-sections", fruitColumns);
+      ]);
 
       // Swords
-      const swordColumns = [
+      renderGroupedTables(groupByRarity(data.swords || []), "swords-sections", [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Rarity", key: "rarity" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Price (Robux)", key: "price_robux", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ];
-      renderGroupedTables(groupByRarity(data.swords || []), "swords-sections", swordColumns);
+      ]);
 
       // Fighting Styles
       if (Array.isArray(data.fightingStyles)) {
@@ -130,50 +134,45 @@ document.addEventListener("DOMContentLoaded", () => {
           acc[key].push(style);
           return acc;
         }, {});
-        const fsColumns = [
+        renderGroupedTables(grouped, "fighting-styles-sections", [
           { header: "Image", key: "image_url" },
           { header: "Name", key: "name" },
           { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
           { header: "Description", key: "description" }
-        ];
-        renderGroupedTables(grouped, "fighting-styles-sections", fsColumns);
+        ]);
       }
 
       // Guns
-      const gunColumns = [
+      renderGroupedTables(groupByRarity(data.guns || []), "guns-sections", [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Rarity", key: "rarity" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ];
-      renderGroupedTables(groupByRarity(data.guns || []), "guns-sections", gunColumns);
+      ]);
 
       // Accessories
-      const accessoryColumns = [
+      renderGroupedTables(groupByRarity(data.accessories || []), "accessories-sections", [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Rarity", key: "rarity" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ];
-      renderGroupedTables(groupByRarity(data.accessories || []), "accessories-sections", accessoryColumns);
+      ]);
 
       // Races
-      const raceColumns = [
+      renderGroupedTables({ "All Races": data.races || [] }, "races-sections", [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Description", key: "description" }
-      ];
-      renderGroupedTables({ "All Races": data.races || [] }, "races-sections", raceColumns);
+      ]);
 
       // Locations
-      const locationColumns = [
+      renderGroupedTables({ "Game Worlds": data.locations || [] }, "locations-sections", [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Description", key: "description" }
-      ];
-      renderGroupedTables({ "Game Worlds": data.locations || [] }, "locations-sections", locationColumns);
+      ]);
 
       // Updates
       const updatesBody = document.querySelector("#updates-table tbody");
@@ -211,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>${item.description || "No description available."}</p>
         ${item.rarity ? `<p><b>Rarity:</b> ${item.rarity}</p>` : ""}
         ${item.type ? `<p><b>Type:</b> ${item.type}</p>` : ""}
-        ${item.price_money ? `<p><b>Price:</b> ${item.price_money}</p>` : ""}
+        ${item.price_money ? `<p><b>Price:</b> ${Number(item.price_money).toLocaleString()}</p>` : ""}
       `;
 
       container.appendChild(card);
@@ -226,11 +225,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const query = searchInput.value.trim();
       if (!query) {
         document.getElementById("search-results").innerHTML = "";
+        if (clearBtn) clearBtn.style.display = "none";
         return;
       }
       const results = fuse.search(query);
       renderResults(results);
-      if (clearBtn) clearBtn.style.display = query ? "inline-block" : "none";
+      if (clearBtn) clearBtn.style.display = "inline-block";
     });
   }
 
