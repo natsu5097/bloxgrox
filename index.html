@@ -7,15 +7,11 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Header -->
   <header>
     <h1>Blox Fruits Fan Wiki</h1>
-    <button id="darkModeToggle" class="toggle-btn">
-      <span class="icon">🌙</span>
-    </button>
+    <button id="darkModeToggle" class="toggle-btn"><span class="icon">🌙</span></button>
   </header>
 
-  <!-- Navigation -->
   <nav id="navbar">
     <ul>
       <li><a href="#fruits">Fruits</a></li>
@@ -29,92 +25,43 @@
     </ul>
   </nav>
 
-  <!-- Filters & Controls -->
-  <section id="controls">
-    <div id="filters">
-      <button class="filter-btn" data-filter="fruits">Fruits</button>
-      <button class="filter-btn" data-filter="fighting-styles">Fighting Styles</button>
-      <button class="filter-btn" data-filter="swords">Swords</button>
-      <button class="filter-btn" data-filter="guns">Guns</button>
-      <button class="filter-btn" data-filter="accessories">Accessories</button>
-      <button class="filter-btn" data-filter="races">Races</button>
-      <button class="filter-btn" data-filter="locations">Locations</button>
-      <button class="filter-btn" data-filter="updates">Updates</button>
-    </div>
+  <div id="filters">
+    <button class="filter-btn" data-filter="fruits">Fruits</button>
+    <button class="filter-btn" data-filter="fighting-styles">Fighting Styles</button>
+    <button class="filter-btn" data-filter="swords">Swords</button>
+    <button class="filter-btn" data-filter="guns">Guns</button>
+    <button class="filter-btn" data-filter="accessories">Accessories</button>
+    <button class="filter-btn" data-filter="races">Races</button>
+    <button class="filter-btn" data-filter="locations">Locations</button>
+    <button class="filter-btn" data-filter="updates">Updates</button>
+  </div>
 
-    <div id="expand-collapse">
-      <button id="expandAll">Expand All</button>
-      <button id="collapseAll">Collapse All</button>
-    </div>
+  <div id="expand-collapse">
+    <button id="expandAll">Expand All</button>
+    <button id="collapseAll">Collapse All</button>
+  </div>
 
-    <div id="search-container">
-      <input type="text" id="search-bar" placeholder="Search items... (Fruits, Swords, Guns, etc.)" />
-      <button id="clear-search">✖</button>
-    </div>
-  </section>
+  <div id="search-container">
+    <input type="text" id="search-bar" placeholder="Search items... (Fruits, Swords, Guns, etc.)">
+    <button id="clear-search">✖</button>
+  </div>
 
-  <!-- Main Content -->
   <main>
-    <section id="fruits">
-      <h2>Fruits</h2>
-      <div id="fruits-sections"></div>
-    </section>
-
-    <section id="fighting-styles">
-      <h2>Fighting Styles</h2>
-      <div id="fighting-styles-sections"></div>
-    </section>
-
-    <section id="swords">
-      <h2>Swords</h2>
-      <div id="swords-sections"></div>
-    </section>
-
-    <section id="guns">
-      <h2>Guns</h2>
-      <div id="guns-sections"></div>
-    </section>
-
-    <section id="accessories">
-      <h2>Accessories</h2>
-      <div id="accessories-sections"></div>
-    </section>
-
-    <section id="races">
-      <h2>Races</h2>
-      <div id="races-sections"></div>
-    </section>
-
-    <section id="locations">
-      <h2>Locations</h2>
-      <div id="locations-sections"></div>
-    </section>
-
-    <section id="updates">
-      <h2>Updates</h2>
-      <table id="updates-table">
-        <thead>
-          <tr>
-            <th>Version</th>
-            <th>Date</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </section>
+    <section id="fruits"><h2>Fruits</h2><div id="fruits-sections"></div></section>
+    <section id="fighting-styles"><h2>Fighting Styles</h2><div id="fighting-styles-sections"></div></section>
+    <section id="swords"><h2>Swords</h2><div id="swords-sections"></div></section>
+    <section id="guns"><h2>Guns</h2><div id="guns-sections"></div></section>
+    <section id="accessories"><h2>Accessories</h2><div id="accessories-sections"></div></section>
+    <section id="races"><h2>Races</h2><div id="races-sections"></div></section>
+    <section id="locations"><h2>Locations</h2><div id="locations-sections"></div></section>
+    <section id="updates"><h2>Updates</h2><table id="updates-table"><thead><tr><th>Version</th><th>Date</th><th>Details</th></tr></thead><tbody></tbody></table></section>
   </main>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Blox Fruits Fan Wiki. Built for fans!</p>
-  </footer>
+  <footer><p>© 2025 Blox Fruits Fan Wiki. Built for fans!</p></footer>
 
-  <!-- Floating UI -->
   <button id="scrollTopBtn">⬆</button>
   <div id="loadingSpinner">Loading...</div>
 
-  <!-- Scripts -->
   <script src="script.js"></script>
 </body>
 </html>
