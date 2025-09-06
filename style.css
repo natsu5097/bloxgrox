@@ -472,3 +472,69 @@ body.dark .result-card h3 {
 body.dark .result-card p {
   color: #ddd;
 }
+/* ------------------------------
+   Fuse.js Search Result Cards
+------------------------------ */
+#search-results {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.result-card {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.result-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.result-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: #1E90FF;
+}
+
+.result-card small {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.result-card img {
+  max-width: 100%;
+  height: auto;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+}
+
+.result-card p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Dark mode styling */
+body.dark .result-card {
+  background: #222;
+  border-color: #444;
+  color: #eee;
+}
+
+body.dark .result-card h3 {
+  color: #4aa3ff;
+}
+
+body.dark .result-card small {
+  color: #aaa;
+}
+
+body.dark .result-card p {
+  color: #ddd;
+}

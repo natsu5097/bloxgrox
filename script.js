@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const spinner = document.getElementById("loadingSpinner");
   if (spinner) spinner.style.display = "block";
 
+  let fuse;
+  let allItems = [];
+
   // ---------- helpers ----------
   function safeText(v) {
     return v === undefined || v === null ? "" : String(v);
@@ -17,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, {});
   }
 
+  // ---------- render grouped tables ----------
   function renderGroupedTables(groups, containerId, columns) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -63,10 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       header.addEventListener("click", () => tableWrapper.classList.toggle("active"));
 
-      // ⭐ Initialize DataTable
+      // ⭐ Initialize DataTables
       new DataTable(table, {
         paging: false,
-        searching: false, // keep Fuse.js as global search
+        searching: false, // disable built-in search
         info: false
       });
     });
@@ -74,78 +78,102 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ---------- fetch + render ----------
   fetch("data.json")
-    .then(resp => {
-      if (!resp.ok) throw new Error(`Failed to fetch data.json (HTTP ${resp.status})`);
-      return resp.json();
-    })
+    .then(resp => resp.json())
     .then(data => {
       if (spinner) spinner.style.display = "none";
 
+      // Prepare allItems for Fuse.js
+      allItems = [
+        ...(data.fruits || []).map(item => ({ ...item, category: "Fruit" })),
+        ...(data.fightingStyles || []).map(item => ({ ...item, category: "Fighting Style" })),
+        ...(data.swords || []).map(item => ({ ...item, category: "Sword" })),
+        ...(data.guns || []).map(item => ({ ...item, category: "Gun" })),
+        ...(data.accessories || []).map(item => ({ ...item, category: "Accessory" })),
+        ...(data.races || []).map(item => ({ ...item, category: "Race" })),
+        ...(data.locations || []).map(item => ({ ...item, category: "Location" })),
+        ...(data.updates || []).map(item => ({ ...item, category: "Update" }))
+      ];
+
+      // Initialize Fuse.js
+      fuse = new Fuse(allItems, {
+        keys: ["name", "description", "rarity", "type", "category"],
+        threshold: 0.3
+      });
+
       // Fruits
-      renderGroupedTables(groupByRarity(data.fruits || []), "fruits-sections", [
+      const fruitColumns = [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Type", key: "type" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Price (Robux)", key: "price_robux", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables(groupByRarity(data.fruits || []), "fruits-sections", fruitColumns);
 
       // Swords
-      renderGroupedTables(groupByRarity(data.swords || []), "swords-sections", [
+      const swordColumns = [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Rarity", key: "rarity" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Price (Robux)", key: "price_robux", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables(groupByRarity(data.swords || []), "swords-sections", swordColumns);
 
-      // Fighting Styles (group by sea)
-      const fsGrouped = (data.fightingStyles || []).reduce((acc, style) => {
-        const key = style.sea || "Unknown Sea";
-        if (!acc[key]) acc[key] = [];
-        acc[key].push(style);
-        return acc;
-      }, {});
-      renderGroupedTables(fsGrouped, "fighting-styles-sections", [
-        { header: "Image", key: "image_url" },
-        { header: "Name", key: "name" },
-        { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
-        { header: "Description", key: "description" }
-      ]);
+      // Fighting Styles
+      if (Array.isArray(data.fightingStyles)) {
+        const grouped = data.fightingStyles.reduce((acc, style) => {
+          const key = style.sea || "Unknown Sea";
+          if (!acc[key]) acc[key] = [];
+          acc[key].push(style);
+          return acc;
+        }, {});
+        const fsColumns = [
+          { header: "Image", key: "image_url" },
+          { header: "Name", key: "name" },
+          { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
+          { header: "Description", key: "description" }
+        ];
+        renderGroupedTables(grouped, "fighting-styles-sections", fsColumns);
+      }
 
       // Guns
-      renderGroupedTables(groupByRarity(data.guns || []), "guns-sections", [
+      const gunColumns = [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Rarity", key: "rarity" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables(groupByRarity(data.guns || []), "guns-sections", gunColumns);
 
       // Accessories
-      renderGroupedTables(groupByRarity(data.accessories || []), "accessories-sections", [
+      const accessoryColumns = [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Rarity", key: "rarity" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables(groupByRarity(data.accessories || []), "accessories-sections", accessoryColumns);
 
       // Races
-      renderGroupedTables({ "All Races": data.races || [] }, "races-sections", [
+      const raceColumns = [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables({ "All Races": data.races || [] }, "races-sections", raceColumns);
 
       // Locations
-      renderGroupedTables({ "Game Worlds": data.locations || [] }, "locations-sections", [
+      const locationColumns = [
         { header: "Image", key: "image_url" },
         { header: "Name", key: "name" },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables({ "Game Worlds": data.locations || [] }, "locations-sections", locationColumns);
 
       // Updates
       const updatesBody = document.querySelector("#updates-table tbody");
@@ -157,71 +185,66 @@ document.addEventListener("DOMContentLoaded", () => {
           updatesBody.appendChild(r);
         });
       }
-
-      // ---------- Fuse.js global search ----------
-      let allItems = [
-        ...data.fruits.map(item => ({ ...item, category: "Fruit" })),
-        ...data.fightingStyles.map(item => ({ ...item, category: "Fighting Style" })),
-        ...data.swords.map(item => ({ ...item, category: "Sword" })),
-        ...data.guns.map(item => ({ ...item, category: "Gun" })),
-        ...data.accessories.map(item => ({ ...item, category: "Accessory" })),
-        ...data.races.map(item => ({ ...item, category: "Race" })),
-        ...data.locations.map(item => ({ ...item, category: "Location" })),
-        ...data.updates.map(item => ({ ...item, category: "Update" }))
-      ];
-
-      const fuse = new Fuse(allItems, {
-        keys: ["name", "description", "rarity", "type", "category"],
-        threshold: 0.3
-      });
-
-      const searchInput = document.getElementById("search-box");
-      const clearBtn = document.getElementById("clear-search");
-      const resultsContainer = document.getElementById("search-results");
-
-      function renderResults(results) {
-        resultsContainer.innerHTML = "";
-        if (results.length === 0) {
-          resultsContainer.innerHTML = "<p>No results found.</p>";
-          return;
-        }
-        results.forEach(({ item }) => {
-          const card = document.createElement("div");
-          card.classList.add("result-card");
-          card.innerHTML = `
-            <h3>${item.name} <small>(${item.category})</small></h3>
-            ${item.image_url ? `<img src="${item.image_url}" alt="${item.name}" />` : ""}
-            <p>${item.description || "No description available."}</p>
-            ${item.rarity ? `<p><b>Rarity:</b> ${item.rarity}</p>` : ""}
-            ${item.type ? `<p><b>Type:</b> ${item.type}</p>` : ""}
-            ${item.price_money ? `<p><b>Price:</b> ${item.price_money}</p>` : ""}
-          `;
-          resultsContainer.appendChild(card);
-        });
-      }
-
-      searchInput.addEventListener("input", () => {
-        const query = searchInput.value.trim();
-        clearBtn.style.display = query ? "inline-block" : "none";
-        if (!query) {
-          resultsContainer.innerHTML = "";
-          return;
-        }
-        renderResults(fuse.search(query));
-      });
-
-      clearBtn.addEventListener("click", () => {
-        searchInput.value = "";
-        resultsContainer.innerHTML = "";
-        clearBtn.style.display = "none";
-      });
     })
     .catch(err => {
       if (spinner) spinner.style.display = "none";
       console.error("❌ Error loading JSON:", err);
     });
 
-  // ---------- UI helpers ----------
+  // ---------- Fuse.js search ----------
+  function renderResults(results) {
+    const container = document.getElementById("search-results");
+    container.innerHTML = "";
+
+    if (results.length === 0) {
+      container.innerHTML = "<p>No results found.</p>";
+      return;
+    }
+
+    results.forEach(({ item }) => {
+      const card = document.createElement("div");
+      card.classList.add("result-card");
+
+      card.innerHTML = `
+        <h3>${item.name} <small>(${item.category})</small></h3>
+        ${item.image_url ? `<img src="${item.image_url}" alt="${item.name}" />` : ""}
+        <p>${item.description || "No description available."}</p>
+        ${item.rarity ? `<p><b>Rarity:</b> ${item.rarity}</p>` : ""}
+        ${item.type ? `<p><b>Type:</b> ${item.type}</p>` : ""}
+        ${item.price_money ? `<p><b>Price:</b> ${item.price_money}</p>` : ""}
+      `;
+
+      container.appendChild(card);
+    });
+  }
+
+  const searchInput = document.getElementById("search-box");
+  const clearBtn = document.getElementById("clear-search");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim();
+      if (!query) {
+        document.getElementById("search-results").innerHTML = "";
+        return;
+      }
+      const results = fuse.search(query);
+      renderResults(results);
+      if (clearBtn) clearBtn.style.display = query ? "inline-block" : "none";
+    });
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      if (searchInput) {
+        searchInput.value = "";
+        searchInput.dispatchEvent(new Event("input"));
+      }
+      clearBtn.style.display = "none";
+    });
+  }
+
+  // ---------- Scroll to top ----------
   const scrollTopBtn = document.getElementById("scrollTopBtn");
   if (scrollTopBtn) {
     window.addEventListener("scroll", () => {
@@ -230,17 +253,19 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   }
 
+  // ---------- Expand/Collapse ----------
   const exp = document.getElementById("expandAll");
   const col = document.getElementById("collapseAll");
   if (exp) exp.addEventListener("click", () => document.querySelectorAll(".collapsible-content").forEach(c => c.classList.add("active")));
   if (col) col.addEventListener("click", () => document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active")));
 
+  // ---------- Dark Mode ----------
   const darkToggle = document.getElementById("darkModeToggle");
   if (darkToggle) {
     const icon = darkToggle.querySelector(".icon");
     darkToggle.addEventListener("click", () => {
       document.body.classList.toggle("dark");
-      if (icon) icon.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+      icon.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
     });
   }
 });
