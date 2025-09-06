@@ -132,39 +132,47 @@ footer {
   display: block;
 }
 
-/* Search */
+/* Existing search container styles */
 #search-container {
   position: sticky;
-  top: 60px; /* sits below navbar */
-  z-index: 900;
+  top: 0;
+  z-index: 1000;
   background: #EAF6FF;
   padding: 15px;
   text-align: center;
   border-bottom: 2px solid #1E90FF;
 }
 
-#search-bar {
-  width: 60%;
-  max-width: 500px;
-  padding: 10px;
-  font-size: 16px;
-  border: 2px solid #1E90FF;
-  border-radius: 8px;
+/* Extra styling for flex + clear button */
+#search-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#search-box {
+  flex: 1;
+  padding: 0.5rem;
 }
 
 #clear-search {
-  margin-left: -40px;
-  background: #1E90FF;
+  display: none; /* hidden by default */
   border: none;
-  color: white;
-  font-size: 18px;
-  padding: 5px 10px;
-  cursor: pointer;
+  background: #ccc;
   border-radius: 50%;
-  display: none;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+/* Light mode */
+body:not(.dark) #clear-search:hover {
+  background: #aaa;
 }
 
-#clear-search:hover {
+/* Dark mode */
+body.dark #clear-search:hover {
   background: #007ACC;
 }
 
@@ -344,4 +352,123 @@ body.dark #darkModeToggle .icon {
     padding: 8px 14px;
     font-size: 14px;
   }
+}
+
+/* DataTables theming to match wiki style */
+
+/* Table wrapper */
+.dataTable {
+  border: 1px solid #87CEFA;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #F0F8FF;
+}
+
+/* Header row */
+.dataTable thead th {
+  background: #1E90FF;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dataTable thead th:hover {
+  background: #1976d2;
+}
+
+/* Body rows */
+.dataTable tbody td {
+  padding: 8px 10px;
+}
+
+.dataTable tbody tr:nth-child(even) {
+  background: #EAF6FF;
+}
+
+.dataTable tbody tr:hover {
+  background: #d6ecff;
+}
+
+/* Sorting arrows (DataTables default icons override) */
+.dataTable thead th.sorting::after,
+.dataTable thead th.sorting_asc::after,
+.dataTable thead th.sorting_desc::after {
+  color: yellow; /* highlight arrows */
+  font-size: 0.8em;
+  margin-left: 5px;
+}
+
+/* Dark mode overrides */
+body.dark .dataTable {
+  background: #2a2a40;
+  border-color: #1565c0;
+}
+
+body.dark .dataTable thead th {
+  background: #0d47a1;
+  color: #fff;
+}
+
+body.dark .dataTable tbody tr:nth-child(even) {
+  background: #1e1e2f;
+}
+
+body.dark .dataTable tbody tr:hover {
+  background: #28395a;
+}
+/* Fuse.js Search Results */
+#search-results {
+  margin-top: 15px;
+  display: grid;
+  gap: 1rem;
+}
+
+.result-card {
+  background: #F0F8FF;
+  border: 1px solid #87CEFA;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.result-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.result-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  color: #0d47a1;
+}
+
+.result-card img {
+  max-width: 60px;
+  height: auto;
+  float: right;
+  margin-left: 10px;
+}
+
+.result-card p {
+  margin: 4px 0;
+  color: #1A3C57;
+  font-size: 0.95rem;
+}
+
+/* Dark mode */
+body.dark .result-card {
+  background: #2a2a40;
+  border-color: #1565c0;
+  color: #fff;
+}
+
+body.dark .result-card h3 {
+  color: #90caf9;
+}
+
+body.dark .result-card p {
+  color: #ddd;
 }

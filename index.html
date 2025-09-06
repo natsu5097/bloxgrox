@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blox Fruits Fan Wiki</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css" />
 </head>
 <body>
   <!-- Header -->
@@ -47,16 +48,15 @@
       <button id="collapseAll">Collapse All</button>
     </div>
 
-    <div id="search-container">
-      <input 
-        type="text" 
-        id="search-bar" 
-        placeholder="Search items... (Fruits, Swords, Guns, etc.)"
-        aria-label="Search items"
-      />
-      <button id="clear-search" aria-label="Clear search">✖</button>
-    </div>
-  </section>
+    <section id="search-container">
+  <input 
+    type="text" 
+    id="search-box" 
+    placeholder="Search fruits, swords, styles, etc..."
+  />
+  <button id="clear-search" aria-label="Clear search">✖</button>
+  <div id="search-results"></div>
+</section>
 
   <!-- Main Content -->
   <main>
@@ -117,8 +117,12 @@
 
   <!-- Floating UI -->
   <button id="scrollTopBtn" aria-label="Scroll to top">⬆</button>
+
   <div id="loadingSpinner" aria-hidden="true">Loading...</div>
-  
+
+   <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+
 <script src="script.js"></script>
 
 </body>
