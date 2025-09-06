@@ -5,10 +5,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blox Fruits Fan Wiki</title>
-  <link rel="stylesheet" href="bloxgrox.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+    <div id="loadingSpinner">⏳ Loading data...</div>
+
   <!-- Header & Navigation -->
   <header>
     <h1>Blox Fruits Fan Wiki</h1>
@@ -217,266 +219,256 @@
   <!-- Scroll Button -->
   <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
 <script>
-    fetch('data.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("✅ JSON loaded successfully:", data);
-            // ... your rendering code here ...
-        })
-        .catch(error => {
-            console.error("❌ Error loading JSON:", error);
-            const main = document.querySelector("main");
-            if (main) {
-                main.insertAdjacentHTML(
-                    "afterbegin",
-                    `<div style="background:#ffdddd;color:#900;padding:1em;margin:1em 0;border:1px solid red;">
-                        Failed to load <b>data.json</b>: ${error.message}
-                     </div>`
-                );
-            }
-        });
-                function renderGroupedTables(groups, containerId, columns) {
-                    const container = document.getElementById(containerId);
-                    container.innerHTML = '';
+document.addEventListener("DOMContentLoaded", () => {
+  const body = document.body;
+  const darkToggle = document.getElementById("darkModeToggle");
+  const links = document.querySelectorAll("#navbar a");
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  const spinner = document.getElementById("loadingSpinner");
+  const searchBar = document.getElementById("search-bar");
+  const clearBtn = document.getElementById("clear-search");
+  const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-                    Object.keys(groups).forEach(rarity => {
-                        const section = document.createElement('section');
-                        section.classList.add('collapsible-section');
+  // Show spinner while loading
+  spinner.style.display = "block";
 
-                        const header = document.createElement('h3');
-                        header.textContent = rarity;
-                        header.classList.add('collapsible-header');
+  fetch('data.json')
+    .then(response => {
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      spinner.style.display = "none"; // hide spinner once loaded
+      console.log("✅ JSON loaded successfully:", data);
 
-                        const tableWrapper = document.createElement('div');
-                        tableWrapper.classList.add('collapsible-content');
+      // --- Rendering functions ---
+      function renderGroupedTables(groups, containerId, columns) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = '';
 
-                        const table = document.createElement('table');
-                        const thead = document.createElement('thead');
-                        thead.innerHTML = `<tr>${columns.map(c => `<th>${c.header}</th>`).join('')}</tr>`;
-                        table.appendChild(thead);
+        Object.keys(groups).forEach(rarity => {
+          const section = document.createElement('section');
+          section.classList.add('collapsible-section');
 
-                        const tbody = document.createElement('tbody');
-                        groups[rarity].forEach(item => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = columns.map(c =>
-                                c.key === 'image_url'
-                                    ? `<td><img src="${item[c.key] || 'images/placeholder.png'}" alt="${item.name || ''}" style="width:40px;height:40px;"></td>`
-                                    : `<td>${item[c.key] !== undefined ? item[c.key] : ''}</td>`
-                            ).join('');
-                            tbody.appendChild(row);
-                        });
-                        table.appendChild(tbody);
-                        tableWrapper.appendChild(table);
+          const header = document.createElement('h3');
+          header.textContent = rarity;
+          header.classList.add('collapsible-header');
 
-                        section.appendChild(header);
-                        section.appendChild(tableWrapper);
-                        container.appendChild(section);
+          const tableWrapper = document.createElement('div');
+          tableWrapper.classList.add('collapsible-content');
 
-                        header.addEventListener('click', () => {
-                            tableWrapper.classList.toggle('active');
-                        });
-                    });
-                }
+          const table = document.createElement('table');
+          const thead = document.createElement('thead');
+          thead.innerHTML = `<tr>${columns.map(c => `<th>${c.header}</th>`).join('')}</tr>`;
+          table.appendChild(thead);
 
-                const fruitColumns = [
-                    { header: 'Image', key: 'image_url' },
-                    { header: 'Name', key: 'name' },
-                    { header: 'Type', key: 'type' },
-                    { header: 'Price (Money)', key: 'price_money' },
-                    { header: 'Price (Robux)', key: 'price_robux' },
-                    { header: 'Description', key: 'description' }
-                ];
-                renderGroupedTables(groupByRarity(data.fruits), 'fruits-sections', fruitColumns);
+          const tbody = document.createElement('tbody');
+          groups[rarity].forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = columns.map(c =>
+              c.key === 'image_url'
+                ? `<td><img src="${item[c.key] || 'images/placeholder.png'}" alt="${item.name || ''}" style="width:40px;height:40px;"></td>`
+                : `<td>${item[c.key] !== undefined ? item[c.key] : ''}</td>`
+            ).join('');
+            tbody.appendChild(row);
+          });
+          table.appendChild(tbody);
+          tableWrapper.appendChild(table);
 
-                const swordColumns = [
-                    { header: 'Image', key: 'image_url' },
-                    { header: 'Name', key: 'name' },
-                    { header: 'Rarity', key: 'rarity' },
-                    { header: 'Price (Money)', key: 'price_money' },
-                    { header: 'Price (Robux)', key: 'price_robux' },
-                    { header: 'Description', key: 'description' }
-                ];
-                renderGroupedTables(groupByRarity(data.swords), 'swords-sections', swordColumns);
+          section.appendChild(header);
+          section.appendChild(tableWrapper);
+          container.appendChild(section);
 
-                const fightingStylesTableBody = document.querySelector('#fighting-styles-table tbody');
-                data.fightingStyles.forEach(style => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td><img src="${style.image_url || 'images/placeholder.png'}" alt="${style.name || ''}" style="width:40px;height:40px;"></td>
-                        <td>${style.name || ''}</td>
-                        <td>${style.price_money ? style.price_money.toLocaleString() : ''}</td>
-                        <td>${style.description || ''}</td>
-                    `;
-                    fightingStylesTableBody.appendChild(row);
-                });
-
-                const gunColumns = [
-                    { header: 'Image', key: 'image_url' },
-                    { header: 'Name', key: 'name' },
-                    { header: 'Rarity', key: 'rarity' },
-                    { header: 'Price (Money)', key: 'price_money' },
-                    { header: 'Description', key: 'description' }
-                ];
-                renderGroupedTables(groupByRarity(data.guns), 'guns-sections', gunColumns);
-
-                const accessoryColumns = [
-                    { header: 'Image', key: 'image_url' },
-                    { header: 'Name', key: 'name' },
-                    { header: 'Rarity', key: 'rarity' },
-                    { header: 'Price (Money)', key: 'price_money' },
-                    { header: 'Description', key: 'description' }
-                ];
-                renderGroupedTables(groupByRarity(data.accessories), 'accessories-sections', accessoryColumns);
-
-                const raceColumns = [
-                    { header: 'Image', key: 'image_url' },
-                    { header: 'Name', key: 'name' },
-                    { header: 'Description', key: 'description' }
-                ];
-                renderGroupedTables({ "All Races": data.races }, 'races-sections', raceColumns);
-
-                const locationColumns = [
-                    { header: 'Image', key: 'image_url' },
-                    { header: 'Name', key: 'name' },
-                    { header: 'Description', key: 'description' }
-                ];
-                renderGroupedTables({ "Game Worlds": data.locations }, 'locations-sections', locationColumns);
-
-                const updatesTableBody = document.querySelector('#updates-table tbody');
-                data.updates.forEach(update => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${update.version}</td>
-                        <td>${update.date}</td>
-                        <td>${update.details}</td>
-                    `;
-                    updatesTableBody.appendChild(row);
-                });
-
-                const searchBar = document.getElementById('search-bar');
-                searchBar.addEventListener('input', () => {
-                    const query = searchBar.value.toLowerCase();
-
-                    function filterTable(containerId) {
-                        const container = document.getElementById(containerId);
-                        if (!container) return;
-                        const rows = container.querySelectorAll('tbody tr');
-                        rows.forEach(row => {
-                            const text = row.innerText.toLowerCase();
-                            row.style.display = text.includes(query) ? '' : 'none';
-                        });
-                    }
-
-                    filterTable('fruits-sections');
-                    filterTable('swords-sections');
-                    filterTable('guns-sections');
-                    filterTable('accessories-sections');
-                    filterTable('races-sections');
-                    filterTable('locations-sections');
-
-                    const fsRows = document.querySelectorAll('#fighting-styles-table tbody tr');
-                    fsRows.forEach(row => {
-                        const text = row.innerText.toLowerCase();
-                        row.style.display = text.includes(query) ? '' : 'none';
-                    });
-
-                    const updateRows = document.querySelectorAll('#updates-table tbody tr');
-                    updateRows.forEach(row => {
-                        const text = row.innerText.toLowerCase();
-                        row.style.display = text.includes(query) ? '' : 'none';
-                    });
-                });
-            // Remove this extra closing parenthesis and curly brace
-            // .catch(error => console.error('Error loading JSON:', error));
-
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
-
-        window.addEventListener('scroll', () => {
-            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-                scrollTopBtn.style.display = "block";
-            } else {
-                scrollTopBtn.style.display = "none";
-            }
-        });
-
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        const clearBtn = document.getElementById('clear-search');
-        searchBar.addEventListener('input', () => {
-            clearBtn.style.display = searchBar.value ? 'inline-block' : 'none';
-        });
-
-        clearBtn.addEventListener('click', () => {
-            searchBar.value = '';
-            clearBtn.style.display = 'none';
-            searchBar.dispatchEvent(new Event('input'));
-        });
-        document.addEventListener("DOMContentLoaded", () => {
-      const body = document.body;
-      const darkToggle = document.getElementById("darkModeToggle");
-      const links = document.querySelectorAll("#navbar a");
-      const filterBtns = document.querySelectorAll(".filter-btn");
-      const spinner = document.getElementById("loadingSpinner");
-
-      // Dark mode toggle
-      darkToggle.addEventListener("click", () => {
-        body.classList.toggle("dark");
-        darkToggle.textContent = body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
-      });
-
-      // Active nav link on scroll
-      window.addEventListener("scroll", () => {
-        let current = "";
-        document.querySelectorAll("section").forEach(sec => {
-          const secTop = sec.offsetTop - 80;
-          if (scrollY >= secTop) current = sec.id;
-        });
-        links.forEach(a => {
-          a.classList.remove("active");
-          if (a.getAttribute("href") === "#" + current) a.classList.add("active");
-        });
-      });
-
-      // Filters
-      filterBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const target = btn.dataset.filter;
-          document.querySelectorAll("section").forEach(sec => {
-            sec.style.display = sec.id === target ? "block" : "none";
+          header.addEventListener('click', () => {
+            tableWrapper.classList.toggle('active');
           });
         });
+      }
+
+      // Fruits
+      renderGroupedTables(groupByRarity(data.fruits), 'fruits-sections', [
+        { header: 'Image', key: 'image_url' },
+        { header: 'Name', key: 'name' },
+        { header: 'Type', key: 'type' },
+        { header: 'Price (Money)', key: 'price_money' },
+        { header: 'Price (Robux)', key: 'price_robux' },
+        { header: 'Description', key: 'description' }
+      ]);
+
+      // Swords
+      renderGroupedTables(groupByRarity(data.swords), 'swords-sections', [
+        { header: 'Image', key: 'image_url' },
+        { header: 'Name', key: 'name' },
+        { header: 'Rarity', key: 'rarity' },
+        { header: 'Price (Money)', key: 'price_money' },
+        { header: 'Price (Robux)', key: 'price_robux' },
+        { header: 'Description', key: 'description' }
+      ]);
+
+      // Fighting styles
+      const fightingStylesTableBody = document.querySelector('#fighting-styles-table tbody');
+      data.fightingStyles.forEach(style => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><img src="${style.image_url || 'images/placeholder.png'}" alt="${style.name || ''}" style="width:40px;height:40px;"></td>
+          <td>${style.name || ''}</td>
+          <td>${style.price_money ? style.price_money.toLocaleString() : ''}</td>
+          <td>${style.description || ''}</td>
+        `;
+        fightingStylesTableBody.appendChild(row);
       });
 
-      // Expand/Collapse All
-      document.getElementById("expandAll").addEventListener("click", () => {
-        document.querySelectorAll(".collapsible-content").forEach(c => c.classList.add("active"));
-      });
-      document.getElementById("collapseAll").addEventListener("click", () => {
-        document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active"));
+      // Guns
+      renderGroupedTables(groupByRarity(data.guns), 'guns-sections', [
+        { header: 'Image', key: 'image_url' },
+        { header: 'Name', key: 'name' },
+        { header: 'Rarity', key: 'rarity' },
+        { header: 'Price (Money)', key: 'price_money' },
+        { header: 'Description', key: 'description' }
+      ]);
+
+      // Accessories
+      renderGroupedTables(groupByRarity(data.accessories), 'accessories-sections', [
+        { header: 'Image', key: 'image_url' },
+        { header: 'Name', key: 'name' },
+        { header: 'Rarity', key: 'rarity' },
+        { header: 'Price (Money)', key: 'price_money' },
+        { header: 'Description', key: 'description' }
+      ]);
+
+      // Races
+      renderGroupedTables({ "All Races": data.races }, 'races-sections', [
+        { header: 'Image', key: 'image_url' },
+        { header: 'Name', key: 'name' },
+        { header: 'Description', key: 'description' }
+      ]);
+
+      // Locations
+      renderGroupedTables({ "Game Worlds": data.locations }, 'locations-sections', [
+        { header: 'Image', key: 'image_url' },
+        { header: 'Name', key: 'name' },
+        { header: 'Description', key: 'description' }
+      ]);
+
+      // Updates
+      const updatesTableBody = document.querySelector('#updates-table tbody');
+      data.updates.forEach(update => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${update.version}</td>
+          <td>${update.date}</td>
+          <td>${update.details}</td>
+        `;
+        updatesTableBody.appendChild(row);
       });
 
-      // Search highlight
-      const searchBar = document.getElementById("search-bar");
-      searchBar.addEventListener("input", () => {
-        const text = searchBar.value.toLowerCase();
-        document.querySelectorAll("section").forEach(sec => {
-          sec.querySelectorAll("td").forEach(td => {
-            td.innerHTML = td.textContent.replace(new RegExp(text, "gi"), match => `<span class="highlight">${match}</span>`);
+      // --- Search functionality ---
+      searchBar.addEventListener('input', () => {
+        const query = searchBar.value.toLowerCase();
+        function filterTable(containerId) {
+          const container = document.getElementById(containerId);
+          if (!container) return;
+          const rows = container.querySelectorAll('tbody tr');
+          rows.forEach(row => {
+            const text = row.innerText.toLowerCase();
+            row.style.display = text.includes(query) ? '' : 'none';
           });
-        });
-      });
+        }
 
-      // Fake loading (for demo, remove if data loads dynamically)
-      spinner.style.display = "block";
-      setTimeout(() => spinner.style.display = "none", 1500);
+        filterTable('fruits-sections');
+        filterTable('swords-sections');
+        filterTable('guns-sections');
+        filterTable('accessories-sections');
+        filterTable('races-sections');
+        filterTable('locations-sections');
+
+        const fsRows = document.querySelectorAll('#fighting-styles-table tbody tr');
+        fsRows.forEach(row => {
+          const text = row.innerText.toLowerCase();
+          row.style.display = text.includes(query) ? '' : 'none';
+        });
+
+        const updateRows = document.querySelectorAll('#updates-table tbody tr');
+        updateRows.forEach(row => {
+          const text = row.innerText.toLowerCase();
+          row.style.display = text.includes(query) ? '' : 'none';
+        });
+
+        // Toggle clear button
+        clearBtn.style.display = searchBar.value ? 'inline-block' : 'none';
+      });
+    })
+    .catch(error => {
+      spinner.style.display = "none";
+      console.error("❌ Error loading JSON:", error);
+      document.querySelector("main").insertAdjacentHTML(
+        "afterbegin",
+        `<div style="background:#ffdddd;color:#900;padding:1em;margin:1em 0;border:1px solid red;">
+          Failed to load <b>data.json</b>: ${error.message}
+         </div>`
+      );
     });
-    </script>
+
+  // --- UI Interactions outside fetch ---
+
+  // Dark mode toggle
+  darkToggle.addEventListener("click", () => {
+    body.classList.toggle("dark");
+    darkToggle.textContent = body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
+  });
+
+  // Active nav link on scroll
+  window.addEventListener("scroll", () => {
+    let current = "";
+    document.querySelectorAll("section").forEach(sec => {
+      const secTop = sec.offsetTop - 80;
+      if (scrollY >= secTop) current = sec.id;
+    });
+    links.forEach(a => {
+      a.classList.remove("active");
+      if (a.getAttribute("href") === "#" + current) a.classList.add("active");
+    });
+  });
+
+  // Filters
+  filterBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = btn.dataset.filter;
+      document.querySelectorAll("section").forEach(sec => {
+        sec.style.display = sec.id === target ? "block" : "none";
+      });
+    });
+  });
+
+  // Expand/Collapse All
+  document.getElementById("expandAll").addEventListener("click", () => {
+    document.querySelectorAll(".collapsible-content").forEach(c => c.classList.add("active"));
+  });
+  document.getElementById("collapseAll").addEventListener("click", () => {
+    document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active"));
+  });
+
+  // Scroll to top button
+  window.addEventListener('scroll', () => {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      scrollTopBtn.style.display = "block";
+    } else {
+      scrollTopBtn.style.display = "none";
+    }
+  });
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Clear search button
+  clearBtn.addEventListener('click', () => {
+    searchBar.value = '';
+    clearBtn.style.display = 'none';
+    searchBar.dispatchEvent(new Event('input'));
+  });
+
+});
+</script>
 </body>
 </html>
