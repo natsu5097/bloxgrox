@@ -31,8 +31,7 @@
             <input type="text" id="search-bar" placeholder="Search items... (Fruits, Swords, Guns, etc.)">
             <button id="clear-search">×</button>
         </div>
-
-        <section id="home">
+        
 <section id="home">
     <h2>Welcome to Blox Fruits Fan Wiki</h2>
     <p>Blox Fruits are mysterious fruits that can grant their user supernatural abilities when eaten. They are
@@ -327,29 +326,12 @@
             clearBtn.style.display = searchBar.value ? 'inline-block' : 'none';
         });
 
-<<<<<<< HEAD
         clearBtn.addEventListener('click', () => {
             searchBar.value = '';
             clearBtn.style.display = 'none';
             searchBar.dispatchEvent(new Event('input')); // reset all tables
         });
-=======
-    // Clear search button functionality
-    const clearBtn = document.getElementById('clear-search');
-
-    searchBar.addEventListener('input', () => {
-        clearBtn.style.display = searchBar.value ? 'inline-block' : 'none';
-    });
-
-    clearBtn.addEventListener('click', () => {
-        searchBar.value = '';
-        clearBtn.style.display = 'none';
-        searchBar.dispatchEvent(new Event('input')); // reset all tables
-    });
-</script>
+    </script>
 
 </body>
-<button id="scrollTopBtn">↑</button>
-
 </html>
->>>>>>> a1e01ed6cbc16ebce18c84ae17075aadb0fbfcc8
