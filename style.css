@@ -282,3 +282,28 @@ body.dark a {
   display: none;
   z-index: 2000;
 }
+#darkModeToggle {
+  background: #2196f3;
+  border: none;
+  color: white;
+  font-size: 16px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#darkModeToggle:hover {
+  background: #1976d2;
+  transform: scale(1.05);
+}
+
+/* Optional: small emoji animation */
+#darkModeToggle span {
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+
+#darkModeToggle.switching span {
+  transform: rotate(180deg);
+}

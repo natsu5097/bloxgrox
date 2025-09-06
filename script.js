@@ -231,10 +231,17 @@ document.addEventListener("DOMContentLoaded", () => {
   if (col) col.addEventListener("click", () => document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active")));
 
   const darkToggle = document.getElementById("darkModeToggle");
-  if (darkToggle) {
-    darkToggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-      darkToggle.textContent = document.body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
-    });
-  }
-});
+if (darkToggle) {
+  darkToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    // Animate icon
+    darkToggle.classList.add("switching");
+    setTimeout(() => darkToggle.classList.remove("switching"), 400);
+
+    // Change label
+    darkToggle.innerHTML = document.body.classList.contains("dark")
+      ? "<span>☀️ Light Mode</span>"
+      : "<span>🌙 Dark Mode</span>";
+  });
+}
