@@ -1,0 +1,159 @@
+/* styles.css */
+body {
+    background-color: #FFF5E6; /* Papaya Whip - light warm */
+    color: #4E342E; /* Dark brown for text */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #FF8C00; /* Dark Orange */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+h1, h2 {
+    color: #FF4500; /* Orange Red */
+}
+
+section {
+    margin: 20px;
+    padding: 20px;
+    background-color: #FFE4B5; /* Moccasin - warmer light */
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #FFD700; /* Golden */
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #FFA500; /* Orange */
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #FFFACD; /* Lemon Chiffon for alternating rows */
+}
+
+footer {
+    background-color: #FF8C00;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+.collapsible-header {
+    background-color: #FFB347; /* Lighter orange */
+    color: #4E342E;
+    padding: 10px;
+    margin: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+
+.collapsible-header:hover {
+    background-color: #FFA500; /* Orange */
+    color: white;
+}
+
+.collapsible-content {
+    display: none;
+    margin-top: 10px;
+}
+
+.collapsible-content.active {
+    display: block;
+}
+/* Search bar + clear button */
+#search-container {
+    position: sticky;   
+    top: 0;             
+    z-index: 1000;      
+    background: #FFF5E6;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 2px solid #FFA500;
+}
+
+#search-bar {
+    width: 60%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #FFA500;
+    border-radius: 8px;
+}
+
+#clear-search {
+    position: absolute;
+    right: 20%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #FF8C00;
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: none; /* hidden until text is typed */
+}
+
+#clear-search:hover {
+    background: #FF4500;
+}
+
+#scrollTopBtn {
+    display: none; /* hidden until user scrolls */
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 1001;
+    font-size: 20px;
+    padding: 12px 16px;
+    border: none;
+    background: #FF8C00;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#scrollTopBtn:hover {
+    background: #FF4500;
+    transform: scale(1.1);
+}

@@ -1,0 +1,809 @@
+{
+    "fruits": [
+        {
+            "name": "Rocket",
+            "rarity": "Common",
+            "type": "Natural",
+            "price_money": 5000,
+            "price_robux": 50,
+            "description": "Grants rocket propulsion for movement and explosive attacks. Abilities: Missile Fist, Air Strike, Rocket Crash, Blast Off.",
+            "image_url": "images/fruits/rocket.png"
+        },
+        {
+            "name": "Spin",
+            "rarity": "Common",
+            "type": "Natural",
+            "price_money": 7500,
+            "price_robux": 75,
+            "description": "Allows spinning attacks and flight. Abilities: Razor Wind, Helicopter Flight, Tornado Assault, Spinning Bomber.",
+            "image_url": "images/fruits/spin.png"
+        },
+        {
+            "name": "Chop",
+            "rarity": "Common",
+            "type": "Natural",
+            "price_money": 30000,
+            "price_robux": 100,
+            "description": "Provides immunity to sword damage and chopping abilities. Abilities: Tackle, Dance, Party, Helicopter.",
+            "image_url": "images/fruits/chop.png"
+        },
+        {
+            "name": "Spring",
+            "rarity": "Common",
+            "type": "Natural",
+            "price_money": 60000,
+            "price_robux": 180,
+            "description": "Enables high jumps and spring-based moves. Abilities: Knock, Spring Snipe, Spring Cannon, Spring Leap, Spring Emperor.",
+            "image_url": "images/fruits/spring.png"
+        },
+        {
+            "name": "Bomb",
+            "rarity": "Common",
+            "type": "Natural",
+            "price_money": 80000,
+            "price_robux": 220,
+            "description": "Allows creation of explosives. Abilities: Targeted Bomb, Explosive Jump, Bomb Grab, Land Mines, Self Destruct.",
+            "image_url": "images/fruits/bomb.png"
+        },
+        {
+            "name": "Smoke",
+            "rarity": "Common",
+            "type": "Elemental",
+            "price_money": 100000,
+            "price_robux": 250,
+            "description": "Grants smoke manipulation for flight and logia immunity. Abilities: Smoke Slam, Smoke Bomber, Smoke Blast, Smoke Liberation.",
+            "image_url": "images/fruits/smoke.png"
+        },
+        {
+            "name": "Spike",
+            "rarity": "Common",
+            "type": "Natural",
+            "price_money": 180000,
+            "price_robux": 380,
+            "description": "Creates spikes for attacks. Abilities: Spike Summon, Whirlwind, Spiky Ball, Spike Barrage.",
+            "image_url": "images/fruits/spike.png"
+        },
+        {
+            "name": "Flame",
+            "rarity": "Uncommon",
+            "type": "Elemental",
+            "price_money": 250000,
+            "price_robux": 550,
+            "description": "Fire-based projectiles and flight; awakenable for 14,500 Fragments. Awakened abilities include Blue Fire Bullets, Rocket Flight, etc.",
+            "image_url": "images/fruits/flame.png"
+        },
+        {
+            "name": "Falcon",
+            "rarity": "Uncommon",
+            "type": "Beast",
+            "price_money": 300000,
+            "price_robux": 650,
+            "description": "Bird transformation for flight. Abilities: Plumage, Wind Burst, Flight, Bone Crusher, Soaring Talons.",
+            "image_url": "images/fruits/falcon.png"
+        },
+        {
+            "name": "Ice",
+            "rarity": "Uncommon",
+            "type": "Elemental",
+            "price_money": 350000,
+            "price_robux": 750,
+            "description": "Ice attacks and freezing; walk on water; awakenable for 14,500 Fragments.",
+            "image_url": "images/fruits/ice.png"
+        },
+        {
+            "name": "Sand",
+            "rarity": "Uncommon",
+            "type": "Elemental",
+            "price_money": 420000,
+            "price_robux": 850,
+            "description": "Sand manipulation; awakenable for 14,500 Fragments; double damage in water.",
+            "image_url": "images/fruits/sand.png"
+        },
+        {
+            "name": "Dark",
+            "rarity": "Uncommon",
+            "type": "Elemental",
+            "price_money": 500000,
+            "price_robux": 950,
+            "description": "Dark energy attacks; awakenable for 14,500 Fragments.",
+            "image_url": "images/fruits/dark.png"
+        },
+        {
+            "name": "Diamond",
+            "rarity": "Uncommon",
+            "type": "Natural",
+            "price_money": 600000,
+            "price_robux": 1000,
+            "description": "Diamond hardening for defense and attacks.",
+            "image_url": "images/fruits/diamond.png"
+        },
+        {
+            "name": "Light",
+            "rarity": "Rare",
+            "type": "Elemental",
+            "price_money": 650000,
+            "price_robux": 1100,
+            "description": "Light-based speed and attacks; awakenable for 14,500 Fragments.",
+            "image_url": "images/fruits/light.png"
+        },
+        {
+            "name": "Rubber",
+            "rarity": "Rare",
+            "type": "Natural",
+            "price_money": 750000,
+            "price_robux": 1200,
+            "description": "Rubber body granting immunity to guns and electric attacks.",
+            "image_url": "images/fruits/rubber.png"
+        },
+        {
+            "name": "Barrier",
+            "rarity": "Rare",
+            "type": "Natural",
+            "price_money": 800000,
+            "price_robux": 1250,
+            "description": "Creates barriers for protection.",
+            "image_url": "images/fruits/barrier.png"
+        },
+        {
+            "name": "Ghost",
+            "rarity": "Rare",
+            "type": "Natural",
+            "price_money": 940000,
+            "price_robux": 1275,
+            "description": "Revival and ghost form abilities.",
+            "image_url": "images/fruits/ghost.png"
+        },
+        {
+            "name": "Magma",
+            "rarity": "Rare",
+            "type": "Elemental",
+            "price_money": 960000,
+            "price_robux": 1300,
+            "description": "Magma attacks with high damage; walk on water; awakenable.",
+            "image_url": "images/fruits/magma.png"
+        },
+        {
+            "name": "Quake",
+            "rarity": "Legendary",
+            "type": "Natural",
+            "price_money": 1000000,
+            "price_robux": 1500,
+            "description": "Earthquake waves; awakenable.",
+            "image_url": "images/fruits/quake.png"
+        },
+        {
+            "name": "Buddha",
+            "rarity": "Legendary",
+            "type": "Beast",
+            "price_money": 1200000,
+            "price_robux": 1650,
+            "description": "Giant form with damage reduction; awakenable.",
+            "image_url": "images/fruits/buddha.png"
+        },
+        {
+            "name": "Love",
+            "rarity": "Legendary",
+            "type": "Natural",
+            "price_money": 1300000,
+            "price_robux": 1700,
+            "description": "Love-themed attacks; awakenable.",
+            "image_url": "images/fruits/love.png"
+        },
+        {
+            "name": "Spider",
+            "rarity": "Legendary",
+            "type": "Natural",
+            "price_money": 1500000,
+            "price_robux": 1800,
+            "description": "String manipulation; awakenable.",
+            "image_url": "images/fruits/spider.png"
+        },
+        {
+            "name": "Sound",
+            "rarity": "Legendary",
+            "type": "Natural",
+            "price_money": 1700000,
+            "price_robux": 1900,
+            "description": "Sound waves for attacks; awakenable.",
+            "image_url": "images/fruits/sound.png"
+        },
+        {
+            "name": "Phoenix",
+            "rarity": "Legendary",
+            "type": "Beast",
+            "price_money": 1800000,
+            "price_robux": 2000,
+            "description": "Phoenix transformation with regeneration; awakenable.",
+            "image_url": "images/fruits/phoenix.png"
+        },
+        {
+            "name": "Portal",
+            "rarity": "Legendary",
+            "type": "Natural",
+            "price_money": 1900000,
+            "price_robux": 2000,
+            "description": "Portal creation for teleportation; awakenable.",
+            "image_url": "images/fruits/portal.png"
+        },
+        {
+            "name": "Rumble",
+            "rarity": "Legendary",
+            "type": "Elemental",
+            "price_money": 2100000,
+            "price_robux": 2100,
+            "description": "Lightning strikes; awakenable.",
+            "image_url": "images/fruits/rumble.png"
+        },
+        {
+            "name": "Paw",
+            "rarity": "Legendary",
+            "type": "Natural",
+            "price_money": 2300000,
+            "price_robux": 2200,
+            "description": "Paw pads to repel attacks; awakenable.",
+            "image_url": "images/fruits/paw.png"
+        },
+        {
+            "name": "Blizzard",
+            "rarity": "Legendary",
+            "type": "Elemental",
+            "price_money": 2400000,
+            "price_robux": 2250,
+            "description": "Snow storms; awakenable.",
+            "image_url": "images/fruits/blizzard.png"
+        },
+        {
+            "name": "Gravity",
+            "rarity": "Legendary",
+            "type": "Natural",
+            "price_money": 2500000,
+            "price_robux": 2300,
+            "description": "Gravity control for meteors and lifts.",
+            "image_url": "images/fruits/gravity.png"
+        },
+        {
+            "name": "Dough",
+            "rarity": "Mythical",
+            "type": "Natural",
+            "price_money": 2700000,
+            "price_robux": 2400,
+            "description": "Dough manipulation; awakenable.",
+            "image_url": "images/fruits/dough.png"
+        },
+        {
+            "name": "Shadow",
+            "rarity": "Mythical",
+            "type": "Natural",
+            "price_money": 2900000,
+            "price_robux": 2425,
+            "description": "Shadow control and umbrakinesis.",
+            "image_url": "images/fruits/shadow.png"
+        },
+        {
+            "name": "Venom",
+            "rarity": "Mythical",
+            "type": "Natural",
+            "price_money": 3000000,
+            "price_robux": 2450,
+            "description": "Poison clouds and attacks.",
+            "image_url": "images/fruits/venom.png"
+        },
+        {
+            "name": "Control",
+            "rarity": "Mythical",
+            "type": "Natural",
+            "price_money": 3200000,
+            "price_robux": 2500,
+            "description": "Levitate and crush objects.",
+            "image_url": "images/fruits/control.png"
+        },
+        {
+            "name": "Spirit",
+            "rarity": "Mythical",
+            "type": "Natural",
+            "price_money": 3400000,
+            "price_robux": 2550,
+            "description": "Summon spirits for buffs and attacks.",
+            "image_url": "images/fruits/spirit.png"
+        },
+        {
+            "name": "Dragon",
+            "rarity": "Mythical",
+            "type": "Beast",
+            "price_money": 3500000,
+            "price_robux": 2600,
+            "description": "Dragon transformation with fire breath; awakenable.",
+            "image_url": "images/fruits/dragon.png"
+        },
+        {
+            "name": "Leopard",
+            "rarity": "Mythical",
+            "type": "Beast",
+            "price_money": 5000000,
+            "price_robux": 3000,
+            "description": "Leopard form with speed and power.",
+            "image_url": "images/fruits/leopard.png"
+        },
+        {
+            "name": "Kitsune",
+            "rarity": "Mythical",
+            "type": "Beast",
+            "price_money": 8000000,
+            "price_robux": 4000,
+            "description": "Fox transformation with illusions and blue fire; awakenable.",
+            "image_url": "images/fruits/kitsune.png"
+        },
+        {
+            "name": "T-Rex",
+            "rarity": "Mythical",
+            "type": "Beast",
+            "price_money": 2700000,
+            "price_robux": 2350,
+            "description": "T-Rex transformation with massive strength.",
+            "image_url": "images/fruits/t-rex.png"
+        },
+        {
+            "name": "Mammoth",
+            "rarity": "Mythical",
+            "type": "Beast",
+            "price_money": 2700000,
+            "price_robux": 2350,
+            "description": "Mammoth transformation with charge attacks.",
+            "image_url": "images/fruits/mammoth.png"
+        },
+        {
+            "name": "Celestial",
+            "rarity": "Mythical",
+            "type": "Natural",
+            "price_money": 8000000,
+            "price_robux": 4500,
+            "description": "Celestial powers, introduced in recent updates.",
+            "image_url": "images/fruits/celestial.png"
+        },
+        {
+            "name": "Creation",
+            "rarity": "Mythical",
+            "type": "Natural",
+            "price_money": 9000000,
+            "price_robux": 5000,
+            "description": "Creation and manipulation abilities.",
+            "image_url": "images/fruits/creation.png"
+        },
+        {
+            "name": "Eagle",
+            "rarity": "Mythical",
+            "type": "Beast",
+            "price_money": 5500000,
+            "price_robux": 975,
+            "description": "Eagle transformation with enhanced mobility.",
+            "image_url": "images/fruits/eagle.png"
+        }
+    ],
+    "fightingStyles": [
+        {
+            "name": "Combat",
+            "price_money": 0,
+            "description": "Basic melee fighting style.",
+            "image_url": "images/fighting_styles/combat.png"
+        },
+        {
+            "name": "Dark Step",
+            "price_money": 150000,
+            "description": "Fast kicks with dark energy.",
+            "image_url": "images/fighting_styles/dark_step.png"
+        },
+        {
+            "name": "Electric",
+            "price_money": 500000,
+            "description": "Electric-enhanced punches.",
+            "image_url": "images/fighting_styles/electric.png"
+        },
+        {
+            "name": "Water Kung Fu",
+            "price_money": 750000,
+            "description": "Water-based fluid movements.",
+            "image_url": "images/fighting_styles/water_kung_fu.png"
+        },
+        {
+            "name": "Dragon Breath",
+            "price_money": 1500000,
+            "description": "Fire breath and dragon-inspired moves.",
+            "image_url": "images/fighting_styles/dragon_breath.png"
+        },
+        {
+            "name": "Superhuman",
+            "price_money": 3000000,
+            "description": "Combination of basic styles for super speed.",
+            "image_url": "images/fighting_styles/superhuman.png"
+        },
+        {
+            "name": "Death Step",
+            "price_money": 2500000,
+            "description": "Advanced Dark Step with death themes.",
+            "image_url": "images/fighting_styles/death_step.png"
+        },
+        {
+            "name": "Sharkman Karate",
+            "price_money": 2500000,
+            "description": "Advanced Water Kung Fu with shark power.",
+            "image_url": "images/fighting_styles/sharkman_karate.png"
+        },
+        {
+            "name": "Electric Claw",
+            "price_money": 3000000,
+            "description": "Advanced Electric with claw attacks.",
+            "image_url": "images/fighting_styles/electric_claw.png"
+        },
+        {
+            "name": "Dragon Talon",
+            "price_money": 3000000,
+            "description": "Advanced Dragon Breath with talon strikes.",
+            "image_url": "images/fighting_styles/dragon_talon.png"
+        },
+        {
+            "name": "Godhuman",
+            "price_money": 5000000,
+            "description": "Ultimate fighting style combining all.",
+            "image_url": "images/fighting_styles/godhuman.png"
+        },
+        {
+            "name": "Sanguine Art",
+            "price_money": 5000000,
+            "description": "Blood-based attacks with lifesteal.",
+            "image_url": "images/fighting_styles/sanguine_art.png"
+        }
+    ],
+    "swords": [
+        {
+            "name": "Katana",
+            "rarity": "Common",
+            "price_money": 1000,
+            "description": "Basic steel katana for beginners. Abilities: Quiet Rush, Air Slash.",
+            "image_url": "images/swords/katana.png"
+        },
+        {
+            "name": "Cutlass",
+            "rarity": "Common",
+            "price_money": 1000,
+            "description": "Short, curved sword for sailors. Abilities: Quiet Rush, Air Slash.",
+            "image_url": "images/swords/cutlass.png"
+        },
+        {
+            "name": "Dual Katana",
+            "rarity": "Common",
+            "price_money": 12000,
+            "description": "Dual-wield katanas for fast slashes. Abilities: Cyclone Slash, Double Air Slash.",
+            "image_url": "images/swords/dual_katana.png"
+        },
+        {
+            "name": "Iron Mace",
+            "rarity": "Common",
+            "price_money": 25000,
+            "description": "Heavy mace for crushing attacks. Abilities: Crush, Ground Slam.",
+            "image_url": "images/swords/iron_mace.png"
+        },
+        {
+            "name": "Shark Saw",
+            "rarity": "Uncommon",
+            "price_money": 30000,
+            "description": "Serrated blade from shark teeth. Abilities: Shark Bite, Frenzy Slash.",
+            "image_url": "images/swords/shark_saw.png"
+        },
+        {
+            "name": "Triple Katana",
+            "rarity": "Common",
+            "price_money": 60000,
+            "description": "Three katanas for versatile attacks. Abilities: Triple Slash, Spinning Blades.",
+            "image_url": "images/swords/triple_katana.png"
+        },
+        {
+            "name": "Dual-Headed Blade",
+            "rarity": "Common",
+            "price_money": 40000,
+            "description": "Double-ended blade for unique combos. Abilities: Double Slash, Spinning Strike.",
+            "image_url": "images/swords/dual-headed_blade.png"
+        },
+        {
+            "name": "Pipe",
+            "rarity": "Common",
+            "price_money": 100000,
+            "description": "Metal pipe for blunt attacks. Abilities: Pipe Smash, Heavy Swing.",
+            "image_url": "images/swords/pipe.png"
+        },
+        {
+            "name": "Soul Cane",
+            "rarity": "Rare",
+            "price_money": 750000,
+            "description": "Mystic cane harnessing souls. Abilities: Soul Beam, Soul Slash.",
+            "image_url": "images/swords/soul_cane.png"
+        },
+        {
+            "name": "Trident",
+            "rarity": "Common",
+            "price_money": 20000,
+            "description": "Long spear for piercing attacks. Abilities: Pierce, Trident Throw.",
+            "image_url": "images/swords/trident.png"
+        },
+        {
+            "name": "Warden Sword",
+            "rarity": "Common",
+            "price_money": 25000,
+            "description": "Balanced sword for PvE. Abilities: Warden Slash, Guard Break.",
+            "image_url": "images/swords/warden_sword.png"
+        },
+        {
+            "name": "Bisento",
+            "rarity": "Rare",
+            "price_money": 1000000,
+            "description": "Large pole weapon for sweeping attacks. Abilities: Quake Smash, Tornado Slash.",
+            "image_url": "images/swords/bisento.png"
+        },
+        {
+            "name": "Pole (1st Form)",
+            "rarity": "Rare",
+            "price_money": 5000,
+            "description": "Staff weapon with electric charge. Abilities: Thunder Strike, Pole Vault.",
+            "image_url": "images/swords/pole_1st_form.png"
+        },
+        {
+            "name": "Saber",
+            "rarity": "Rare",
+            "price_money": 0,
+            "description": "Dropped by Saber Expert; upgradable. Abilities: Flying Slash, Triple Slash.",
+            "image_url": "images/swords/saber.png"
+        },
+        {
+            "name": "Dragon Trident",
+            "rarity": "Rare",
+            "price_money": 750000,
+            "description": "Fire-based trident with range. Abilities: Dragon Pierce, Flame Burst.",
+            "image_url": "images/swords/dragon_trident.png"
+        },
+        {
+            "name": "Gravity Blade",
+            "rarity": "Rare",
+            "price_money": 0,
+            "description": "Dropped by Fajita; gravity effects. Abilities: Gravity Push, Meteor Strike.",
+            "image_url": "images/swords/gravity_blade.png"
+        },
+        {
+            "name": "Flail",
+            "rarity": "Rare",
+            "price_money": 0,
+            "description": "Dropped by bosses; chain-based. Abilities: Chain Whip, Spiked Slam.",
+            "image_url": "images/swords/flail.png"
+        },
+        {
+            "name": "Longsword",
+            "rarity": "Rare",
+            "price_money": 0,
+            "description": "Dropped by bosses; long reach. Abilities: Long Slash, Piercing Thrust.",
+            "image_url": "images/swords/longsword.png"
+        },
+        {
+            "name": "Koko",
+            "rarity": "Legendary",
+            "price_money": 2000000,
+            "description": "Buffed by Control fruit; high AoE. Abilities: Electric Slash, Thunderous Strike.",
+            "image_url": "images/swords/koko.png"
+        },
+        {
+            "name": "Midnight Blade",
+            "rarity": "Legendary",
+            "price_money": 0,
+            "description": "Dropped by El Admin; night-themed. Abilities: Night Slash, Shadow Strike.",
+            "image_url": "images/swords/midnight_blade.png"
+        },
+        {
+            "name": "Rengoku",
+            "rarity": "Legendary",
+            "price_money": 2000000,
+            "description": "Fiery blade with blazing strikes. Abilities: Burning Slash, Flame Burst.",
+            "image_url": "images/swords/rengoku.png"
+        },
+        {
+            "name": "Saishi",
+            "rarity": "Legendary",
+            "price_money": 2000000,
+            "description": "Legendary sword from Dealer; gold-infused. Abilities: Swords Dance, True Air Slash.",
+            "image_url": "images/swords/saishi.png"
+        },
+        {
+            "name": "Shizu",
+            "rarity": "Legendary",
+            "price_money": 2000000,
+            "description": "Legendary sword from Dealer; agile strikes. Abilities: Wind Slash, Cyclone Strike.",
+            "image_url": "images/swords/shizu.png"
+        },
+        {
+            "name": "Oroshi",
+            "rarity": "Legendary",
+            "price_money": 2000000,
+            "description": "Legendary sword from Dealer; precise. Abilities: Swift Slash, Storm Blade.",
+            "image_url": "images/swords/oroshi.png"
+        },
+        {
+            "name": "Tushita",
+            "rarity": "Legendary",
+            "price_money": 0,
+            "description": "Dropped by Longma; celestial power. Abilities: Heavenly Slash, Starfall.",
+            "image_url": "images/swords/tushita.png"
+        },
+        {
+            "name": "Yama",
+            "rarity": "Legendary",
+            "price_money": 0,
+            "description": "Dropped by bosses; shockwave attacks. Abilities: Hell Slash, Demon Cut.",
+            "image_url": "images/swords/yama.png"
+        },
+        {
+            "name": "True Triple Katana",
+            "rarity": "Mythical",
+            "price_money": 8000000,
+            "description": "Combines Saishi, Shizu, Oroshi; high damage. Abilities: Wolf Fang Rush, Dragon Hurricane.",
+            "image_url": "images/swords/true_triple_katana.png"
+        },
+        {
+            "name": "Cursed Dual Katana",
+            "rarity": "Mythical",
+            "price_money": 0,
+            "description": "Obtained via puzzle; high damage. Abilities: Revolving Ravager, Slayer of Goliath.",
+            "image_url": "images/swords/cursed_dual_katana.png"
+        },
+        {
+            "name": "Dark Blade",
+            "rarity": "Mythical",
+            "price_money": 1200,
+            "price_robux": 1200,
+            "description": "Purchased or gifted; dark slashes. Abilities: One Thousand Slices, Dark Air Slash.",
+            "image_url": "images/swords/dark_blade.png"
+        },
+        {
+            "name": "Hallow Scythe",
+            "rarity": "Mythical",
+            "price_money": 0,
+            "description": "Dropped by Soul Reaper; Halloween-themed. Abilities: Grim Reaper, Soul Harvest.",
+            "image_url": "images/swords/hallow_scythe.png"
+        },
+        {
+            "name": "Fox Lamp",
+            "rarity": "Mythical",
+            "price_money": 0,
+            "description": "Obtained via Kitsune Shrine; air-based. Abilities: Fox Fire, Ember Dash.",
+            "image_url": "images/swords/fox_lamp.png"
+        }
+    ],
+    "guns": [
+        {
+            "name": "Slingshot",
+            "rarity": "Common",
+            "price_money": 5000,
+            "description": "Basic ranged weapon that shoots pebbles. Abilities: Pebble Shot, Quick Fire.",
+            "image_url": "images/guns/slingshot.png"
+        },
+        {
+            "name": "Musket",
+            "rarity": "Common",
+            "price_money": 15000,
+            "description": "Single-shot firearm with decent range. Ability: Piercing Shot.",
+            "image_url": "images/guns/musket.png"
+        },
+        {
+            "name": "Flintlock",
+            "rarity": "Common",
+            "price_money": 5000,
+            "description": "Dual pistols for quickfire. Ability: Rapid Barrage.",
+            "image_url": "images/guns/flintlock.png"
+        },
+        {
+            "name": "Acidum Rifle",
+            "rarity": "Legendary",
+            "price_money": 1500000,
+            "description": "Shoots toxic projectiles. Ability: Acid Blast.",
+            "image_url": "images/guns/acidum_rifle.png"
+        },
+        {
+            "name": "Serpent Bow",
+            "rarity": "Legendary",
+            "price_money": 2500000,
+            "description": "Powerful bow infused with venom. Ability: Venom Arrows.",
+            "image_url": "images/guns/serpent_bow.png"
+        }
+    ],
+    "accessories": [
+        {
+            "name": "Black Cape",
+            "rarity": "Rare",
+            "price_money": 50000,
+            "description": "Grants increased health and energy.",
+            "image_url": "images/accessories/black_cape.png"
+        },
+        {
+            "name": "Pink Coat",
+            "rarity": "Rare",
+            "price_money": 100000,
+            "description": "Increases defense and style.",
+            "image_url": "images/accessories/pink_coat.png"
+        },
+        {
+            "name": "Tomoe Ring",
+            "rarity": "Rare",
+            "price_money": 250000,
+            "description": "Boosts fruit ability damage.",
+            "image_url": "images/accessories/tomoe_ring.png"
+        },
+        {
+            "name": "Ghoul Mask",
+            "rarity": "Legendary",
+            "price_money": 1000000,
+            "description": "Restores health on damage dealt.",
+            "image_url": "images/accessories/ghoul_mask.png"
+        }
+    ],
+    "races": [
+        {
+            "name": "Human",
+            "description": "Balanced stats. Upgrade gives clutch survival abilities.",
+            "image_url": "images/races/human.png"
+        },
+        {
+            "name": "Rabbit (Mink)",
+            "description": "Increased movement speed and agility.",
+            "image_url": "images/races/rabbit_mink.png"
+        },
+        {
+            "name": "Fishman (Shark)",
+            "description": "Allows swimming and stronger water attacks.",
+            "image_url": "images/races/fishman_shark.png"
+        },
+        {
+            "name": "Skypian (Angel)",
+            "description": "Glide ability and aerial advantages.",
+            "image_url": "images/races/skypian_angel.png"
+        },
+        {
+            "name": "Cyborg",
+            "description": "Energy regeneration and beam attacks.",
+            "image_url": "images/races/cyborg.png"
+        },
+        {
+            "name": "Ghoul",
+            "description": "Life steal abilities and night bonuses.",
+            "image_url": "images/races/ghoul.png"
+        }
+    ],
+    "locations": [
+        {
+            "name": "First Sea",
+            "description": "Starter sea with basic islands like Jungle, Pirate Village, and Desert.",
+            "image_url": "images/locations/first_sea.png"
+        },
+        {
+            "name": "Second Sea",
+            "description": "Unlocked at level 700. Includes Dressrosa, Green Zone, and Ice Castle.",
+            "image_url": "images/locations/second_sea.png"
+        },
+        {
+            "name": "Third Sea",
+            "description": "Unlocked at level 1500. Features Floating Turtle, Haunted Castle, and Sea of Treats.",
+            "image_url": "images/locations/third_sea.png"
+        }
+    ],
+    "updates": [
+        {
+            "version": "Update 27",
+            "date": "2025-01-20",
+            "details": "Added Kitsune fruit, new swords, bug fixes, balance changes."
+        },
+        {
+            "version": "Update 26",
+            "date": "2024-09-10",
+            "details": "Added Celestial and Creation fruits, new race abilities, awakened sound fruit."
+        },
+        {
+            "version": "Update 25",
+            "date": "2024-04-15",
+            "details": "Added T-Rex and Mammoth fruits, new raids, and fighting style buffs."
+        }
+    ]
+}
