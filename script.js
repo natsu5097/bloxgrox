@@ -97,67 +97,22 @@ document.addEventListener("DOMContentLoaded", () => {
       ];
       renderGroupedTables(groupByRarity(data.swords || []), "swords-sections", swordColumns);
 
-      // Fighting styles
-     if (Array.isArray(data.fightingStyles)) {
-  // group by sea
-  const grouped = data.fightingStyles.reduce((acc, style) => {
-    const key = style.sea || "Unknown Sea";
-    if (!acc[key]) acc[key] = [];
-    acc[key].push(style);
-    return acc;
-  }, {});
-
-  const fsContainer = document.getElementById("fighting-styles-sections");
-  if (fsContainer) {
-    fsContainer.innerHTML = "";
-
-    // Loop through each Sea
-    Object.keys(grouped).forEach(sea => {
-      // Sort styles within this Sea (by price_money ascending)
-      grouped[sea].sort((a, b) => (a.price_money || 0) - (b.price_money || 0));
-
-      const section = document.createElement("section");
-      section.classList.add("collapsible-section");
-
-      const header = document.createElement("h3");
-      header.textContent = sea;
-      header.classList.add("collapsible-header");
-
-      const wrapper = document.createElement("div");
-      wrapper.classList.add("collapsible-content");
-
-      const table = document.createElement("table");
-      table.innerHTML = `
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Price (Money)</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${grouped[sea].map(style => `
-            <tr>
-              <td><img src="${style.image_url || 'images/placeholder.png'}" alt="${style.name}" style="width:40px;height:40px;"></td>
-              <td>${style.name}</td>
-              <td>${style.price_money ? Number(style.price_money).toLocaleString() : ""}</td>
-              <td>${style.description}</td>
-            </tr>
-          `).join("")}
-        </tbody>
-      `;
-      wrapper.appendChild(table);
-
-      section.appendChild(header);
-      section.appendChild(wrapper);
-      fsContainer.appendChild(section);
-
-      // collapsible toggle
-      header.addEventListener("click", () => wrapper.classList.toggle("active"));
-    });
-  }
-}
+      // Fighting styles: group by sea
+      if (Array.isArray(data.fightingStyles)) {
+        const grouped = data.fightingStyles.reduce((acc, style) => {
+          const key = style.sea || "Unknown Sea";
+          if (!acc[key]) acc[key] = [];
+          acc[key].push(style);
+          return acc;
+        }, {});
+        const fsColumns = [
+          { header: "Image", key: "image_url" },
+          { header: "Name", key: "name" },
+          { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
+          { header: "Description", key: "description" }
+        ];
+        renderGroupedTables(grouped, "fighting-styles-sections", fsColumns);
+      }
 
       // Guns
       const gunColumns = [
@@ -219,24 +174,39 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-  // ---------- UI helpers (search, expand/collapse, dark, scrollTop) ----------
+  // ---------- UI helpers ----------
   const searchBar = document.getElementById("search-bar");
   const clearBtn = document.getElementById("clear-search");
+
+  function escapeRegExp(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
   if (searchBar) {
     searchBar.addEventListener("input", () => {
-      const q = searchBar.value.trim().toLowerCase();
-      // simple filter for all tables' rows
+      const q = searchBar.value.trim();
+      const qlc = q.toLowerCase();
+
       document.querySelectorAll("table tbody tr").forEach(row => {
-        const txt = row.innerText.toLowerCase();
-        row.style.display = q === "" || txt.includes(q) ? "" : "none";
-        // highlight
+        const txt = row.textContent.toLowerCase();
+        const matches = !qlc || txt.includes(qlc);
+        row.style.display = matches ? "" : "none";
+
         row.querySelectorAll("td").forEach(td => {
-          td.innerHTML = td.textContent.replace(new RegExp(q, "gi"), match => `<span class="highlight">${match}</span>`);
+          if (!qlc) {
+            td.innerHTML = safeText(td.textContent);
+          } else {
+            const escaped = escapeRegExp(qlc);
+            td.innerHTML = td.textContent.replace(new RegExp(escaped, "gi"),
+              m => `<span class="highlight">${m}</span>`);
+          }
         });
       });
+
       if (clearBtn) clearBtn.style.display = q ? "inline-block" : "none";
     });
   }
+
   if (clearBtn) {
     clearBtn.addEventListener("click", () => {
       if (searchBar) {
@@ -255,13 +225,11 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   }
 
-  // expand/collapse all
   const exp = document.getElementById("expandAll");
   const col = document.getElementById("collapseAll");
   if (exp) exp.addEventListener("click", () => document.querySelectorAll(".collapsible-content").forEach(c => c.classList.add("active")));
   if (col) col.addEventListener("click", () => document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active")));
 
-  // dark mode toggle
   const darkToggle = document.getElementById("darkModeToggle");
   if (darkToggle) {
     darkToggle.addEventListener("click", () => {

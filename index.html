@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blox Fruits Fan Wiki</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
   <header>
     <h1>Blox Fruits Fan Wiki</h1>
@@ -27,7 +26,7 @@
     </ul>
   </nav>
 
-  <!-- Filters -->
+  <!-- Filters + controls -->
   <div id="filters">
     <button class="filter-btn" data-filter="fruits">Fruits</button>
     <button class="filter-btn" data-filter="fighting-styles">Fighting Styles</button>
@@ -39,29 +38,26 @@
     <button class="filter-btn" data-filter="updates">Updates</button>
   </div>
 
-  <!-- Expand/Collapse -->
   <div id="expand-collapse">
     <button id="expandAll">Expand All</button>
     <button id="collapseAll">Collapse All</button>
   </div>
 
-  <!-- Search -->
   <div id="search-container">
     <input type="text" id="search-bar" placeholder="Search items... (Fruits, Swords, Guns, etc.)">
     <button id="clear-search">✖</button>
   </div>
 
-  <!-- Main content -->
   <main>
     <section id="fruits">
       <h2>Fruits</h2>
       <div id="fruits-sections"></div>
     </section>
 
-   <section id="fighting-styles">
-  <h2>Fighting Styles</h2>
-  <div id="fighting-styles-sections"></div>
-</section>
+    <section id="fighting-styles">
+      <h2>Fighting Styles</h2>
+      <div id="fighting-styles-sections"></div>
+    </section>
 
     <section id="swords">
       <h2>Swords</h2>
@@ -103,11 +99,13 @@
     </section>
   </main>
 
- <footer>
+  <footer>
     <p>© 2025 Blox Fruits Fan Wiki. Built for fans!</p>
   </footer>
 
-  <!-- Load external JavaScript -->
+  <button id="scrollTopBtn">⬆</button>
+  <div id="loadingSpinner">Loading...</div>
+
   <script src="script.js"></script>
 </body>
 </html>
