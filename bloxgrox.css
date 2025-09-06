@@ -159,3 +159,82 @@ footer {
     background: #007ACC;
     transform: scale(1.1);
 }
+/* Dark Mode */
+body.dark {
+  background-color: #1e1e2f;
+  color: #e0e0e0;
+}
+body.dark header, body.dark footer {
+  background-color: #0d47a1;
+}
+body.dark section {
+  background-color: #2a2a40;
+}
+body.dark .collapsible-header {
+  background-color: #1565c0;
+  color: white;
+}
+
+/* Sticky navbar */
+#navbar {
+  position: sticky;
+  top: 0;
+  background: #2196f3;
+  z-index: 1000;
+}
+#navbar a.active {
+  border-bottom: 2px solid yellow;
+}
+
+/* Filters */
+#filters {
+  margin: 10px;
+  text-align: center;
+}
+.filter-btn {
+  background: #2196f3;
+  border: none;
+  padding: 8px 12px;
+  margin: 5px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+.filter-btn:hover {
+  background: #1976d2;
+}
+
+/* Search highlight */
+.highlight {
+  background: yellow;
+  font-weight: bold;
+}
+
+/* Expand / Collapse buttons */
+#expand-collapse {
+  text-align: center;
+  margin: 10px;
+}
+#expand-collapse button {
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Spinner */
+#loadingSpinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  background: rgba(255,255,255,0.9);
+  padding: 20px;
+  border-radius: 10px;
+  display: none;
+  z-index: 2000;
+}

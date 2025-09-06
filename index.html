@@ -2,140 +2,244 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blox Fruits Fan Wiki</title>
-  <link rel="stylesheet" href="bloxgrox.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blox Fruits Fan Wiki</title>
+  <link rel="stylesheet" href="bloxgrox.css" />
 </head>
 
 <body>
-    <header>
-        <h1>Blox Fruits Fan Wiki</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#fruits">Fruits</a></li>
-                <li><a href="#fighting-styles">Fighting Styles</a></li>
-                <li><a href="#swords">Swords</a></li>
-                <li><a href="#guns">Guns</a></li>
-                <li><a href="#accessories">Accessories</a></li>
-                <li><a href="#races">Races</a></li>
-                <li><a href="#locations">Locations</a></li>
-                <li><a href="#updates">Updates</a></li>
-            </ul>
-        </nav>
-    </header>
+  <!-- Header & Navigation -->
+  <header>
+    <h1>Blox Fruits Fan Wiki</h1>
+    <button id="darkModeToggle">🌙 Dark Mode</button>
+    <nav id="navbar" aria-label="Main Navigation">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#obtainment">Obtainment</a></li>
+        <li><a href="#bloxfruit-info">Blox Fruit Info</a></li>
+        <li><a href="#fruits">Fruits</a></li>
+        <li><a href="#unobtainable-fruits">Unobtainable Fruits</a></li>
+        <li><a href="#fighting-styles">Fighting Styles</a></li>
+        <li><a href="#swords">Swords</a></li>
+        <li><a href="#guns">Guns</a></li>
+        <li><a href="#accessories">Accessories</a></li>
+        <li><a href="#races">Races</a></li>
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#updates">Updates</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <main>
-        <div id="search-container">
-            <input type="text" id="search-bar" placeholder="Search items... (Fruits, Swords, Guns, etc.)">
-            <button id="clear-search">×</button>
-        </div>
-        
-<section id="home">
-    <h2>Welcome to Blox Fruits Fan Wiki</h2>
-    <p>Blox Fruits are mysterious fruits that can grant their user supernatural abilities when eaten. They are
-        the main, core mechanism of the game, as well as being represented as the game title, hence Blox Fruits.
-        Each Blox Fruit has its own unique power. However, in exchange for power, the user will continuously
-        take damage if they stay in water for too long. Some Blox Fruits have special abilities that can grant
-        the user certain immunities, buffed movement, defensive perks, etc.</p>
-    <p>Explore the sections below for details on fruits, weapons, races, and more. This site uses a brighter and
-        warmer color palette for a more inviting feel.</p>
-</section>
+  <!-- Filters -->
+  <div id="filters">
+    <button class="filter-btn" data-filter="fruits">Fruits</button>
+    <button class="filter-btn" data-filter="fighting-styles">Fighting Styles</button>
+    <button class="filter-btn" data-filter="guns">Guns</button>
+    <button class="filter-btn" data-filter="accessories">Accessories</button>
+    <button class="filter-btn" data-filter="races">Races</button>
+    <button class="filter-btn" data-filter="locations">Locations</button>
+    <button class="filter-btn" data-filter="unobtainable-fruits">Unobtainable Fruits</button>
+  </div>
 
-        <section id="fruits">
-            <h2>Blox Fruits</h2>
-            <p>Blox Fruits are the core mechanic of the game, granting users special abilities. They are divided by
-                rarity.</p>
-            <div id="fruits-sections"></div>
-        </section>
+  <!-- Expand/Collapse -->
+  <div id="expand-collapse">
+    <button id="expandAll">Expand All</button>
+    <button id="collapseAll">Collapse All</button>
+  </div>
 
-        <section id="fighting-styles">
-            <h2>Fighting Styles</h2>
-            <p>Fighting styles are melee combat methods. Examples: Combat, Dark Step, Electric, Water Kung Fu, Dragon
-                Breath, Superhuman, Death Step, Sharkman Karate, Electric Claw, Dragon Talon, Godhuman, Sanguine Art.
-            </p>
-            <table id="fighting-styles-table">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price (Money)</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </section>
+  <!-- Loading Spinner -->
+  <div id="loadingSpinner">Loading...</div>
 
-        <section id="swords">
-            <h2>Swords</h2>
-            <p>Swords are weapons for close combat. They vary from Common to Mythical rarity.</p>
-            <div id="swords-sections"></div>
-        </section>
+  <main>
+    <!-- Search Bar -->
+    <div id="search-container">
+      <input 
+        type="text" 
+        id="search-bar" 
+        placeholder="Search items... (Fruits, Swords, Guns, etc.)" 
+        aria-label="Search items" />
+      <button id="clear-search" aria-label="Clear search">×</button>
+    </div>
 
-        <section id="guns">
-            <h2>Guns</h2>
-            <p>Guns are ranged weapons with different abilities, from basic Slingshots to legendary Serpent Bows.</p>
-            <div id="guns-sections"></div>
-        </section>
+    <!-- Home -->
+    <section id="home">
+      <h2>Welcome to Blox Fruits Fan Wiki</h2>
+      <p>
+        Blox Fruits are mysterious fruits that grant their user supernatural abilities when eaten. 
+        They are the core mechanic of the game, as reflected in the game’s title. Each fruit has unique powers, 
+        but users take damage if they stay in water too long. Some fruits provide immunities, movement buffs, 
+        or defensive perks.
+      </p>
+      <p>
+        Explore the sections below for details on fruits, weapons, races, and more. 
+        This wiki uses a light blue theme for readability and modern design.
+      </p>
+    </section>
 
-        <section id="accessories">
-            <h2>Accessories</h2>
-            <p>Accessories grant buffs such as increased damage, health, or unique effects.</p>
-            <div id="accessories-sections"></div>
-        </section>
+    <!-- Obtainment -->
+    <section id="obtainment">
+      <h2>Obtainment</h2>
+      <p>
+        Main ways to obtain Blox Fruits: purchase powers from the 
+        <strong>Blox Fruit Dealer</strong>, buy a fruit from the 
+        <strong>Blox Fruit Gacha</strong>, buy a <strong>Permanent Fruit</strong>, 
+        or collect fruits that spawn hourly (45 minutes on weekends).
+      </p>
+      <p>
+        Other ways: do the most damage in a <strong>Factory raid</strong>, 
+        defend the <strong>Castle on the Sea</strong>, defeat a 
+        <strong>Grand Brigade</strong> (Ship Raids), trade in Café/Mansion, 
+        be gifted a Permanent Fruit, or buy a <strong>Rocket Fruit</strong> 
+        from Dog House (R$ 97). Limited events (like Halloween) also reward fruits.
+      </p>
+      <p>
+        Rare methods include defeating the <strong>Tyrant of the Skies</strong>, 
+        offering <strong>Azure Embers</strong>, or collecting a 
+        <strong>Dragon Egg</strong>, which may grant Eagle, Kitsune, or Dragon Fruits.
+      </p>
+    </section>
 
-        <section id="races">
-            <h2>Races</h2>
-            <p>Races provide unique perks and evolutions. Each has different advantages for PvE and PvP.</p>
-            <div id="races-sections"></div>
-        </section>
+    <!-- Blox Fruit Info -->
+    <section id="bloxfruit-info">
+      <h2>Blox Fruit Info</h2>
+      <p>
+        There are <strong>5 rarities</strong> of Blox Fruits:
+      </p>
+      <ul>
+        <li><strong>Common</strong> (7 fruits) — Cheapest, most likely to spawn.</li>
+        <li><strong>Uncommon</strong> (6 fruits) — Cheap fruits.</li>
+        <li><strong>Rare</strong> (4 fruits) — Mid-priced.</li>
+        <li><strong>Legendary</strong> (11 fruits) — Expensive.</li>
+        <li><strong>Mythical</strong> (13 fruits) — Very expensive, rarest spawn.</li>
+      </ul>
+      <p>
+        In total: <strong>41 Fruits</strong> — 21 Natural, 11 Elemental, 9 Beast.
+      </p>
+    </section>
 
-        <section id="locations">
-            <h2>Locations</h2>
-            <p>Explore the three seas, each with unique islands, bosses, and quests.</p>
-            <div id="locations-sections"></div>
-        </section>
+    <!-- Fruits -->
+    <section id="fruits">
+      <h2>Blox Fruits</h2>
+      <p>Core mechanic of the game, granting users special abilities. Divided by rarity.</p>
+      <div id="fruits-sections"></div>
+    </section>
 
-        <section id="updates">
-            <h2>Updates</h2>
-            <p>Recent updates with new fruits, weapons, and balance changes.</p>
-            <table id="updates-table">
-                <thead>
-                    <tr>
-                        <th>Version</th>
-                        <th>Date</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </section>
-    </main>
+    <!-- Unobtainable Fruits -->
+    <section id="unobtainable-fruits">
+      <h2>Unobtainable Fruits</h2>
+      <p>These fruits are not currently obtainable but appear in lore or events.</p>
+      <div id="unobtainable-fruits-sections"></div>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 Blox Fruits Fan Wiki. Inspired by <a
-                href="https://blox-fruits.fandom.com/wiki/Blox_Fruits_Wiki">Blox Fruits Wiki</a>. All rights reserved to
-            original creators.</p>
-    </footer>
+    <!-- Fighting Styles -->
+    <section id="fighting-styles">
+      <h2>Fighting Styles</h2>
+      <p>
+        Fighting styles are melee combat techniques. 
+        Examples include Combat, Dark Step, Electric, Water Kung Fu, Dragon Breath, 
+        Superhuman, Death Step, Sharkman Karate, Electric Claw, Dragon Talon, Godhuman, Sanguine Art.
+      </p>
+      <table id="fighting-styles-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
 
-    <button id="scrollTopBtn" style="display:none;" aria-label="Scroll to top">↑</button>
+    <!-- Swords -->
+    <section id="swords">
+      <h2>Swords</h2>
+      <p>Swords are close-combat weapons, ranging from Common to Mythical rarity.</p>
+      <div id="swords-sections"></div>
+    </section>
 
-    <script>
-        fetch('data.json')
-            .then(response => response.json())
-            .then(data => {
-                function groupByRarity(items) {
-                    const groups = {};
-                    items.forEach(item => {
-                        const rarity = item.rarity || 'Unknown';
-                        if (!groups[rarity]) groups[rarity] = [];
-                        groups[rarity].push(item);
-                    });
-                    return groups;
-                }
+    <!-- Guns -->
+    <section id="guns">
+      <h2>Guns</h2>
+      <p>Ranged weapons with various abilities, from Slingshots to legendary Serpent Bows.</p>
+      <div id="guns-sections"></div>
+    </section>
 
+    <!-- Accessories -->
+    <section id="accessories">
+      <h2>Accessories</h2>
+      <p>Accessories grant buffs such as extra damage, health, or unique effects.</p>
+      <div id="accessories-sections"></div>
+    </section>
+
+    <!-- Races -->
+    <section id="races">
+      <h2>Races</h2>
+      <p>Races provide unique perks and evolutions for PvE and PvP.</p>
+      <div id="races-sections"></div>
+    </section>
+
+    <!-- Locations -->
+    <section id="locations">
+      <h2>Locations</h2>
+      <p>Explore the three seas, each with unique islands, bosses, and quests.</p>
+      <div id="locations-sections"></div>
+    </section>
+
+    <!-- Updates -->
+    <section id="updates">
+      <h2>Updates</h2>
+      <p>Recent updates include new fruits, weapons, and balance changes.</p>
+      <table id="updates-table">
+        <thead>
+          <tr>
+            <th>Version</th>
+            <th>Date</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      &copy; 2025 Blox Fruits Fan Wiki. Inspired by 
+      <a href="https://blox-fruits.fandom.com/wiki/Blox_Fruits_Wiki">Blox Fruits Wiki</a>. 
+      All rights reserved to original creators.
+    </p>
+  </footer>
+
+  <!-- Scroll Button -->
+  <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+<script>
+    fetch('data.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("✅ JSON loaded successfully:", data);
+            // ... your rendering code here ...
+        })
+        .catch(error => {
+            console.error("❌ Error loading JSON:", error);
+            const main = document.querySelector("main");
+            if (main) {
+                main.insertAdjacentHTML(
+                    "afterbegin",
+                    `<div style="background:#ffdddd;color:#900;padding:1em;margin:1em 0;border:1px solid red;">
+                        Failed to load <b>data.json</b>: ${error.message}
+                     </div>`
+                );
+            }
+        });
                 function renderGroupedTables(groups, containerId, columns) {
                     const container = document.getElementById(containerId);
                     container.innerHTML = '';
@@ -144,12 +248,10 @@
                         const section = document.createElement('section');
                         section.classList.add('collapsible-section');
 
-                        // Collapsible header
                         const header = document.createElement('h3');
                         header.textContent = rarity;
                         header.classList.add('collapsible-header');
 
-                        // Table container
                         const tableWrapper = document.createElement('div');
                         tableWrapper.classList.add('collapsible-content');
 
@@ -175,14 +277,12 @@
                         section.appendChild(tableWrapper);
                         container.appendChild(section);
 
-                        // Toggle behavior
                         header.addEventListener('click', () => {
                             tableWrapper.classList.toggle('active');
                         });
                     });
                 }
 
-                // Fruits
                 const fruitColumns = [
                     { header: 'Image', key: 'image_url' },
                     { header: 'Name', key: 'name' },
@@ -193,7 +293,6 @@
                 ];
                 renderGroupedTables(groupByRarity(data.fruits), 'fruits-sections', fruitColumns);
 
-                // Swords
                 const swordColumns = [
                     { header: 'Image', key: 'image_url' },
                     { header: 'Name', key: 'name' },
@@ -204,20 +303,18 @@
                 ];
                 renderGroupedTables(groupByRarity(data.swords), 'swords-sections', swordColumns);
 
-                // Fighting Styles
                 const fightingStylesTableBody = document.querySelector('#fighting-styles-table tbody');
                 data.fightingStyles.forEach(style => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                <td><img src="${style.image_url || 'images/placeholder.png'}" alt="${style.name || ''}" style="width:40px;height:40px;"></td>
-                <td>${style.name || ''}</td>
-                <td>${style.price_money ? style.price_money.toLocaleString() : ''}</td>
-                <td>${style.description || ''}</td>
-            `;
+                        <td><img src="${style.image_url || 'images/placeholder.png'}" alt="${style.name || ''}" style="width:40px;height:40px;"></td>
+                        <td>${style.name || ''}</td>
+                        <td>${style.price_money ? style.price_money.toLocaleString() : ''}</td>
+                        <td>${style.description || ''}</td>
+                    `;
                     fightingStylesTableBody.appendChild(row);
                 });
 
-                // Guns
                 const gunColumns = [
                     { header: 'Image', key: 'image_url' },
                     { header: 'Name', key: 'name' },
@@ -227,7 +324,6 @@
                 ];
                 renderGroupedTables(groupByRarity(data.guns), 'guns-sections', gunColumns);
 
-                // Accessories
                 const accessoryColumns = [
                     { header: 'Image', key: 'image_url' },
                     { header: 'Name', key: 'name' },
@@ -237,7 +333,6 @@
                 ];
                 renderGroupedTables(groupByRarity(data.accessories), 'accessories-sections', accessoryColumns);
 
-                // Races
                 const raceColumns = [
                     { header: 'Image', key: 'image_url' },
                     { header: 'Name', key: 'name' },
@@ -245,7 +340,6 @@
                 ];
                 renderGroupedTables({ "All Races": data.races }, 'races-sections', raceColumns);
 
-                // Locations
                 const locationColumns = [
                     { header: 'Image', key: 'image_url' },
                     { header: 'Name', key: 'name' },
@@ -253,19 +347,17 @@
                 ];
                 renderGroupedTables({ "Game Worlds": data.locations }, 'locations-sections', locationColumns);
 
-                // Updates
                 const updatesTableBody = document.querySelector('#updates-table tbody');
                 data.updates.forEach(update => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                <td>${update.version}</td>
-                <td>${update.date}</td>
-                <td>${update.details}</td>
-            `;
+                        <td>${update.version}</td>
+                        <td>${update.date}</td>
+                        <td>${update.details}</td>
+                    `;
                     updatesTableBody.appendChild(row);
                 });
 
-                // 🔍 Search functionality
                 const searchBar = document.getElementById('search-bar');
                 searchBar.addEventListener('input', () => {
                     const query = searchBar.value.toLowerCase();
@@ -280,7 +372,6 @@
                         });
                     }
 
-                    // Search across these categories
                     filterTable('fruits-sections');
                     filterTable('swords-sections');
                     filterTable('guns-sections');
@@ -288,22 +379,20 @@
                     filterTable('races-sections');
                     filterTable('locations-sections');
 
-                    // Fighting Styles (already a <table>)
                     const fsRows = document.querySelectorAll('#fighting-styles-table tbody tr');
                     fsRows.forEach(row => {
                         const text = row.innerText.toLowerCase();
                         row.style.display = text.includes(query) ? '' : 'none';
                     });
 
-                    // Updates (already a <table>)
                     const updateRows = document.querySelectorAll('#updates-table tbody tr');
                     updateRows.forEach(row => {
                         const text = row.innerText.toLowerCase();
                         row.style.display = text.includes(query) ? '' : 'none';
                     });
                 });
-            })
-            .catch(error => console.error('Error loading JSON:', error));
+            // Remove this extra closing parenthesis and curly brace
+            // .catch(error => console.error('Error loading JSON:', error));
 
         const scrollTopBtn = document.getElementById('scrollTopBtn');
 
@@ -319,9 +408,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Clear search button functionality
         const clearBtn = document.getElementById('clear-search');
-
         searchBar.addEventListener('input', () => {
             clearBtn.style.display = searchBar.value ? 'inline-block' : 'none';
         });
@@ -329,9 +416,67 @@
         clearBtn.addEventListener('click', () => {
             searchBar.value = '';
             clearBtn.style.display = 'none';
-            searchBar.dispatchEvent(new Event('input')); // reset all tables
+            searchBar.dispatchEvent(new Event('input'));
         });
-    </script>
+        document.addEventListener("DOMContentLoaded", () => {
+      const body = document.body;
+      const darkToggle = document.getElementById("darkModeToggle");
+      const links = document.querySelectorAll("#navbar a");
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const spinner = document.getElementById("loadingSpinner");
 
+      // Dark mode toggle
+      darkToggle.addEventListener("click", () => {
+        body.classList.toggle("dark");
+        darkToggle.textContent = body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
+      });
+
+      // Active nav link on scroll
+      window.addEventListener("scroll", () => {
+        let current = "";
+        document.querySelectorAll("section").forEach(sec => {
+          const secTop = sec.offsetTop - 80;
+          if (scrollY >= secTop) current = sec.id;
+        });
+        links.forEach(a => {
+          a.classList.remove("active");
+          if (a.getAttribute("href") === "#" + current) a.classList.add("active");
+        });
+      });
+
+      // Filters
+      filterBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.filter;
+          document.querySelectorAll("section").forEach(sec => {
+            sec.style.display = sec.id === target ? "block" : "none";
+          });
+        });
+      });
+
+      // Expand/Collapse All
+      document.getElementById("expandAll").addEventListener("click", () => {
+        document.querySelectorAll(".collapsible-content").forEach(c => c.classList.add("active"));
+      });
+      document.getElementById("collapseAll").addEventListener("click", () => {
+        document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active"));
+      });
+
+      // Search highlight
+      const searchBar = document.getElementById("search-bar");
+      searchBar.addEventListener("input", () => {
+        const text = searchBar.value.toLowerCase();
+        document.querySelectorAll("section").forEach(sec => {
+          sec.querySelectorAll("td").forEach(td => {
+            td.innerHTML = td.textContent.replace(new RegExp(text, "gi"), match => `<span class="highlight">${match}</span>`);
+          });
+        });
+      });
+
+      // Fake loading (for demo, remove if data loads dynamically)
+      spinner.style.display = "block";
+      setTimeout(() => spinner.style.display = "none", 1500);
+    });
+    </script>
 </body>
 </html>
