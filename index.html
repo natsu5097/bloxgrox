@@ -1,47 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blox Fruits Fan Wiki</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <div id="loadingSpinner">⏳ Loading data...</div>
-
-  <!-- Header & Navigation -->
   <header>
     <h1>Blox Fruits Fan Wiki</h1>
     <button id="darkModeToggle">🌙 Dark Mode</button>
-    <nav id="navbar" aria-label="Main Navigation">
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#obtainment">Obtainment</a></li>
-        <li><a href="#bloxfruit-info">Blox Fruit Info</a></li>
-        <li><a href="#fruits">Fruits</a></li>
-        <li><a href="#unobtainable-fruits">Unobtainable Fruits</a></li>
-        <li><a href="#fighting-styles">Fighting Styles</a></li>
-        <li><a href="#swords">Swords</a></li>
-        <li><a href="#guns">Guns</a></li>
-        <li><a href="#accessories">Accessories</a></li>
-        <li><a href="#races">Races</a></li>
-        <li><a href="#locations">Locations</a></li>
-        <li><a href="#updates">Updates</a></li>
-      </ul>
-    </nav>
   </header>
+
+  <!-- Navbar -->
+  <nav id="navbar">
+    <ul>
+      <li><a href="#fruits">Fruits</a></li>
+      <li><a href="#fighting-styles">Fighting Styles</a></li>
+      <li><a href="#swords">Swords</a></li>
+      <li><a href="#guns">Guns</a></li>
+      <li><a href="#accessories">Accessories</a></li>
+      <li><a href="#races">Races</a></li>
+      <li><a href="#locations">Locations</a></li>
+      <li><a href="#updates">Updates</a></li>
+    </ul>
+  </nav>
 
   <!-- Filters -->
   <div id="filters">
     <button class="filter-btn" data-filter="fruits">Fruits</button>
     <button class="filter-btn" data-filter="fighting-styles">Fighting Styles</button>
+    <button class="filter-btn" data-filter="swords">Swords</button>
     <button class="filter-btn" data-filter="guns">Guns</button>
     <button class="filter-btn" data-filter="accessories">Accessories</button>
     <button class="filter-btn" data-filter="races">Races</button>
     <button class="filter-btn" data-filter="locations">Locations</button>
-    <button class="filter-btn" data-filter="unobtainable-fruits">Unobtainable Fruits</button>
+    <button class="filter-btn" data-filter="updates">Updates</button>
   </div>
 
   <!-- Expand/Collapse -->
@@ -50,104 +44,27 @@
     <button id="collapseAll">Collapse All</button>
   </div>
 
-  <!-- Loading Spinner -->
-  <div id="loadingSpinner">Loading...</div>
+  <!-- Search -->
+  <div id="search-container">
+    <input type="text" id="search-bar" placeholder="Search items... (Fruits, Swords, Guns, etc.)">
+    <button id="clear-search">✖</button>
+  </div>
 
+  <!-- Main content -->
   <main>
-    <!-- Search Bar -->
-    <div id="search-container">
-      <input 
-        type="text" 
-        id="search-bar" 
-        placeholder="Search items... (Fruits, Swords, Guns, etc.)" 
-        aria-label="Search items" />
-      <button id="clear-search" aria-label="Clear search">×</button>
-    </div>
-
-    <!-- Home -->
-    <section id="home">
-      <h2>Welcome to Blox Fruits Fan Wiki</h2>
-      <p>
-        Blox Fruits are mysterious fruits that grant their user supernatural abilities when eaten. 
-        They are the core mechanic of the game, as reflected in the game’s title. Each fruit has unique powers, 
-        but users take damage if they stay in water too long. Some fruits provide immunities, movement buffs, 
-        or defensive perks.
-      </p>
-      <p>
-        Explore the sections below for details on fruits, weapons, races, and more. 
-        This wiki uses a light blue theme for readability and modern design.
-      </p>
-    </section>
-
-    <!-- Obtainment -->
-    <section id="obtainment">
-      <h2>Obtainment</h2>
-      <p>
-        Main ways to obtain Blox Fruits: purchase powers from the 
-        <strong>Blox Fruit Dealer</strong>, buy a fruit from the 
-        <strong>Blox Fruit Gacha</strong>, buy a <strong>Permanent Fruit</strong>, 
-        or collect fruits that spawn hourly (45 minutes on weekends).
-      </p>
-      <p>
-        Other ways: do the most damage in a <strong>Factory raid</strong>, 
-        defend the <strong>Castle on the Sea</strong>, defeat a 
-        <strong>Grand Brigade</strong> (Ship Raids), trade in Café/Mansion, 
-        be gifted a Permanent Fruit, or buy a <strong>Rocket Fruit</strong> 
-        from Dog House (R$ 97). Limited events (like Halloween) also reward fruits.
-      </p>
-      <p>
-        Rare methods include defeating the <strong>Tyrant of the Skies</strong>, 
-        offering <strong>Azure Embers</strong>, or collecting a 
-        <strong>Dragon Egg</strong>, which may grant Eagle, Kitsune, or Dragon Fruits.
-      </p>
-    </section>
-
-    <!-- Blox Fruit Info -->
-    <section id="bloxfruit-info">
-      <h2>Blox Fruit Info</h2>
-      <p>
-        There are <strong>5 rarities</strong> of Blox Fruits:
-      </p>
-      <ul>
-        <li><strong>Common</strong> (7 fruits) — Cheapest, most likely to spawn.</li>
-        <li><strong>Uncommon</strong> (6 fruits) — Cheap fruits.</li>
-        <li><strong>Rare</strong> (4 fruits) — Mid-priced.</li>
-        <li><strong>Legendary</strong> (11 fruits) — Expensive.</li>
-        <li><strong>Mythical</strong> (13 fruits) — Very expensive, rarest spawn.</li>
-      </ul>
-      <p>
-        In total: <strong>41 Fruits</strong> — 21 Natural, 11 Elemental, 9 Beast.
-      </p>
-    </section>
-
-    <!-- Fruits -->
     <section id="fruits">
-      <h2>Blox Fruits</h2>
-      <p>Core mechanic of the game, granting users special abilities. Divided by rarity.</p>
+      <h2>Fruits</h2>
       <div id="fruits-sections"></div>
     </section>
 
-    <!-- Unobtainable Fruits -->
-    <section id="unobtainable-fruits">
-      <h2>Unobtainable Fruits</h2>
-      <p>These fruits are not currently obtainable but appear in lore or events.</p>
-      <div id="unobtainable-fruits-sections"></div>
-    </section>
-
-    <!-- Fighting Styles -->
     <section id="fighting-styles">
       <h2>Fighting Styles</h2>
-      <p>
-        Fighting styles are melee combat techniques. 
-        Examples include Combat, Dark Step, Electric, Water Kung Fu, Dragon Breath, 
-        Superhuman, Death Step, Sharkman Karate, Electric Claw, Dragon Talon, Godhuman, Sanguine Art.
-      </p>
       <table id="fighting-styles-table">
         <thead>
           <tr>
             <th>Image</th>
             <th>Name</th>
-            <th>Price</th>
+            <th>Price (Money)</th>
             <th>Description</th>
           </tr>
         </thead>
@@ -155,45 +72,33 @@
       </table>
     </section>
 
-    <!-- Swords -->
     <section id="swords">
       <h2>Swords</h2>
-      <p>Swords are close-combat weapons, ranging from Common to Mythical rarity.</p>
       <div id="swords-sections"></div>
     </section>
 
-    <!-- Guns -->
     <section id="guns">
       <h2>Guns</h2>
-      <p>Ranged weapons with various abilities, from Slingshots to legendary Serpent Bows.</p>
       <div id="guns-sections"></div>
     </section>
 
-    <!-- Accessories -->
     <section id="accessories">
       <h2>Accessories</h2>
-      <p>Accessories grant buffs such as extra damage, health, or unique effects.</p>
       <div id="accessories-sections"></div>
     </section>
 
-    <!-- Races -->
     <section id="races">
       <h2>Races</h2>
-      <p>Races provide unique perks and evolutions for PvE and PvP.</p>
       <div id="races-sections"></div>
     </section>
 
-    <!-- Locations -->
     <section id="locations">
       <h2>Locations</h2>
-      <p>Explore the three seas, each with unique islands, bosses, and quests.</p>
       <div id="locations-sections"></div>
     </section>
 
-    <!-- Updates -->
     <section id="updates">
       <h2>Updates</h2>
-      <p>Recent updates include new fruits, weapons, and balance changes.</p>
       <table id="updates-table">
         <thead>
           <tr>
@@ -207,18 +112,14 @@
     </section>
   </main>
 
-  <!-- Footer -->
   <footer>
-    <p>
-      &copy; 2025 Blox Fruits Fan Wiki. Inspired by 
-      <a href="https://blox-fruits.fandom.com/wiki/Blox_Fruits_Wiki">Blox Fruits Wiki</a>. 
-      All rights reserved to original creators.
-    </p>
+    <p>© 2025 Blox Fruits Fan Wiki. Built for fans!</p>
   </footer>
 
-  <!-- Scroll Button -->
-  <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
-<script>
+  <button id="scrollTopBtn">⬆</button>
+  <div id="loadingSpinner">Loading...</div>
+
+  <script>
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
   const darkToggle = document.getElementById("darkModeToggle");
