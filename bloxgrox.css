@@ -34,21 +34,13 @@ nav a:hover {
 }
 
 h1, h2 {
-<<<<<<< HEAD
-    color: #000000; /* Azure blue */
-=======
-    color: #007ACC; /* Azure blue */
->>>>>>> cae158595e0cc1031798a7f2813072600ae61d79
+    color: black; /* Azure blue */
 }
 
 section {
     margin: 20px;
     padding: 20px;
-<<<<<<< HEAD
-    background-color: #bdc7cf; /* Alice Blue */
-=======
     background-color: #F0F8FF; /* Alice Blue */
->>>>>>> cae158595e0cc1031798a7f2813072600ae61d79
     border-radius: 8px;
 }
 
@@ -167,7 +159,3 @@ footer {
     background: #007ACC;
     transform: scale(1.1);
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> cae158595e0cc1031798a7f2813072600ae61d79
