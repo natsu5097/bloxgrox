@@ -23,30 +23,15 @@
     <div class="item-layout">
       <!-- Left: Main Content -->
       <div class="item-main">
-        <section id="item-description">
-          <p>Loading details...</p>
-        </section>
 
-        <!-- Extra sections -->
-        <section id="item-moves">
-          <h2>Moves</h2>
-          <p>No moves documented yet.</p>
-        </section>
+        <!-- Expand/Collapse All buttons -->
+        <div id="expand-collapse" style="text-align:center; margin: 10px 0;">
+          <button id="expandAll">Expand All</button>
+          <button id="collapseAll">Collapse All</button>
+        </div>
 
-        <section id="item-stats">
-          <h2>Stats</h2>
-          <p>No stats documented yet.</p>
-        </section>
-
-        <section id="item-trivia">
-          <h2>Trivia</h2>
-          <p>No trivia available yet.</p>
-        </section>
-
-        <section id="item-gallery">
-          <h2>Gallery</h2>
-          <p>No images added yet.</p>
-        </section>
+        <!-- Dynamic collapsible sections injected here by JS -->
+        <div id="item-details"></div>
       </div>
 
       <!-- Right: Infobox -->
