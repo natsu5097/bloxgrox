@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Item Details</title>
-  <link rel="stylesheet" href="style.css?v=6">
-
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <div id="item-page">
@@ -17,17 +16,46 @@
       <span id="breadcrumb-item">Item</span>
     </nav>
 
+    <!-- Page Title -->
     <h1 id="item-name">Loading...</h1>
 
-    <section id="item-details">
-      <p>Loading details...</p>
-    </section>
+    <!-- Two-column layout -->
+    <div class="item-layout">
+      <!-- Left: Main Content -->
+      <div class="item-main">
+        <section id="item-description">
+          <p>Loading details...</p>
+        </section>
 
-    <div id="item-back">
-      <a href="index.html">⬅ Back to Main Wiki</a>
+        <!-- Extra sections -->
+        <section id="item-moves">
+          <h2>Moves</h2>
+          <p>No moves documented yet.</p>
+        </section>
+
+        <section id="item-stats">
+          <h2>Stats</h2>
+          <p>No stats documented yet.</p>
+        </section>
+
+        <section id="item-trivia">
+          <h2>Trivia</h2>
+          <p>No trivia available yet.</p>
+        </section>
+
+        <section id="item-gallery">
+          <h2>Gallery</h2>
+          <p>No images added yet.</p>
+        </section>
+      </div>
+
+      <!-- Right: Infobox -->
+      <aside class="item-infobox" id="item-infobox">
+        <p>Loading info...</p>
+      </aside>
     </div>
   </div>
 
-  <script src="item.js?v=6"></script>
+  <script src="item.js?v=7"></script>
 </body>
 </html>

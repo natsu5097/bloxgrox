@@ -634,3 +634,149 @@ body.dark #breadcrumb {
 body.dark #breadcrumb a {
   color: #90caf9;
 }
+/* ===============================
+   Wiki-Style Item Sections
+================================= */
+.item-main section {
+  margin-bottom: 25px;
+  padding: 15px;
+  background: #ffffff;
+  border: 1px solid #87CEFA;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.item-main h2 {
+  margin-top: 0;
+  color: #0d47a1;
+  border-bottom: 2px solid #87CEFA;
+  padding-bottom: 5px;
+}
+
+body.dark .item-main section {
+  background: #2a2a40;
+  border: 1px solid #3a4b70;
+}
+
+body.dark .item-main h2 {
+  color: #90caf9;
+  border-color: #3a4b70;
+}
+
+/* ===============================
+   Wiki-Style Item Sections
+================================= */
+.item-main section {
+  margin-bottom: 25px;
+  padding: 15px;
+  background: #ffffff;
+  border: 1px solid #87CEFA;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.item-main h2 {
+  margin-top: 0;
+  color: #0d47a1;
+  border-bottom: 2px solid #87CEFA;
+  padding-bottom: 5px;
+}
+
+body.dark .item-main section {
+  background: #2a2a40;
+  border: 1px solid #3a4b70;
+}
+
+body.dark .item-main h2 {
+  color: #90caf9;
+  border-color: #3a4b70;
+}
+
+/* ===============================
+   Wiki-Style Collapsible Sections
+================================= */
+.collapsible-section {
+  margin: 15px 0;
+  border: 1px solid #87CEFA;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.collapsible-header {
+  background: #1E90FF;
+  color: white;
+  padding: 10px 14px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease;
+  position: relative;
+  padding-left: 28px; /* space for arrow */
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+.collapsible-header::before {
+  content: "▶";
+  position: absolute;
+  left: 10px;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.collapsible-header.active::before {
+  content: "▼";
+}
+
+.collapsible-header:hover {
+  background: #1565c0;
+}
+
+.collapsible-content {
+  display: none;
+  padding: 12px 15px;
+  background: #ffffff;
+  color: #1A3C57;
+}
+
+.collapsible-content.active {
+  display: block;
+}
+
+/* Dark Mode */
+body.dark .collapsible-section {
+  border-color: #3a4b70;
+}
+
+body.dark .collapsible-header {
+  background: #0d47a1;
+  color: #fff;
+}
+
+body.dark .collapsible-header:hover {
+  background: #1565c0;
+}
+
+body.dark .collapsible-content {
+  background: #2a2a40;
+  color: #ddd;
+}
+
+/* ===============================
+   Gallery Section
+================================= */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.gallery img {
+  max-width: 180px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+

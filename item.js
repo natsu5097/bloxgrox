@@ -11,29 +11,121 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!item) {
         document.getElementById("item-name").textContent = "Item Not Found";
-        document.getElementById("item-details").innerHTML = "<p>Sorry, this item does not exist in the database.</p>";
+        document.getElementById("item-details").innerHTML =
+          "<p>Sorry, this item does not exist in the database.</p>";
         return;
       }
 
-      // Set page title and heading
+      // Page title
       document.title = `${item.name} - BloxGrox Wiki`;
       document.getElementById("item-name").textContent = item.name;
 
-      // Render details
-      document.getElementById("item-details").innerHTML = `
-        ${item.image_url ? `<img src="${item.image_url}" alt="${item.name}" style="max-width:200px;display:block;margin-bottom:15px;">` : ""}
-        
+      // Sections to render
+      const sections = [
+        {
+          id: "description",
+          title: "Description",
+          content: `<p>${item.description || "No description available."}</p>`
+        },
+        {
+          id: "moves",
+          title: "Moves",
+          content: item.moves
+            ? `<ul>${item.moves.map(m => `<li>${m}</li>`).join("")}</ul>`
+            : "<p>No moves listed.</p>"
+        },
+        {
+          id: "stats",
+          title: "Stats",
+          content: item.stats
+            ? `<table>
+                ${Object.entries(item.stats)
+                  .map(([k, v]) => `<tr><td><b>${k}</b></td><td>${v}</td></tr>`)
+                  .join("")}
+              </table>`
+            : "<p>No stats available.</p>"
+        },
+        {
+          id: "trivia",
+          title: "Trivia",
+          content: item.trivia
+            ? `<ul>${item.trivia.map(t => `<li>${t}</li>`).join("")}</ul>`
+            : "<p>No trivia available.</p>"
+        },
+        {
+          id: "gallery",
+          title: "Gallery",
+          content: item.gallery
+            ? `<div class="gallery">
+                ${item.gallery.map(img => `<img src="${img}" alt="${item.name} gallery image">`).join("")}
+              </div>`
+            : "<p>No gallery images.</p>"
+        }
+      ];
+
+      // Render details (infobox)
+      const details = document.getElementById("item-details");
+      details.innerHTML = `
+        ${item.image_url ? `<img src="${item.image_url}" alt="${item.name}" />` : ""}
         ${item.rarity ? `<p><b>Rarity:</b> ${item.rarity}</p>` : ""}
         ${item.type ? `<p><b>Type:</b> ${item.type}</p>` : ""}
         ${item.sea ? `<p><b>Sea:</b> ${item.sea}</p>` : ""}
-
         ${item.price_money ? `<p><b>Price (Money):</b> ${Number(item.price_money).toLocaleString()}</p>` : ""}
         ${item.price_robux ? `<p><b>Price (Robux):</b> ${Number(item.price_robux).toLocaleString()}</p>` : ""}
-        
-        <p><b>Description:</b> ${item.description || "No description available."}</p>
       `;
 
-      // ✅ Set breadcrumbs (must be inside .then so `item` is defined)
+      // Collapsible + Anchors
+      const sectionContainer = document.createElement("div");
+      sectionContainer.id = "wiki-sections";
+
+      sections.forEach((s, index) => {
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("collapsible-section");
+
+        const header = document.createElement("h2");
+        header.textContent = s.title;
+        header.id = `item-${s.id}`; // 🔗 anchor
+        header.classList.add("collapsible-header");
+
+        const content = document.createElement("div");
+        content.classList.add("collapsible-content");
+        content.innerHTML = s.content;
+
+        // expand first section by default
+        if (index === 0) {
+          header.classList.add("active");
+          content.classList.add("active");
+        }
+
+        wrapper.appendChild(header);
+        wrapper.appendChild(content);
+        sectionContainer.appendChild(wrapper);
+      });
+
+      details.appendChild(sectionContainer);
+
+      // Enable collapsible sections (arrow + toggle)
+      document.querySelectorAll(".collapsible-header").forEach(header => {
+        header.addEventListener("click", () => {
+          header.classList.toggle("active");
+          const content = header.nextElementSibling;
+          content.classList.toggle("active");
+        });
+      });
+
+      // ✅ Expand/Collapse All support
+      const exp = document.getElementById("expandAll");
+      const col = document.getElementById("collapseAll");
+      if (exp) exp.addEventListener("click", () => {
+        document.querySelectorAll(".collapsible-header").forEach(h => h.classList.add("active"));
+        document.querySelectorAll(".collapsible-content").forEach(c => c.classList.add("active"));
+      });
+      if (col) col.addEventListener("click", () => {
+        document.querySelectorAll(".collapsible-header").forEach(h => h.classList.remove("active"));
+        document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active"));
+      });
+
+      // Breadcrumb
       const categoryNames = {
         fruits: "Fruits",
         swords: "Swords",
@@ -45,11 +137,13 @@ document.addEventListener("DOMContentLoaded", () => {
         updates: "Updates"
       };
 
-      document.getElementById("breadcrumb-category").textContent = categoryNames[category] || category;
+      document.getElementById("breadcrumb-category").textContent =
+        categoryNames[category] || category;
       document.getElementById("breadcrumb-item").textContent = item.name;
     })
     .catch(err => {
       console.error("❌ Error loading item:", err);
-      document.getElementById("item-details").innerHTML = "<p>Failed to load item data.</p>";
+      document.getElementById("item-details").innerHTML =
+        "<p>Failed to load item data.</p>";
     });
 });
