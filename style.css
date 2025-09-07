@@ -831,3 +831,38 @@ body.dark .collapsible-content {
   position: sticky;
   top: 100px; /* keeps it visible while scrolling */
 }
+/* ===============================
+   Expand / Collapse Controls
+================================= */
+#expand-collapse {
+  text-align: center;
+  margin: 15px 0 25px 0;
+}
+
+#expand-collapse button {
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  margin: 0 6px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#expand-collapse button:hover {
+  background: #1565c0;
+  transform: scale(1.05);
+}
+
+/* Dark mode */
+body.dark #expand-collapse button {
+  background: #1565c0;
+}
+
+body.dark #expand-collapse button:hover {
+  background: #0d47a1;
+}
+
