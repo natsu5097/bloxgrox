@@ -20,6 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
       document.title = `${item.name} - BloxGrox Wiki`;
       document.getElementById("item-name").textContent = item.name;
 
+      // ✅ Page description (top section)
+const pageDescription = document.getElementById("page-description");
+pageDescription.innerHTML = `
+  <p>${item.description || "No description available."}</p>
+`;
+
+
       // ✅ Infobox (right column)
       const infobox = document.getElementById("item-infobox");
       infobox.innerHTML = `
