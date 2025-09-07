@@ -20,7 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
       document.title = `${item.name} - BloxGrox Wiki`;
       document.getElementById("item-name").textContent = item.name;
 
-
+      // ✅ Page description (top intro text, not the wiki section)
+      const pageDesc = document.getElementById("page-description");
+      if (pageDesc) {
+        pageDesc.innerHTML = item.page_description || item.description || "No description available.";
+      }
 
       // ✅ Infobox (right column)
       const infobox = document.getElementById("item-infobox");
@@ -33,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${item.price_robux ? `<p><b>Price (Robux):</b> ${Number(item.price_robux).toLocaleString()}</p>` : ""}
       `;
 
-      // ✅ Wiki-style sections (left column)
+      // ✅ Wiki-style collapsible sections
       const sections = [
         {
           id: "description",
@@ -150,4 +154,27 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("item-details").innerHTML =
         "<p>Failed to load item data.</p>";
     });
+
+  // ---------- Dark Mode ----------
+  const darkToggle = document.getElementById("darkModeToggle");
+  if (darkToggle) {
+    const icon = darkToggle.querySelector(".icon");
+
+    // restore saved theme
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+      if (icon) icon.textContent = "☀️";
+    }
+
+    darkToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        if (icon) icon.textContent = "☀️";
+      } else {
+        localStorage.setItem("theme", "light");
+        if (icon) icon.textContent = "🌙";
+      }
+    });
+  }
 });
