@@ -343,8 +343,7 @@ footer {
   margin-top: 30px;
 }
 
-  border-color: #1565c0;
-  color: #fff;
+
 /* ===============================
    Dark Mode Overrides
 ================================= */
@@ -779,4 +778,56 @@ body.dark .collapsible-content {
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
+/* ===============================
+   Item Page Layout + Infobox
+================================= */
+.item-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
 
+/* Left column */
+.item-main {
+  flex: 3;
+}
+
+/* Right column (infobox) */
+.item-infobox {
+  flex: 1;
+  background: #fff;
+  padding: 12px;
+  border: 1px solid #87CEFA;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.item-infobox img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.item-layout {
+  display: flex;
+  flex-direction: row; /* side by side */
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Left column */
+.item-main {
+  flex: 3;
+}
+
+/* Right column */
+.item-infobox {
+  flex: 1;
+  background: #fff;
+  padding: 12px;
+  border: 1px solid #87CEFA;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  position: sticky;
+  top: 100px; /* keeps it visible while scrolling */
+}
