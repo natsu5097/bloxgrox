@@ -63,9 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       ];
 
-      // Render details (infobox)
-      const details = document.getElementById("item-details");
-      details.innerHTML = `
+      // ✅ Render infobox (RIGHT COLUMN)
+      const infobox = document.getElementById("item-infobox");
+      infobox.innerHTML = `
         ${item.image_url ? `<img src="${item.image_url}" alt="${item.name}" />` : ""}
         ${item.rarity ? `<p><b>Rarity:</b> ${item.rarity}</p>` : ""}
         ${item.type ? `<p><b>Type:</b> ${item.type}</p>` : ""}
@@ -74,7 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
         ${item.price_robux ? `<p><b>Price (Robux):</b> ${Number(item.price_robux).toLocaleString()}</p>` : ""}
       `;
 
-      // Collapsible + Anchors
+      // ✅ Render collapsible wiki sections (LEFT COLUMN)
+      const details = document.getElementById("item-details");
+      details.innerHTML = ""; // clear placeholder
+
       const sectionContainer = document.createElement("div");
       sectionContainer.id = "wiki-sections";
 
@@ -104,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       details.appendChild(sectionContainer);
 
-      // Enable collapsible sections (arrow + toggle)
+      // Enable collapsible toggle
       document.querySelectorAll(".collapsible-header").forEach(header => {
         header.addEventListener("click", () => {
           header.classList.toggle("active");
@@ -125,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active"));
       });
 
-      // Breadcrumb
+      // ✅ Breadcrumb
       const categoryNames = {
         fruits: "Fruits",
         swords: "Swords",
