@@ -1,4 +1,3 @@
-// script.js
 document.addEventListener("DOMContentLoaded", () => {
   const spinner = document.getElementById("loadingSpinner");
   if (spinner) spinner.style.display = "block";
@@ -40,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const table = document.createElement("table");
       table.classList.add("datatable");
+
       const thead = document.createElement("thead");
       thead.innerHTML = `<tr>${columns.map(c => `<th>${c.header}</th>`).join("")}</tr>`;
       table.appendChild(thead);
@@ -53,7 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const alt = safeText(item.name) || "";
             return `<td><img src="${src}" alt="${alt}" style="width:40px;height:40px;object-fit:contain"></td>`;
           }
-          const txt = c.format ? c.format(item[c.key]) : safeText(item[c.key]);
+          const raw = item[c.key];
+          const txt = c.format ? c.format(raw, item) : safeText(raw);
           return `<td>${txt}</td>`;
         }).join("");
         tbody.appendChild(row);
@@ -66,14 +67,14 @@ document.addEventListener("DOMContentLoaded", () => {
       section.appendChild(tableWrapper);
       container.appendChild(section);
 
-      // Collapsible + DataTable init
+      // Collapsible + DataTables init
       let initialized = false;
       header.addEventListener("click", () => {
         tableWrapper.classList.toggle("active");
         if (!initialized && tableWrapper.classList.contains("active")) {
           new DataTable(table, {
             paging: false,
-            searching: false, // disable built-in search, use Fuse.js instead
+            searching: false,
             info: false
           });
           initialized = true;
@@ -90,14 +91,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Prepare allItems for Fuse.js
       allItems = [
-        ...(data.fruits || []).map(item => ({ ...item, category: "Fruit" })),
-        ...(data.fightingStyles || []).map(item => ({ ...item, category: "Fighting Style" })),
-        ...(data.swords || []).map(item => ({ ...item, category: "Sword" })),
-        ...(data.guns || []).map(item => ({ ...item, category: "Gun" })),
-        ...(data.accessories || []).map(item => ({ ...item, category: "Accessory" })),
-        ...(data.races || []).map(item => ({ ...item, category: "Race" })),
-        ...(data.locations || []).map(item => ({ ...item, category: "Location" })),
-        ...(data.updates || []).map(item => ({ ...item, category: "Update" }))
+        ...(data.fruits || []).map(item => ({ ...item, category: "fruits" })),
+        ...(data.fightingStyles || []).map(item => ({ ...item, category: "fightingStyles" })),
+        ...(data.swords || []).map(item => ({ ...item, category: "swords" })),
+        ...(data.guns || []).map(item => ({ ...item, category: "guns" })),
+        ...(data.accessories || []).map(item => ({ ...item, category: "accessories" })),
+        ...(data.races || []).map(item => ({ ...item, category: "races" })),
+        ...(data.locations || []).map(item => ({ ...item, category: "locations" })),
+        ...(data.updates || []).map(item => ({ ...item, category: "updates" }))
       ];
 
       // Initialize Fuse.js
@@ -107,24 +108,26 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // Fruits
-      renderGroupedTables(groupByRarity(data.fruits || []), "fruits-sections", [
+      const fruitColumns = [
         { header: "Image", key: "image_url" },
-        { header: "Name", key: "name" },
+        { header: "Name", key: "name", format: (v, item) => `<a href="item.html?category=fruits&id=${item.id}">${v}</a>` },
         { header: "Type", key: "type" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Price (Robux)", key: "price_robux", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables(groupByRarity(data.fruits || []), "fruits-sections", fruitColumns);
 
       // Swords
-      renderGroupedTables(groupByRarity(data.swords || []), "swords-sections", [
+      const swordColumns = [
         { header: "Image", key: "image_url" },
-        { header: "Name", key: "name" },
+        { header: "Name", key: "name", format: (v, item) => `<a href="item.html?category=swords&id=${item.id}">${v}</a>` },
         { header: "Rarity", key: "rarity" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Price (Robux)", key: "price_robux", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables(groupByRarity(data.swords || []), "swords-sections", swordColumns);
 
       // Fighting Styles
       if (Array.isArray(data.fightingStyles)) {
@@ -134,45 +137,50 @@ document.addEventListener("DOMContentLoaded", () => {
           acc[key].push(style);
           return acc;
         }, {});
-        renderGroupedTables(grouped, "fighting-styles-sections", [
+        const fsColumns = [
           { header: "Image", key: "image_url" },
-          { header: "Name", key: "name" },
+          { header: "Name", key: "name", format: (v, item) => `<a href="item.html?category=fightingStyles&id=${item.id}">${v}</a>` },
           { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
           { header: "Description", key: "description" }
-        ]);
+        ];
+        renderGroupedTables(grouped, "fighting-styles-sections", fsColumns);
       }
 
       // Guns
-      renderGroupedTables(groupByRarity(data.guns || []), "guns-sections", [
+      const gunColumns = [
         { header: "Image", key: "image_url" },
-        { header: "Name", key: "name" },
+        { header: "Name", key: "name", format: (v, item) => `<a href="item.html?category=guns&id=${item.id}">${v}</a>` },
         { header: "Rarity", key: "rarity" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables(groupByRarity(data.guns || []), "guns-sections", gunColumns);
 
       // Accessories
-      renderGroupedTables(groupByRarity(data.accessories || []), "accessories-sections", [
+      const accessoryColumns = [
         { header: "Image", key: "image_url" },
-        { header: "Name", key: "name" },
+        { header: "Name", key: "name", format: (v, item) => `<a href="item.html?category=accessories&id=${item.id}">${v}</a>` },
         { header: "Rarity", key: "rarity" },
         { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables(groupByRarity(data.accessories || []), "accessories-sections", accessoryColumns);
 
       // Races
-      renderGroupedTables({ "All Races": data.races || [] }, "races-sections", [
+      const raceColumns = [
         { header: "Image", key: "image_url" },
-        { header: "Name", key: "name" },
+        { header: "Name", key: "name", format: (v, item) => `<a href="item.html?category=races&id=${item.id}">${v}</a>` },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables({ "All Races": data.races || [] }, "races-sections", raceColumns);
 
       // Locations
-      renderGroupedTables({ "Game Worlds": data.locations || [] }, "locations-sections", [
+      const locationColumns = [
         { header: "Image", key: "image_url" },
-        { header: "Name", key: "name" },
+        { header: "Name", key: "name", format: (v, item) => `<a href="item.html?category=locations&id=${item.id}">${v}</a>` },
         { header: "Description", key: "description" }
-      ]);
+      ];
+      renderGroupedTables({ "Game Worlds": data.locations || [] }, "locations-sections", locationColumns);
 
       // Updates
       const updatesBody = document.querySelector("#updates-table tbody");
@@ -180,7 +188,11 @@ document.addEventListener("DOMContentLoaded", () => {
         updatesBody.innerHTML = "";
         data.updates.forEach(u => {
           const r = document.createElement("tr");
-          r.innerHTML = `<td>${safeText(u.version)}</td><td>${safeText(u.date)}</td><td>${safeText(u.details)}</td>`;
+          r.innerHTML = `
+            <td><a href="item.html?category=updates&id=${u.id}">${safeText(u.version)}</a></td>
+            <td>${safeText(u.date)}</td>
+            <td>${safeText(u.details)}</td>
+          `;
           updatesBody.appendChild(r);
         });
       }
@@ -205,12 +217,12 @@ document.addEventListener("DOMContentLoaded", () => {
       card.classList.add("result-card");
 
       card.innerHTML = `
-        <h3>${item.name} <small>(${item.category})</small></h3>
+        <h3><a href="item.html?category=${item.category}&id=${item.id}">${item.name}</a> <small>(${item.category})</small></h3>
         ${item.image_url ? `<img src="${item.image_url}" alt="${item.name}" />` : ""}
         <p>${item.description || "No description available."}</p>
         ${item.rarity ? `<p><b>Rarity:</b> ${item.rarity}</p>` : ""}
         ${item.type ? `<p><b>Type:</b> ${item.type}</p>` : ""}
-        ${item.price_money ? `<p><b>Price:</b> ${Number(item.price_money).toLocaleString()}</p>` : ""}
+        ${item.price_money ? `<p><b>Price:</b> ${item.price_money}</p>` : ""}
       `;
 
       container.appendChild(card);
@@ -225,12 +237,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const query = searchInput.value.trim();
       if (!query) {
         document.getElementById("search-results").innerHTML = "";
-        if (clearBtn) clearBtn.style.display = "none";
         return;
       }
       const results = fuse.search(query);
       renderResults(results);
-      if (clearBtn) clearBtn.style.display = "inline-block";
+      if (clearBtn) clearBtn.style.display = query ? "inline-block" : "none";
     });
   }
 
