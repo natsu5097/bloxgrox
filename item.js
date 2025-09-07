@@ -16,11 +16,22 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Page title
+      // ✅ Page title + heading
       document.title = `${item.name} - BloxGrox Wiki`;
       document.getElementById("item-name").textContent = item.name;
 
-      // Sections to render
+      // ✅ Infobox (right column)
+      const infobox = document.getElementById("item-infobox");
+      infobox.innerHTML = `
+        ${item.image_url ? `<img src="${item.image_url}" alt="${item.name}" />` : ""}
+        ${item.rarity ? `<p><b>Rarity:</b> ${item.rarity}</p>` : ""}
+        ${item.type ? `<p><b>Type:</b> ${item.type}</p>` : ""}
+        ${item.sea ? `<p><b>Sea:</b> ${item.sea}</p>` : ""}
+        ${item.price_money ? `<p><b>Price (Money):</b> ${Number(item.price_money).toLocaleString()}</p>` : ""}
+        ${item.price_robux ? `<p><b>Price (Robux):</b> ${Number(item.price_robux).toLocaleString()}</p>` : ""}
+      `;
+
+      // ✅ Wiki-style sections (left column)
       const sections = [
         {
           id: "description",
@@ -63,18 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       ];
 
-      // ✅ Render infobox (RIGHT COLUMN)
-      const infobox = document.getElementById("item-infobox");
-      infobox.innerHTML = `
-        ${item.image_url ? `<img src="${item.image_url}" alt="${item.name}" />` : ""}
-        ${item.rarity ? `<p><b>Rarity:</b> ${item.rarity}</p>` : ""}
-        ${item.type ? `<p><b>Type:</b> ${item.type}</p>` : ""}
-        ${item.sea ? `<p><b>Sea:</b> ${item.sea}</p>` : ""}
-        ${item.price_money ? `<p><b>Price (Money):</b> ${Number(item.price_money).toLocaleString()}</p>` : ""}
-        ${item.price_robux ? `<p><b>Price (Robux):</b> ${Number(item.price_robux).toLocaleString()}</p>` : ""}
-      `;
-
-      // ✅ Render collapsible wiki sections (LEFT COLUMN)
       const details = document.getElementById("item-details");
       details.innerHTML = ""; // clear placeholder
 
@@ -107,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       details.appendChild(sectionContainer);
 
-      // Enable collapsible toggle
+      // ✅ Collapsible toggle
       document.querySelectorAll(".collapsible-header").forEach(header => {
         header.addEventListener("click", () => {
           header.classList.toggle("active");
@@ -116,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
-      // ✅ Expand/Collapse All support
+      // ✅ Expand/Collapse All
       const exp = document.getElementById("expandAll");
       const col = document.getElementById("collapseAll");
       if (exp) exp.addEventListener("click", () => {
