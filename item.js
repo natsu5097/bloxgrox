@@ -72,10 +72,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     // ✅ Wiki-style collapsible sections
     const sections = [
       {
-        id: "description",
-        title: "Description",
-        content: `<p>${safeText(item.description) || "No description available."}</p>`
-      },
+  id: "description",
+  title: "Description",
+  content: `<p>${safeText(
+    item.wiki_description || item.description || item.page_description || "No description available."
+  )}</p>`
+},
       {
         id: "moves",
         title: "Moves",
