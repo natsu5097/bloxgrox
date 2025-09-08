@@ -173,11 +173,10 @@ tbody tr:nth-child(even) {
 /* ===============================
    Search + Fuse.js Results
 ================================= */
-/* Keep search bar fixed at the top */
 #search-container {
   position: sticky;
   top: 0;
-  z-index: 2000;   /* stays above other content */
+  z-index: 1000;
   background: #EAF6FF;
   padding: 15px;
   border-bottom: 2px solid #1E90FF;
@@ -186,26 +185,22 @@ tbody tr:nth-child(even) {
   gap: 0.5rem;
 }
 
-/* Search results overlay (don’t push content down) */
-#search-results {
-  position: fixed;
-  top: 70px; /* adjust depending on header/nav height */
-  left: 0;
-  right: 0;
-  background: #F0F8FF;
-  max-height: 60vh;
-  overflow-y: auto;
-  padding: 1rem;
-  z-index: 1500;
-  display: none; /* hidden until results appear */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+#search-box {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
 }
 
-/* Show results when populated */
-#search-results.active {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
+#clear-search {
+  display: none;
+  border: none;
+  background: #ccc;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1rem;
 }
 
 body:not(.dark) #clear-search:hover {
@@ -217,11 +212,31 @@ body.dark #clear-search:hover {
 }
 
 /* Fuse.js Result Cards */
+/* 🔍 Search results overlay */
 #search-results {
-  margin-top: 1rem;
+  position: fixed;
+  top: 120px; /* adjust: your navbar + filters height */
+  left: 0;
+  right: 0;
+  background: #F0F8FF;
+  max-height: 65vh;
+  overflow-y: auto;
+  padding: 1rem;
+  z-index: 1500;
+  display: none; /* hidden by default */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+#search-results.active {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1rem;
+}
+
+/* 🌙 Dark mode fixes */
+body.dark #search-results {
+  background: #2a2a40;
+  border: 1px solid #3a4b70;
 }
 
 .result-card {

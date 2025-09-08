@@ -38,6 +38,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, {});
   }
 
+  // ✅ Close search results if clicked outside
+  document.addEventListener("click", (e) => {
+    if (searchResults && !searchResults.contains(e.target) && !searchInput.contains(e.target)) {
+      searchResults.classList.remove("active");
+    }
+  });
+
+  // ... rest of your code (fetch, render, etc.)
+});
+
+
   // --------- Render grouped tables ----------
   function renderGroupedTables(groups, containerId, columns, category) {
     const container = document.getElementById(containerId);
@@ -126,13 +137,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   searchResults.innerHTML = "";
 
   if (!results || results.length === 0) {
-    searchResults.classList.remove("active");
+    searchResults.classList.remove("active"); // hide if no results
     searchResults.innerHTML = "<p>No results</p>";
     if (clearSearchBtn) clearSearchBtn.style.display = "none";
     return;
   }
 
-  searchResults.classList.add("active"); // ✅ make visible
+  searchResults.classList.add("active"); // ✅ show panel
   if (clearSearchBtn) clearSearchBtn.style.display = "inline-block";
 
   results.forEach(r => {
@@ -142,7 +153,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     card.innerHTML = `
       <img src="${safeText(it.image_url)}" alt="" />
       <div class="meta">
-        <a href="item.html?category=${it.category}&id=${encodeURIComponent(it.id || it.name)}"><h3>${safeText(it.name)}</h3></a>
+        <a href="item.html?category=${it.category}&id=${encodeURIComponent(it.id || it.name)}">
+          <h3>${safeText(it.name)}</h3>
+        </a>
         <p class="muted">${safeText(it.category)} • ${safeText(it.rarity)}</p>
         <p>${safeText(it.short_description || it.description || "")}</p>
       </div>
