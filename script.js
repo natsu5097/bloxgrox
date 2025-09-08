@@ -132,8 +132,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (clearSearchBtn) clearSearchBtn.style.display = "inline-block";
     results.forEach(r => {
       const it = r.item || r;
-      const card = document.createElement("div");
-      card.className = "search-card";
+     const card = document.createElement("div");
+     card.className = "result-card";
       card.innerHTML = `
         <img src="${safeText(it.image_url)}" alt="" />
         <div class="meta">
