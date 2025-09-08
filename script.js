@@ -38,12 +38,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, {});
   }
 
-  // ✅ Close search results if clicked outside
-  document.addEventListener("click", (e) => {
-    if (searchResults && !searchResults.contains(e.target) && !searchInput.contains(e.target)) {
-      searchResults.classList.remove("active");
-    }
-  });
+  // Close search results if clicked outside
+document.addEventListener("click", (e) => {
+  if (searchResults && !searchResults.contains(e.target) && !searchInput.contains(e.target)) {
+    searchResults.classList.remove("active");
+  }
+});
+
+// Optional: ESC key to close search results
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && searchResults) {
+    searchResults.classList.remove("active");
+    if (clearSearchBtn) clearSearchBtn.style.display = "none";
+    if (searchInput) searchInput.value = "";
+  }
+});
+
 
   // ... rest of your code (fetch, render, etc.)
 });
@@ -143,7 +153,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  searchResults.classList.add("active"); // ✅ show panel
+  searchResults.classList.add("active"); // ✅ show results panel
   if (clearSearchBtn) clearSearchBtn.style.display = "inline-block";
 
   results.forEach(r => {
@@ -163,7 +173,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     searchResults.appendChild(card);
   });
 }
-
 
   // --------- Wire up controls ----------
   if (searchInput) {
