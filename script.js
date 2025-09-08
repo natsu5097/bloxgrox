@@ -11,6 +11,7 @@
 */
 
 document.addEventListener("DOMContentLoaded", async () => {
+  // ---------- Setup ----------
   const spinner = document.getElementById("loadingSpinner");
   if (spinner) spinner.style.display = "block";
 
@@ -24,7 +25,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let allItems = [];
   let fuse = null;
-  let dataTablesBySection = {}; // track tables
 
   function safeText(v) {
     return v === undefined || v === null ? "" : String(v);
@@ -38,26 +38,81 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, {});
   }
 
-  // Close search results if clicked outside
-document.addEventListener("click", (e) => {
-  if (searchResults && !searchResults.contains(e.target) && !searchInput.contains(e.target)) {
-    searchResults.classList.remove("active");
+  // ---------- Close search results ----------
+  document.addEventListener("click", (e) => {
+    if (searchResults && !searchResults.contains(e.target) && !searchInput.contains(e.target)) {
+      searchResults.classList.remove("active");
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && searchResults) {
+      searchResults.classList.remove("active");
+      if (clearSearchBtn) clearSearchBtn.style.display = "none";
+      if (searchInput) searchInput.value = "";
+    }
+  });
+
+  // ---------- Render grouped tables ----------
+  function renderGroupedTables(groups, containerId, columns, category) {
+    // ... your table rendering code here
+  }
+
+  // ---------- Render updates ----------
+  function renderUpdates(updates) {
+    // ... your updates code here
+  }
+
+  // ---------- Fuse.js ----------
+  function initFuse(items) {
+    fuse = new Fuse(items, {
+      keys: ["name", "description", "short_description", "rarity", "type", "category"],
+      threshold: 0.35,
+      ignoreLocation: true
+    });
+  }
+
+  function renderSearchResults(results) {
+    // ... your results code here
+  }
+
+  // ---------- Wire up controls ----------
+  // search input, clear button, expand/collapse, scrollToTop, dark mode toggle
+
+  // ---------- Fetch + render ----------
+  try {
+    const resp = await fetch("data.json"); // ✅ adjust if not in root
+    if (!resp.ok) throw new Error("Failed to fetch data.json");
+    const data = await resp.json();
+
+    // Build allItems for search
+    allItems = [
+      ...(data.fruits || []).map(i => ({ ...i, category: "fruits" })),
+      ...(data.swords || []).map(i => ({ ...i, category: "swords" })),
+      ...(data.fightingStyles || []).map(i => ({ ...i, category: "fightingStyles" })),
+      ...(data.guns || []).map(i => ({ ...i, category: "guns" })),
+      ...(data.accessories || []).map(i => ({ ...i, category: "accessories" })),
+      ...(data.races || []).map(i => ({ ...i, category: "races" })),
+      ...(data.locations || []).map(i => ({ ...i, category: "locations" })),
+      ...(data.updates || []).map(i => ({ ...i, category: "updates" }))
+    ];
+    initFuse(allItems);
+
+    // Render category sections
+    renderGroupedTables(groupByRarity(data.fruits || []), "fruits-sections", [ /* ... */ ], "fruits");
+    renderGroupedTables(groupByRarity(data.swords || []), "swords-sections", [ /* ... */ ], "swords");
+    renderGroupedTables(groupByRarity(data.guns || []), "guns-sections", [ /* ... */ ], "guns");
+    renderGroupedTables(groupByRarity(data.accessories || []), "accessories-sections", [ /* ... */ ], "accessories");
+    renderGroupedTables({ "All Races": data.races || [] }, "races-sections", [ /* ... */ ], "races");
+    renderGroupedTables({ "Locations": data.locations || [] }, "locations-sections", [ /* ... */ ], "locations");
+
+    renderUpdates(data.updates || []);
+  } catch (err) {
+    console.error("Data load error:", err);
+  } finally {
+    if (spinner) spinner.style.display = "none";
   }
 });
-
-// Optional: ESC key to close search results
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && searchResults) {
-    searchResults.classList.remove("active");
-    if (clearSearchBtn) clearSearchBtn.style.display = "none";
-    if (searchInput) searchInput.value = "";
-  }
-});
-
-
-  // ... rest of your code (fetch, render, etc.)
-});
-
 
   // --------- Render grouped tables ----------
   function renderGroupedTables(groups, containerId, columns, category) {
