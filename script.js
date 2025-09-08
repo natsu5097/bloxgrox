@@ -121,30 +121,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  function renderSearchResults(results) {
-    if (!searchResults) return;
-    searchResults.innerHTML = "";
-    if (!results || results.length === 0) {
-      searchResults.innerHTML = "<p>No results</p>";
-      if (clearSearchBtn) clearSearchBtn.style.display = "none";
-      return;
-    }
-    if (clearSearchBtn) clearSearchBtn.style.display = "inline-block";
-    results.forEach(r => {
-      const it = r.item || r;
-     const card = document.createElement("div");
-     card.className = "result-card";
-      card.innerHTML = `
-        <img src="${safeText(it.image_url)}" alt="" />
-        <div class="meta">
-          <a href="item.html?category=${it.category}&id=${encodeURIComponent(it.id || it.name)}"><h3>${safeText(it.name)}</h3></a>
-          <p class="muted">${safeText(it.category)} • ${safeText(it.rarity)}</p>
-          <p>${safeText(it.short_description || it.description || "")}</p>
-        </div>
-      `;
-      searchResults.appendChild(card);
-    });
+ function renderSearchResults(results) {
+  if (!searchResults) return;
+  searchResults.innerHTML = "";
+
+  if (!results || results.length === 0) {
+    searchResults.classList.remove("active");
+    searchResults.innerHTML = "<p>No results</p>";
+    if (clearSearchBtn) clearSearchBtn.style.display = "none";
+    return;
   }
+
+  searchResults.classList.add("active"); // ✅ make visible
+  if (clearSearchBtn) clearSearchBtn.style.display = "inline-block";
+
+  results.forEach(r => {
+    const it = r.item || r;
+    const card = document.createElement("div");
+    card.className = "result-card";
+    card.innerHTML = `
+      <img src="${safeText(it.image_url)}" alt="" />
+      <div class="meta">
+        <a href="item.html?category=${it.category}&id=${encodeURIComponent(it.id || it.name)}"><h3>${safeText(it.name)}</h3></a>
+        <p class="muted">${safeText(it.category)} • ${safeText(it.rarity)}</p>
+        <p>${safeText(it.short_description || it.description || "")}</p>
+      </div>
+    `;
+    searchResults.appendChild(card);
+  });
+}
+
 
   // --------- Wire up controls ----------
   if (searchInput) {
