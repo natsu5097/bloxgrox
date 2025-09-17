@@ -885,4 +885,39 @@ body.dark #expand-collapse button {
 body.dark #expand-collapse button:hover {
   background: #0d47a1;
 }
+/* ===============================
+   Extra Wiki Enhancements
+   (paste at the very bottom)
+================================= */
 
+/* Spinner animation */
+#loadingSpinner svg { display:block; }
+#loadingSpinner circle {
+  stroke-dasharray: 125;
+  stroke-dashoffset: 0;
+  transform-origin: 50% 50%;
+  animation: spin 1s linear infinite;
+  stroke: var(--bf-accent, #2ea3ff);
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Collapsible arrow rotation (JS toggles .active) */
+.collapsible-header::after {
+  content: "▸";
+  float: right;
+  transition: transform .2s ease;
+}
+.collapsible-header.active::after {
+  transform: rotate(90deg);
+}
+
+/* Gallery tweaks */
+.gallery img {
+  max-width: 160px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform .2s ease;
+}
+.gallery img:hover {
+  transform: scale(1.05);
+}

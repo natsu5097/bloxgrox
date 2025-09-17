@@ -1,50 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Item Details</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Item Details — BloxGrox</title>
+
+  <!-- Your main stylesheet (add the CSS snippets I provided earlier to this file) -->
   <link rel="stylesheet" href="style.css?v=8">
+
+  <style>
+    /* Small page-level defaults if your stylesheet is missing some pieces */
+    :root { --gap: 18px; }
+    body { margin: 18px; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
+    #breadcrumb { margin-bottom: 12px; color: #98b6d1; font-size: 0.95rem; }
+    #item-name { margin: 6px 0 10px; font-size: 1.8rem; }
+    .item-layout { display: grid; grid-template-columns: 1fr 320px; gap: 18px; align-items: start; }
+    .item-main { min-width: 0; }
+    .item-infobox { padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.02); }
+    .page-description { margin-bottom: 12px; color: #cfe7ff; }
+    #expand-collapse { margin: 12px 0; display:flex; gap:8px; }
+    button { cursor:pointer; padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:inherit; }
+    .sr-only { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+    @media (max-width:900px) {
+      .item-layout { grid-template-columns: 1fr; }
+      .item-infobox { order: -1; margin-bottom: 12px; }
+    }
+  </style>
 </head>
 <body>
-  <div id="item-page">
+  <!-- Skip link for accessibility -->
+  <a href="#item-details" class="sr-only">Skip to content</a>
 
-    <!-- Breadcrumb -->
-    <nav id="breadcrumb">
-      <a href="index.html">Home</a> › 
-      <span id="breadcrumb-category">Category</span> › 
+  <!-- Loading spinner (hidden by default; item.js toggles it) -->
+  <div id="loadingSpinner" aria-hidden="true" style="display:none; position:fixed; right:18px; top:18px; z-index:1200;">
+    <svg width="36" height="36" viewBox="0 0 50 50" aria-hidden="true" role="img">
+      <circle cx="25" cy="25" r="20" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"></circle>
+    </svg>
+  </div>
+
+  <!-- Header: breadcrumb + dark mode toggle -->
+  <header style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+    <nav id="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a> <span aria-hidden="true">›</span>
+      <span id="breadcrumb-category">Category</span> <span aria-hidden="true">›</span>
       <span id="breadcrumb-item">Item</span>
     </nav>
 
-    <!-- Page Title -->
-    <h1 id="item-name">Loading...</h1>
-    
-<div id="page-description" class="page-description"></div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <button id="darkModeToggle" aria-pressed="false" title="Toggle theme">
+        <span class="icon">🌙</span>
+        <span class="sr-only">Toggle theme</span>
+      </button>
+    </div>
+  </header>
 
+  <!-- Title + short description -->
+  <main id="item-page" style="margin-top:8px;">
+    <h1 id="item-name">Loading...</h1>
+    <div id="page-description" class="page-description" aria-live="polite"></div>
 
     <!-- Expand / Collapse controls -->
     <div id="expand-collapse">
-      <button id="expandAll">Expand All</button>
-      <button id="collapseAll">Collapse All</button>
+      <button id="expandAll" type="button">Expand All</button>
+      <button id="collapseAll" type="button">Collapse All</button>
     </div>
 
-    <!-- Two-column layout -->
+    <!-- Two-column layout: main content + infobox -->
     <div class="item-layout">
-      <!-- Left: Main Content -->
-      <div class="item-main">
-        <div id="item-details">
+      <!-- Left column: main details (collapsible wiki sections injected by JS) -->
+      <section class="item-main" aria-labelledby="item-name">
+        <div id="item-details" tabindex="0">
           <p>Loading details...</p>
         </div>
-      </div>
+      </section>
 
-      <!-- Right: Infobox -->
-      <aside class="item-infobox" id="item-infobox">
+      <!-- Right column: infobox -->
+      <aside class="item-infobox" id="item-infobox" aria-labelledby="item-name" role="complementary">
         <p>Loading info...</p>
+        <!-- optional place for a "View on Wiki" link (item.js may inject) -->
+        <div id="infobox-source" style="margin-top:10px; font-size:0.9rem; color: #9fb3c8;"></div>
       </aside>
     </div>
-  </div>
+  </main>
 
-  <!-- Scripts -->
+  <footer style="margin-top:28px; color:#9fb3c8; font-size:0.9rem;">
+    <p>Data source: local <code>data.json</code>. Enrichment from <a href="https://blox-fruits.fandom.com" target="_blank" rel="noopener">Blox Fruits Wiki</a>.</p>
+  </footer>
+
+  <!-- Item page behaviour (make sure item.js is present) -->
   <script src="item.js?v=8"></script>
 </body>
 </html>
