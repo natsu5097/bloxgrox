@@ -1,52 +1,244 @@
-// item.js
+/* === item.js - Robust Version === */
+document.addEventListener("DOMContentLoaded", async () => {
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("category");
+  const id = params.get("id");
+  const spinner = document.getElementById("loadingSpinner");
 
-// Container where all items will be displayed
-const container = document.getElementById('items-container');
+  if (spinner) spinner.style.display = "block";
 
-// Fetch the data.json file
-fetch('./data/data.json')
-  .then(response => {
-    if (!response.ok) throw new Error('Failed to load data.json');
-    return response.json();
-  })
-  .then(data => {
-    displayItems(data);
-  })
-  .catch(err => {
-    console.error('Error loading JSON:', err);
-    container.innerHTML = '<p>Failed to load items.</p>';
-  });
+  // Safe helpers
+  const safeText = v => (v === undefined || v === null ? "" : String(v));
+  const safeArray = arr => (Array.isArray(arr) ? arr : []);
+  const safeObject = obj => (obj && typeof obj === "object" ? obj : {});
 
-// Function to display all items
-function displayItems(items) {
-  container.innerHTML = ''; // Clear container
+  try {
+    const resp = await fetch("data.json");
+    if (!resp.ok) throw new Error("Failed to fetch data.json");
+    const data = await resp.json();
 
-  items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'item-card';
+    // Flatten Fruits by rarity
+    const fruitsArray = [];
+    Object.values(data.Fruits || {}).forEach(rarityArr => {
+      if (Array.isArray(rarityArr)) fruitsArray.push(...rarityArr);
+    });
 
-    // Image
-    const img = document.createElement('img');
-    img.src = `./images/${item.image}`; // Make sure 'image' matches JSON field
-    img.alt = item.name;
-    img.onerror = () => img.src = './images/placeholder.png'; // fallback
+    // Flatten all categories
+    const categories = [
+      "FightingStyles","Swords","Guns","Gears","Updates",
+      "BloxFruitDealer","BloxFruitGacha","Trading","Trees",
+      "SeaEvents","Water","Shop","Factory","CastleOnTheSea",
+      "Enemies","GrandBrigade","ShipRaid","HauntedShipRaid",
+      "Cafe","Mansion"
+    ];
 
-    // Name
-    const name = document.createElement('h3');
-    name.textContent = item.name;
+    let allItems = [
+      ...fruitsArray.map(i => ({ ...i, category: "Fruits" }))
+    ];
 
-    // Stats
-    const stats = document.createElement('p');
-    stats.innerHTML = `
-      Type: ${item.type || 'Unknown'} <br>
-      Rarity: ${item.rarity || 'Unknown'} <br>
-      Power: ${item.power || 'N/A'}
-    `;
+    categories.forEach(cat => {
+      const items = safeArray(data[cat]);
+      items.forEach(it => allItems.push({ ...it, category: cat }));
+    });
 
-    // Append everything
-    card.appendChild(img);
-    card.appendChild(name);
-    card.appendChild(stats);
-    container.appendChild(card);
-  });
-}
+    // Find requested item
+    let item = null;
+    if (category === "Fruits") {
+      item = fruitsArray.find(i => String(i.id) === id);
+    } else if (category && data[category]) {
+      item = safeArray(data[category]).find(i => String(i.id) === id);
+    }
+    if (!item) item = allItems.find(i => String(i.id) === id);
+
+    if (!item) {
+      document.getElementById("item-name").textContent = "Item Not Found";
+      document.getElementById("item-details").innerHTML =
+        "<p>Sorry, this item does not exist in the database.</p>";
+      return;
+    }
+
+    // Ensure safe defaults
+    item.moves = safeArray(item.moves);
+    item.stats = safeObject(item.stats);
+    item.trivia = safeArray(item.trivia);
+    item.gallery = safeArray(item.gallery);
+
+    // Page title and heading
+    document.title = `${item.name} - BloxGrox Wiki`;
+    document.getElementById("item-name").textContent = item.name;
+
+    // Page description
+    const pageDesc = document.getElementById("page-description");
+    if (pageDesc)
+      pageDesc.innerHTML = safeText(item.page_description || item.description || "No description available.");
+
+    // Infobox
+    const infobox = document.getElementById("item-infobox");
+    if (infobox) {
+      infobox.innerHTML = `
+        ${item.image_url ? `<img src="${safeText(item.image_url)}" alt="${safeText(item.name)}" style="max-width:100%;">` : ""}
+        ${item.rarity ? `<p><b>Rarity:</b> ${safeText(item.rarity)}</p>` : ""}
+        ${item.type ? `<p><b>Type:</b> ${safeText(item.type)}</p>` : ""}
+        ${item.sea ? `<p><b>Sea:</b> ${safeText(item.sea)}</p>` : ""}
+        ${item.price_money ? `<p><b>Price (Money):</b> ${Number(item.price_money).toLocaleString()}</p>` : ""}
+        ${item.price_robux ? `<p><b>Price (Robux):</b> ${Number(item.price_robux).toLocaleString()}</p>` : ""}
+        ${item._wiki_source ? `<p><a href="${safeText(item._wiki_source)}" target="_blank" rel="noopener">View on Wiki</a></p>` : ""}
+      `;
+    }
+
+    // Wiki-style collapsible sections
+    const sections = [
+      {
+        id: "description",
+        title: "Description",
+        content: `<p>${safeText(item.wiki_description || item.description || item.page_description || "No description available.")}</p>`
+      },
+      {
+        id: "moves",
+        title: "Moves",
+        content: item.moves.length
+          ? `<ul>${item.moves.map(m => `<li>${safeText(m)}</li>`).join("")}</ul>`
+          : "<p>No moves listed.</p>"
+      },
+      {
+        id: "stats",
+        title: "Stats",
+        content: Object.keys(item.stats).length
+          ? `<table>${Object.entries(item.stats).map(([k,v]) => `<tr><td><b>${safeText(k)}</b></td><td>${safeText(v)}</td></tr>`).join("")}</table>`
+          : "<p>No stats available.</p>"
+      },
+      {
+        id: "trivia",
+        title: "Trivia",
+        content: item.trivia.length
+          ? `<ul>${item.trivia.map(t => `<li>${safeText(t)}</li>`).join("")}</ul>`
+          : "<p>No trivia available.</p>"
+      },
+      {
+        id: "gallery",
+        title: "Gallery",
+        content: item.gallery.length
+          ? `<div class="gallery">${item.gallery.map(img => `<img src="${safeText(img)}" alt="${safeText(item.name)} gallery image">`).join("")}</div>`
+          : "<p>No gallery images.</p>"
+      }
+    ];
+
+    const details = document.getElementById("item-details");
+    if (details) {
+      details.innerHTML = "";
+      const sectionContainer = document.createElement("div");
+      sectionContainer.id = "wiki-sections";
+
+      sections.forEach((s, index) => {
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("collapsible-section");
+
+        const header = document.createElement("h2");
+        header.textContent = s.title;
+        header.id = `item-${s.id}`;
+        header.classList.add("collapsible-header");
+        header.tabIndex = 0;
+
+        const content = document.createElement("div");
+        content.classList.add("collapsible-content");
+        content.innerHTML = s.content;
+
+        if (index === 0) {
+          header.classList.add("active");
+          content.classList.add("active");
+        }
+
+        wrapper.appendChild(header);
+        wrapper.appendChild(content);
+        sectionContainer.appendChild(wrapper);
+
+        // Keyboard accessibility
+        header.addEventListener("keydown", e => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            header.click();
+          }
+        });
+      });
+
+      details.appendChild(sectionContainer);
+    }
+
+    // Collapsible toggle
+    document.querySelectorAll(".collapsible-header").forEach(header => {
+      header.addEventListener("click", () => {
+        header.classList.toggle("active");
+        const content = header.nextElementSibling;
+        if (content) content.classList.toggle("active");
+      });
+    });
+
+    // Expand/Collapse all
+    const exp = document.getElementById("expandAll");
+    const col = document.getElementById("collapseAll");
+    if (exp) exp.addEventListener("click", () => {
+      document.querySelectorAll(".collapsible-header").forEach(h => h.classList.add("active"));
+      document.querySelectorAll(".collapsible-content").forEach(c => c.classList.add("active"));
+    });
+    if (col) col.addEventListener("click", () => {
+      document.querySelectorAll(".collapsible-header").forEach(h => h.classList.remove("active"));
+      document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active"));
+    });
+
+    // Breadcrumb
+    const categoryNames = {
+      Fruits: "Fruits",
+      FightingStyles: "Fighting Styles",
+      Swords: "Swords",
+      Guns: "Guns",
+      Gears: "Gears",
+      Updates: "Updates",
+      BloxFruitDealer: "Blox Fruit Dealer",
+      BloxFruitGacha: "Blox Fruit Gacha",
+      Trading: "Trading",
+      Trees: "Trees",
+      SeaEvents: "Sea Events",
+      Water: "Water",
+      Shop: "Shop",
+      Factory: "Factory",
+      CastleOnTheSea: "Castle on the Sea",
+      Enemies: "Enemies",
+      GrandBrigade: "Grand Brigade",
+      ShipRaid: "Ship Raid",
+      HauntedShipRaid: "Haunted Ship Raid",
+      Cafe: "Café",
+      Mansion: "Mansion"
+    };
+    const bcCat = document.getElementById("breadcrumb-category");
+    const bcItem = document.getElementById("breadcrumb-item");
+    if (bcCat) bcCat.textContent = categoryNames[item.category] || "Unknown Category";
+    if (bcItem) bcItem.textContent = item.name || "Unknown Item";
+
+  } catch (err) {
+    console.error("❌ Error loading item:", err);
+    const details = document.getElementById("item-details");
+    if (details) details.innerHTML = "<p>Failed to load item data.</p>";
+  } finally {
+    if (spinner) spinner.style.display = "none";
+  }
+
+  // Dark mode toggle
+  const darkToggle = document.getElementById("darkModeToggle");
+  if (darkToggle) {
+    const icon = darkToggle.querySelector(".icon");
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+      if (icon) icon.textContent = "☀️";
+    }
+    darkToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        if (icon) icon.textContent = "☀️";
+      } else {
+        localStorage.setItem("theme", "light");
+        if (icon) icon.textContent = "🌙";
+      }
+    });
+  }
+});
