@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const spinner = document.getElementById("loadingSpinner");
+  const mainContent = document.querySelector("main");
+
   if (spinner) spinner.style.display = "block";
 
   const searchBox = document.getElementById("search-box");
@@ -23,7 +25,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     Object.keys(groups).forEach(groupName=>{
       const section=document.createElement("section");
       section.classList.add("collapsible-section");
-
       const header=document.createElement("h3");
       header.textContent=`${groupName} (${groups[groupName].length})`;
       header.classList.add("collapsible-header");
@@ -126,7 +127,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if(!resp.ok) throw new Error("Failed to fetch data.json");
     const data=await resp.json();
 
-    // Flatten all items for search
     allItems=[
       ...(Object.values(data.Fruits||{}).flatMap(rarity=> Object.values(rarity).flatMap(typeArr=>typeArr.map(i=>({...i,category:"Fruits"})))),
       ...(data.Swords||[]).map(i=>({...i,category:"Swords"})),
@@ -137,7 +137,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     fuse=new Fuse(allItems,{ keys:["name","description","trivia"], threshold:0.35 });
 
-    // Render Fruits
     renderNestedFruits(data.Fruits||{}, "fruits-sections", [
       {header:"Image",key:"image_url"},
       {header:"Name",key:"name",format:(v,i)=>`<a href="item.html?category=Fruits&id=${i.id}">${v}</a>`},
@@ -170,15 +169,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       {header:"Description",key:"description"}
     ]);
 
-  } catch(err){ console.error(err); }
+  } catch(err){
+    console.error(err);
+    if(mainContent){
+      mainContent.innerHTML=`<p style="color:red; text-align:center; font-weight:bold;">⚠️ Failed to load data.json. Check console for details.</p>`;
+    }
+  } finally{
+    if(spinner) spinner.style.display="none";
+  }
 
-  finally{ if(spinner) spinner.style.display="none"; }
-
-  // Search input
+  // Search functionality
   if(searchBox){
     searchBox.addEventListener("input", ()=>{
       const q=searchBox.value.trim();
-      if(!q){ searchResults.innerHTML=""; searchResults.classList.remove("active"); return; }
+      if(!q){ searchResults.innerHTML=""; searchResults.classList.remove("active"); if(clearSearchBtn) clearSearchBtn.style.display="none"; return; }
       const res=fuse?fuse.search(q,{limit:50}):[];
       searchResults.innerHTML="";
       res.forEach(r=>{
@@ -200,6 +204,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if(clearSearchBtn) clearSearchBtn.style.display="inline-block";
     });
   }
+
   if(clearSearchBtn) clearSearchBtn.addEventListener("click",()=>{
     if(searchBox) searchBox.value="";
     searchResults.innerHTML=""; searchResults.classList.remove("active");
