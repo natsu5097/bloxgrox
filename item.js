@@ -1,4 +1,4 @@
-/* === item.js (integrated & corrected) ===
+/* === item.js (final integrated version) ===
    - Reads ?id and ?category (fallback to scanning all categories)
    - Fetches data.json, flattens categories if needed
    - Renders page title, description, infobox, collapsible wiki sections
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!resp.ok) throw new Error("Failed to fetch data.json");
     const data = await resp.json();
 
-    // Flatten all categories so we can still find the item if category is missing/wrong
+    // Flatten all categories for fallback search
     const categories = ["fruits","fightingStyles","swords","guns","accessories","races","locations","updates"];
     let allItems = [];
     categories.forEach(cat => {
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       items.forEach(it => allItems.push({...it, category: cat}));
     });
 
-    // First try inside the specified category, else fallback to all
+    // Try to find item
     let item = null;
     if (category && data[category]) {
       item = (data[category] || []).find(i => String(i.id) === id);
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.title = `${item.name} - BloxGrox Wiki`;
     document.getElementById("item-name").textContent = item.name;
 
-    // ✅ Page description (top intro text)
+    // ✅ Page description (intro)
     const pageDesc = document.getElementById("page-description");
     if (pageDesc) {
       pageDesc.innerHTML = item.page_description || item.description || "No description available.";
@@ -66,18 +66,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         ${item.sea ? `<p><b>Sea:</b> ${safeText(item.sea)}</p>` : ""}
         ${item.price_money ? `<p><b>Price (Money):</b> ${Number(item.price_money).toLocaleString()}</p>` : ""}
         ${item.price_robux ? `<p><b>Price (Robux):</b> ${Number(item.price_robux).toLocaleString()}</p>` : ""}
+        ${item._wiki_source ? `<p><a href="${safeText(item._wiki_source)}" target="_blank" rel="noopener">View on Wiki</a></p>` : ""}
       `;
     }
 
     // ✅ Wiki-style collapsible sections
     const sections = [
       {
-  id: "description",
-  title: "Description",
-  content: `<p>${safeText(
-    item.wiki_description || item.description || item.page_description || "No description available."
-  )}</p>`
-},
+        id: "description",
+        title: "Description",
+        content: `<p>${safeText(
+          item.wiki_description || item.description || item.page_description || "No description available."
+        )}</p>`
+      },
       {
         id: "moves",
         title: "Moves",
