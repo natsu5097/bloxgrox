@@ -1,8 +1,8 @@
-/* === item.js - compatible with structured_data.json === */
+/* === item.js - Fixed for structured_data.json === */
 document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(window.location.search);
-  const categoryParam = params.get("category");
-  const idParam = params.get("id");
+  const category = params.get("category");
+  const id = params.get("id");
   const spinner = document.getElementById("loadingSpinner");
 
   if (spinner) spinner.style.display = "block";
@@ -16,51 +16,35 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!resp.ok) throw new Error("Failed to fetch data.json");
     const data = await resp.json();
 
-    // All categories in your structured JSON
-    const categories = [
-      "Fruits","FightingStyles","Swords","Guns","Gears","Updates","BloxFruitDealer","BloxFruitGacha",
-      "Trading","Trees","SeaEvents","Water","Shop","Factory","CastleOnTheSea","Enemies",
-      "GrandBrigade","ShipRaid","HauntedShipRaid","Cafe","Mansion"
+    // Flatten Fruits by rarity
+    function flattenFruits(fruitsObj) {
+      const arr = [];
+      Object.values(fruitsObj || {}).forEach(rarityArr => {
+        if (Array.isArray(rarityArr)) arr.push(...rarityArr);
+      });
+      return arr;
+    }
+    const fruitsArray = flattenFruits(data.Fruits);
+
+    // Flatten all categories
+    const categories = ["FightingStyles","Swords","Guns","Gears","Updates","BloxFruitDealer","BloxFruitGacha","Trading","Trees","SeaEvents","Water","Shop","Factory","CastleOnTheSea","Enemies","GrandBrigade","ShipRaid","HauntedShipRaid","Cafe","Mansion"];
+    let allItems = [
+      ...fruitsArray.map(i => ({ ...i, category: "Fruits" }))
     ];
-
-    // Flatten all items for fallback search
-    let allItems = [];
     categories.forEach(cat => {
-      const items = data[cat];
-      if (!items) return;
-
-      if (cat === "Fruits") {
-        // Fruits nested by rarity
-        Object.keys(items).forEach(rarity => {
-          if (Array.isArray(items[rarity])) {
-            items[rarity].forEach(i => allItems.push({...i, category: cat, rarity}));
-          }
-        });
-      } else if (Array.isArray(items)) {
-        items.forEach(i => allItems.push({...i, category: cat}));
-      }
+      const items = Array.isArray(data[cat]) ? data[cat] : [];
+      items.forEach(it => allItems.push({ ...it, category: cat }));
     });
 
-    // Try to find the requested item
+    // Find the requested item
     let item = null;
-    if (categoryParam && idParam) {
-      const catData = data[categoryParam] || {};
-      if (categoryParam === "Fruits") {
-        // Fruits nested by rarity
-        for (const r in catData) {
-          const found = catData[r].find(i => String(i.id) === idParam);
-          if (found) {
-            item = {...found, category: categoryParam, rarity: r};
-            break;
-          }
-        }
-      } else if (Array.isArray(catData)) {
-        item = catData.find(i => String(i.id) === idParam);
-      }
+    if (category && category === "Fruits") {
+      item = fruitsArray.find(i => String(i.id) === id);
+    } else if (category && data[category]) {
+      item = (data[category] || []).find(i => String(i.id) === id);
     }
-
     if (!item) {
-      item = allItems.find(i => String(i.id) === idParam);
+      item = allItems.find(i => String(i.id) === id);
     }
 
     if (!item) {
@@ -70,21 +54,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // Page title + heading
+    // Page title and heading
     document.title = `${item.name} - BloxGrox Wiki`;
     document.getElementById("item-name").textContent = item.name;
 
     // Page description
     const pageDesc = document.getElementById("page-description");
-    if (pageDesc) {
-      pageDesc.innerHTML = item.page_description || item.description || "No description available.";
-    }
+    if (pageDesc) pageDesc.innerHTML = item.page_description || item.description || "No description available.";
 
     // Infobox
     const infobox = document.getElementById("item-infobox");
     if (infobox) {
       infobox.innerHTML = `
-        ${item.image_url ? `<img src="${safeText(item.image_url)}" alt="${safeText(item.name)}" style="width:100%"/>` : ""}
+        ${item.image_url ? `<img src="${safeText(item.image_url)}" alt="${safeText(item.name)}" style="max-width:100%;">` : ""}
         ${item.rarity ? `<p><b>Rarity:</b> ${safeText(item.rarity)}</p>` : ""}
         ${item.type ? `<p><b>Type:</b> ${safeText(item.type)}</p>` : ""}
         ${item.sea ? `<p><b>Sea:</b> ${safeText(item.sea)}</p>` : ""}
@@ -94,7 +76,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
     }
 
-    // Collapsible wiki sections
+    // Wiki-style collapsible sections
     const sections = [
       {
         id: "description",
@@ -126,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         id: "gallery",
         title: "Gallery",
         content: item.gallery && item.gallery.length
-          ? `<div class="gallery">${item.gallery.map(img => `<img src="${safeText(img)}" alt="${safeText(item.name)} gallery image" style="max-width:100px;margin:4px"/>`).join("")}</div>`
+          ? `<div class="gallery">${item.gallery.map(img => `<img src="${safeText(img)}" alt="${safeText(item.name)} gallery image" style="max-width:80px; margin:4px;">`).join("")}</div>`
           : "<p>No gallery images.</p>"
       }
     ];
@@ -134,10 +116,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const details = document.getElementById("item-details");
     if (details) {
       details.innerHTML = "";
-      const container = document.createElement("div");
-      container.id = "wiki-sections";
+      const sectionContainer = document.createElement("div");
+      sectionContainer.id = "wiki-sections";
 
-      sections.forEach((s,index) => {
+      sections.forEach((s, index) => {
         const wrapper = document.createElement("div");
         wrapper.classList.add("collapsible-section");
 
@@ -145,29 +127,44 @@ document.addEventListener("DOMContentLoaded", async () => {
         header.textContent = s.title;
         header.id = `item-${s.id}`;
         header.classList.add("collapsible-header");
-        if(index===0) header.classList.add("active");
 
         const content = document.createElement("div");
         content.classList.add("collapsible-content");
         content.innerHTML = s.content;
-        if(index===0) content.classList.add("active");
+
+        if (index === 0) {
+          header.classList.add("active");
+          content.classList.add("active");
+        }
 
         wrapper.appendChild(header);
         wrapper.appendChild(content);
-        container.appendChild(wrapper);
+        sectionContainer.appendChild(wrapper);
       });
 
-      details.appendChild(container);
-
-      // collapsible toggle
-      document.querySelectorAll(".collapsible-header").forEach(h => {
-        h.addEventListener("click", () => {
-          h.classList.toggle("active");
-          const content = h.nextElementSibling;
-          if(content) content.classList.toggle("active");
-        });
-      });
+      details.appendChild(sectionContainer);
     }
+
+    // Collapsible toggle
+    document.querySelectorAll(".collapsible-header").forEach(header => {
+      header.addEventListener("click", () => {
+        header.classList.toggle("active");
+        const content = header.nextElementSibling;
+        if (content) content.classList.toggle("active");
+      });
+    });
+
+    // Expand/Collapse all
+    const exp = document.getElementById("expandAll");
+    const col = document.getElementById("collapseAll");
+    if (exp) exp.addEventListener("click", () => {
+      document.querySelectorAll(".collapsible-header").forEach(h => h.classList.add("active"));
+      document.querySelectorAll(".collapsible-content").forEach(c => c.classList.add("active"));
+    });
+    if (col) col.addEventListener("click", () => {
+      document.querySelectorAll(".collapsible-header").forEach(h => h.classList.remove("active"));
+      document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active"));
+    });
 
     // Breadcrumb
     const categoryNames = {
@@ -198,32 +195,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (bcCat) bcCat.textContent = categoryNames[item.category] || item.category;
     if (bcItem) bcItem.textContent = item.name;
 
-  } catch(err) {
+  } catch (err) {
     console.error("❌ Error loading item:", err);
     const details = document.getElementById("item-details");
-    if(details) details.innerHTML = "<p>Failed to load item data.</p>";
+    if (details) details.innerHTML = "<p>Failed to load item data.</p>";
   } finally {
     if (spinner) spinner.style.display = "none";
   }
 
-  // Dark Mode
+  // Dark mode toggle
   const darkToggle = document.getElementById("darkModeToggle");
-  if(darkToggle) {
+  if (darkToggle) {
     const icon = darkToggle.querySelector(".icon");
-    if(localStorage.getItem("theme")==="dark") {
+    if (localStorage.getItem("theme") === "dark") {
       document.body.classList.add("dark");
-      if(icon) icon.textContent="☀️";
+      if (icon) icon.textContent = "☀️";
     }
-    darkToggle.addEventListener("click", ()=>{
+    darkToggle.addEventListener("click", () => {
       document.body.classList.toggle("dark");
-      if(document.body.classList.contains("dark")) {
-        localStorage.setItem("theme","dark");
-        if(icon) icon.textContent="☀️";
+      if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        if (icon) icon.textContent = "☀️";
       } else {
-        localStorage.setItem("theme","light");
-        if(icon) icon.textContent="🌙";
+        localStorage.setItem("theme", "light");
+        if (icon) icon.textContent = "🌙";
       }
     });
   }
 });
-``
