@@ -1,14 +1,4 @@
-/* === script.js - Fixed & Integrated ===
-   Features:
-   - fetches data.json
-   - builds `allItems` array with category markers
-   - renders per-category sections (fruits, swords, fightingStyles, etc.)
-   - groups items by rarity inside each category (collapsible DataTables)
-   - Fuse.js global search with clear button
-   - Expand All / Collapse All controls
-   - Scroll-to-top button
-   - Dark Mode toggle
-*/
+/* === script.js - Fully Polished & Nested Fruits Support === */
 
 document.addEventListener("DOMContentLoaded", async () => {
   const spinner = document.getElementById("loadingSpinner");
@@ -26,9 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let fuse = null;
 
   // ---------- Helpers ----------
-  function safeText(v) {
-    return v === undefined || v === null ? "" : String(v);
-  }
+  function safeText(v) { return v === undefined || v === null ? "" : String(v); }
 
   function groupByRarity(items) {
     return items.reduce((groups, item) => {
@@ -38,13 +26,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, {});
   }
 
-  // ---------- Search controls ----------
+  // ---------- Search ----------
   document.addEventListener("click", (e) => {
     if (searchResults && !searchResults.contains(e.target) && !searchInput.contains(e.target)) {
       searchResults.classList.remove("active");
     }
   });
-
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && searchResults) {
       searchResults.classList.remove("active");
@@ -53,81 +40,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // ---------- Render grouped tables ----------
-  function renderGroupedTables(groups, containerId, columns, category) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    container.innerHTML = "";
-
-    Object.keys(groups).forEach(groupName => {
-      const section = document.createElement("section");
-      section.classList.add("collapsible-section");
-
-      const header = document.createElement("h3");
-      header.textContent = `${groupName} (${groups[groupName].length})`;
-      header.classList.add("collapsible-header");
-
-      const tableWrapper = document.createElement("div");
-      tableWrapper.classList.add("collapsible-content");
-
-      const table = document.createElement("table");
-      table.classList.add("dataTable");
-
-      const thead = document.createElement("thead");
-      thead.innerHTML = `<tr>${columns.map(c => `<th>${c.header}</th>`).join("")}</tr>`;
-      table.appendChild(thead);
-
-      const tbody = document.createElement("tbody");
-      groups[groupName].forEach(item => {
-        const row = document.createElement("tr");
-        row.innerHTML = columns.map(c => {
-          if (c.key === "image_url") {
-            const src = safeText(item[c.key]) || "images/placeholder.png";
-            return `<td><img src="${src}" alt="${safeText(item.name)}" style="width:40px;height:40px;object-fit:contain"></td>`;
-          }
-          const raw = item[c.key];
-          const txt = c.format ? c.format(raw, item) : safeText(raw);
-          return `<td>${txt}</td>`;
-        }).join("");
-        tbody.appendChild(row);
-      });
-
-      table.appendChild(tbody);
-      tableWrapper.appendChild(table);
-      section.appendChild(header);
-      section.appendChild(tableWrapper);
-      container.appendChild(section);
-
-      // collapsible + lazy DataTable
-      let initialized = false;
-      header.addEventListener("click", () => {
-        header.classList.toggle("active");
-        tableWrapper.classList.toggle("active");
-        if (!initialized && tableWrapper.classList.contains("active")) {
-          new DataTable(table, { paging: false, searchable: false, info: false });
-          initialized = true;
-        }
-      });
-    });
-  }
-
-  // ---------- Render updates ----------
-  function renderUpdates(updates) {
-    const updatesBody = document.querySelector("#updates-table tbody");
-    if (!updatesBody) return;
-    updatesBody.innerHTML = "";
-    updates.forEach(u => {
-      const r = document.createElement("tr");
-      r.innerHTML = `
-        <td><a href="item.html?category=updates&id=${u.id}">${safeText(u.version)}</a></td>
-        <td>${safeText(u.date)}</td>
-        <td>${safeText(u.details)}</td>
-      `;
-      updatesBody.appendChild(r);
-    });
-  }
-
-  // ---------- Fuse.js ----------
   function initFuse(items) {
     fuse = new Fuse(items, {
       keys: ["name", "description", "short_description", "rarity", "type", "category"],
@@ -139,7 +51,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderSearchResults(results) {
     if (!searchResults) return;
     searchResults.innerHTML = "";
-
     if (!results || results.length === 0) {
       searchResults.classList.remove("active");
       searchResults.innerHTML = "<p>No results</p>";
@@ -168,17 +79,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // ---------- Wire up controls ----------
   if (searchInput) {
     let timer = null;
     searchInput.addEventListener("input", () => {
       clearTimeout(timer);
       const q = searchInput.value.trim();
-      if (!q) {
-        renderSearchResults([]);
-        if (clearSearchBtn) clearSearchBtn.style.display = "none";
-        return;
-      }
+      if (!q) { renderSearchResults([]); if (clearSearchBtn) clearSearchBtn.style.display = "none"; return; }
       timer = setTimeout(() => {
         const res = fuse ? fuse.search(q, { limit: 50 }) : [];
         renderSearchResults(res);
@@ -194,16 +100,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  // ---------- Expand / Collapse All ----------
   if (expandAllBtn) {
     expandAllBtn.addEventListener("click", () => {
-      document.querySelectorAll(".collapsible-content").forEach(c => {
-        c.classList.add("active");
-        const header = c.previousElementSibling;
-        if (header) header.classList.add("active");
-      });
+      document.querySelectorAll(".collapsible-content").forEach(c => c.classList.add("active"));
+      document.querySelectorAll(".collapsible-header").forEach(h => h.classList.add("active"));
     });
   }
-
   if (collapseAllBtn) {
     collapseAllBtn.addEventListener("click", () => {
       document.querySelectorAll(".collapsible-content").forEach(c => c.classList.remove("active"));
@@ -211,6 +114,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  // ---------- Scroll to Top ----------
   if (scrollTopBtn) {
     window.addEventListener("scroll", () => {
       scrollTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
@@ -222,31 +126,158 @@ document.addEventListener("DOMContentLoaded", async () => {
   const darkToggle = document.getElementById("darkModeToggle");
   if (darkToggle) {
     const icon = darkToggle.querySelector(".icon");
-    if (localStorage.getItem("theme") === "dark") {
-      document.body.classList.add("dark");
-      if (icon) icon.textContent = "☀️";
-    }
+    if (localStorage.getItem("theme") === "dark") { document.body.classList.add("dark"); if(icon) icon.textContent="☀️"; }
     darkToggle.addEventListener("click", () => {
       document.body.classList.toggle("dark");
       if (document.body.classList.contains("dark")) {
-        localStorage.setItem("theme", "dark");
-        if (icon) icon.textContent = "☀️";
-      } else {
-        localStorage.setItem("theme", "light");
-        if (icon) icon.textContent = "🌙";
-      }
+        localStorage.setItem("theme", "dark"); if(icon) icon.textContent="☀️";
+      } else { localStorage.setItem("theme","light"); if(icon) icon.textContent="🌙"; }
     });
   }
 
-  // ---------- Fetch + render ----------
+  // ---------- Render Functions ----------
+  function renderGroupedTables(groups, containerId, columns) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = "";
+
+    Object.keys(groups).forEach(groupName => {
+      const section = document.createElement("section");
+      section.classList.add("collapsible-section");
+
+      const header = document.createElement("h3");
+      header.textContent = `${groupName} (${groups[groupName].length})`;
+      header.classList.add("collapsible-header");
+
+      const tableWrapper = document.createElement("div");
+      tableWrapper.classList.add("collapsible-content");
+
+      const table = document.createElement("table");
+      table.classList.add("dataTable");
+
+      const thead = document.createElement("thead");
+      thead.innerHTML = `<tr>${columns.map(c => `<th>${c.header}</th>`).join("")}</tr>`;
+      table.appendChild(thead);
+
+      const tbody = document.createElement("tbody");
+      groups[groupName].forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = columns.map(c => {
+          if (c.key === "image_url") {
+            const src = item[c.key] || "images/placeholder.png";
+            return `<td><img src="${src}" alt="${item.name || ""}" style="width:40px;height:40px;object-fit:contain"></td>`;
+          }
+          const raw = item[c.key];
+          return `<td>${c.format ? c.format(raw, item) : (raw || "")}</td>`;
+        }).join("");
+        tbody.appendChild(row);
+      });
+
+      table.appendChild(tbody);
+      tableWrapper.appendChild(table);
+      section.appendChild(header);
+      section.appendChild(tableWrapper);
+      container.appendChild(section);
+
+      let initialized = false;
+      header.addEventListener("click", () => {
+        header.classList.toggle("active");
+        tableWrapper.classList.toggle("active");
+        if (!initialized && tableWrapper.classList.contains("active")) {
+          new DataTable(table, { paging:false, searchable:false, info:false });
+          initialized = true;
+        }
+      });
+    });
+  }
+
+  function renderNestedFruits(fruitsData, containerId, columns) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = "";
+
+    Object.keys(fruitsData).forEach(rarity => {
+      const types = fruitsData[rarity];
+      Object.keys(types).forEach(type => {
+        const group = types[type];
+        if (!group || group.length === 0) return;
+
+        const section = document.createElement("section");
+        section.classList.add("collapsible-section");
+
+        const header = document.createElement("h3");
+        header.textContent = `${rarity} • ${type} (${group.length})`;
+        header.classList.add("collapsible-header");
+
+        const tableWrapper = document.createElement("div");
+        tableWrapper.classList.add("collapsible-content");
+
+        const table = document.createElement("table");
+        table.classList.add("dataTable");
+
+        const thead = document.createElement("thead");
+        thead.innerHTML = `<tr>${columns.map(c => `<th>${c.header}</th>`).join("")}</tr>`;
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+        group.forEach(item => {
+          const row = document.createElement("tr");
+          row.innerHTML = columns.map(c => {
+            if(c.key==="image_url"){
+              const src=item[c.key]||"images/placeholder.png";
+              return `<td><img src="${src}" alt="${item.name||""}" style="width:40px;height:40px;object-fit:contain"></td>`;
+            }
+            const raw=item[c.key];
+            return `<td>${c.format?c.format(raw,item):(raw||"")}</td>`;
+          }).join("");
+          tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+        tableWrapper.appendChild(table);
+        section.appendChild(header);
+        section.appendChild(tableWrapper);
+        container.appendChild(section);
+
+        let initialized=false;
+        header.addEventListener("click",()=>{
+          header.classList.toggle("active");
+          tableWrapper.classList.toggle("active");
+          if(!initialized&&tableWrapper.classList.contains("active")){
+            new DataTable(table,{paging:false,searchable:false,info:false});
+            initialized=true;
+          }
+        });
+      });
+    });
+  }
+
+  function renderUpdates(updates) {
+    const updatesBody = document.querySelector("#updates-table tbody");
+    if (!updatesBody) return;
+    updatesBody.innerHTML = "";
+    updates.forEach(u => {
+      const r = document.createElement("tr");
+      r.innerHTML = `
+        <td><a href="item.html?category=updates&id=${u.id}">${safeText(u.version)}</a></td>
+        <td>${safeText(u.date)}</td>
+        <td>${safeText(u.details)}</td>
+      `;
+      updatesBody.appendChild(r);
+    });
+  }
+
+  // ---------- Fetch + Render ----------
   try {
-    const resp = await fetch("data.json"); // data.json is in same folder
+    const resp = await fetch("data.json");
     if (!resp.ok) throw new Error("Failed to fetch data.json");
     const data = await resp.json();
 
-    // Build allItems for search
+    // Flatten for Fuse.js search
     allItems = [
-      ...(data.fruits || []).map(i => ({ ...i, category: "fruits" })),
+      ...(data.fruits || []).flatMap(rarityObj =>
+        Object.values(rarityObj).flatMap(typeArr => typeArr.map(i => ({ ...i, category: "fruits" })))
+      ),
       ...(data.swords || []).map(i => ({ ...i, category: "swords" })),
       ...(data.fightingStyles || []).map(i => ({ ...i, category: "fightingStyles" })),
       ...(data.guns || []).map(i => ({ ...i, category: "guns" })),
@@ -257,16 +288,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     ];
     initFuse(allItems);
 
-    // Render per-category
-    renderGroupedTables(groupByRarity(data.fruits || []), "fruits-sections", [
+    // Render Fruits (nested)
+    renderNestedFruits(data.fruits || {}, "fruits-sections", [
       { header: "Image", key: "image_url" },
       { header: "Name", key: "name", format: (v,i)=>`<a href="item.html?category=fruits&id=${i.id}">${v}</a>` },
       { header: "Type", key: "type" },
       { header: "Price (Money)", key: "price_money", format: v => v ? Number(v).toLocaleString() : "" },
       { header: "Price (Robux)", key: "price_robux", format: v => v ? Number(v).toLocaleString() : "" },
       { header: "Description", key: "description" }
-    ], "fruits");
+    ]);
 
+    // Render other categories
     renderGroupedTables(groupByRarity(data.swords || []), "swords-sections", [
       { header: "Image", key: "image_url" },
       { header: "Name", key: "name", format: (v,i)=>`<a href="item.html?category=swords&id=${i.id}">${v}</a>` },
