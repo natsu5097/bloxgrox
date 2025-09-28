@@ -1,7 +1,9 @@
 /* === item.js - Robust Version === */
 document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(window.location.search);
-  const category = params.get("category");
+  // normalize category param to match keys used in data.json
+  const rawCategory = params.get("category") || "";
+  const category = rawCategory.replace(/\s+/g, '').replace(/[^a-zA-Z0-9]/g, '');
   const id = params.get("id");
   const spinner = document.getElementById("loadingSpinner");
 
@@ -17,11 +19,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!resp.ok) throw new Error("Failed to fetch data.json");
     const data = await resp.json();
 
-    // Flatten Fruits by rarity
-    const fruitsArray = [];
-    Object.values(data.Fruits || {}).forEach(rarityArr => {
-      if (Array.isArray(rarityArr)) fruitsArray.push(...rarityArr);
-    });
+    // Flatten Fruits by rarity (data.Fruits is an object of arrays)
+    const fruitsArray = Object.values(data.Fruits || {}).flat().filter(Boolean);
 
     // Flatten all categories
     const categories = [
@@ -41,14 +40,32 @@ document.addEventListener("DOMContentLoaded", async () => {
       items.forEach(it => allItems.push({ ...it, category: cat }));
     });
 
-    // Find requested item
+    // Find requested item - try several normalized keys
+    const keyCandidates = [
+      category,
+      rawCategory,
+      rawCategory.replace(/\s+/g, ' '),
+      rawCategory.replace(/\s+/g, '-'),
+      rawCategory.toLowerCase()
+    ].filter(Boolean);
+
     let item = null;
-    if (category === "Fruits") {
+    // direct category match
+    if (keyCandidates.includes('Fruits') || keyCandidates.includes('fruits')) {
       item = fruitsArray.find(i => String(i.id) === id);
-    } else if (category && data[category]) {
-      item = safeArray(data[category]).find(i => String(i.id) === id);
     }
-    if (!item) item = allItems.find(i => String(i.id) === id);
+
+    if (!item) {
+      for (const k of keyCandidates) {
+        if (data[k] && Array.isArray(data[k])) {
+          item = safeArray(data[k]).find(i => String(i.id) === id);
+          if (item) break;
+        }
+      }
+    }
+
+    // fallback: search all items
+    if (!item) item = allItems.find(i => String(i.id) === id || String(i.name) === id);
 
     if (!item) {
       document.getElementById("item-name").textContent = "Item Not Found";
